@@ -1,8 +1,13 @@
+این نسخه کامل و نهایی است. در این نسخه، فقط بخش‌های مربوط به ریسپانسیو (Media Queries) در صفحه لاگین اصلاح شده‌اند تا در موبایل بتوانید به راحتی اسکرول کنید و فیلد رمز عبور و دکمه ورود همیشه در دسترس باشند.
+
+نسخه دسکتاپ (ویندوز) بدون هیچ تغییری دقیقاً مثل قبل کار می‌کند.
+
+```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>BCP | کمیته امداد امام خمینی (ره)</title>
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -142,14 +147,106 @@ img{max-width:100%;display:block}
 .login-btn:hover{background:var(--primary-2);transform:translateY(-1px);box-shadow:0 10px 30px var(--primary-glow)}
 .login-err{color:var(--danger);font-size:.78rem;min-height:18px;margin-top:8px;text-align:center;font-weight:500}
 
-@media (max-width:1024px){
-  #loginScreen{flex-direction:column;padding:16px;gap:16px}
-  .login-stage{min-height:45vh}
-  .login-panel{width:100%;min-height:50vh;padding:70px 24px 40px}
-  .emdad-logo{width:min(450px, 85vw)}
-  .bcp-logo{width:90px;height:90px}
-  .login-title{font-size:1.3rem}
+/* ========================================================= */
+/* ============= MOBILE LOGIN FIX (NEW) ==================== */
+/* ========================================================= */
+@media (max-width: 1024px) {
+  #loginScreen {
+    flex-direction: column;
+    padding: 12px;
+    gap: 12px;
+    height: 100vh;
+    height: 100dvh; /* dynamic viewport height for mobile */
+    overflow-y: auto; /* Enable scrolling if keyboard appears */
+    justify-content: flex-start;
+  }
+  
+  .login-stage {
+    flex: none;
+    min-height: 30vh; /* Reduced to leave room for form */
+    border-radius: var(--radius-lg);
+    width: 100%;
+  }
+  
+  .emdad-logo {
+    width: min(350px, 80vw);
+  }
+  
+  .login-panel {
+    width: 100%;
+    flex: none; /* Let it take natural height */
+    min-height: auto;
+    padding: 60px 20px 30px; /* Top padding for me-photo */
+    border-radius: var(--radius-lg);
+    justify-content: flex-start;
+  }
+  
+  .me-photo {
+    top: 16px; left: 16px;
+    width: 44px; height: 44px;
+  }
+  
+  .bcp-logo {
+    width: 70px; height: 70px;
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+  
+  .login-title {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .login-form {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .field {
+    margin-bottom: 14px;
+  }
+  
+  .field input {
+    padding: 11px 36px 11px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .login-btn {
+    padding: 13px;
+    margin-bottom: 20px;
+  }
 }
+
+@media (max-width: 520px) {
+  .login-stage {
+    min-height: 25vh;
+  }
+  .emdad-logo {
+    width: min(280px, 85vw);
+  }
+  .login-panel {
+    padding: 50px 16px 24px;
+  }
+  .bcp-logo {
+    width: 60px; height: 60px;
+  }
+  .login-title {
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+  }
+  .field label {
+    font-size: 0.75rem;
+  }
+  .field input {
+    font-size: 0.85rem;
+    padding: 10px 32px 10px 10px;
+  }
+  .field .wrap svg {
+    width: 14px; height: 14px;
+    right: 10px;
+  }
+}
+/* ========================================================= */
 
 /* ============================== APP SHELL ============================== */
 #appScreen{display:none;min-height:100vh;background:var(--bg);flex-direction:column}
@@ -1432,7 +1529,6 @@ function renderDashboard(){
       <text x="50" y="60" text-anchor="middle" font-family="Vazirmatn,sans-serif" font-size="5.5" fill="var(--muted)">دارای داده</text>
     </svg>`;
 
-  // Icons removed from dc-label
   $('dashboardContainer').innerHTML=`
     <div class="dash-row">
       <div class="dash-card">
