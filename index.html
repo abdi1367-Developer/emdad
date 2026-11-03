@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl" data-theme="light">
 <head>
@@ -285,7 +286,6 @@ img{max-width:100%;display:block}
 /* ============================== CHECKLIST (Wider 16:9) ============================== */
 .chk-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:24px 0;margin-bottom:16px;border-bottom:1px solid var(--border)}
 .chk-title{font-size:1.3rem;font-weight:800;color:var(--text)}
-.chk-title-sub{font-size:.8rem;color:var(--muted);margin-top:2px}
 .chk-toolbar-right{display:flex;gap:10px;align-items:center}
 
 .dash-row{display:grid;grid-template-columns:repeat(4,1fr) 1.5fr;gap:16px;margin-bottom:32px}
@@ -309,10 +309,16 @@ img{max-width:100%;display:block}
 .chk-head-left{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
 .chk-num{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:var(--primary-glow);color:var(--primary);font-weight:800;font-size:.85rem;flex-shrink:0;font-family:monospace}
 .chk-head-left h3{font-size:.95rem;font-weight:700;color:var(--text)}
-.chk-head-meta{display:flex;align-items:center;gap:12px;font-size:.75rem;color:var(--muted);font-family:monospace;flex-shrink:0}
-.chk-mini-bar{width:80px;height:5px;background:var(--border);border-radius:10px;overflow:hidden}
-.chk-mini-bar .fill{height:100%;background:var(--primary);transition:width .4s}
-.chk-chevron{transition:transform .25s}
+
+/* New Blinking Badges */
+.chk-head-meta{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.cnt-badge{padding:4px 10px;border-radius:6px;font-size:.8rem;font-weight:800;font-family:monospace;display:inline-flex;align-items:center;gap:4px;color:#fff}
+.cnt-badge.has{background:var(--success);animation:blink-green 2s infinite}
+.cnt-badge.no{background:var(--danger);animation:blink-red 2s infinite}
+@keyframes blink-green{0%,100%{opacity:1;box-shadow:0 0 8px rgba(61,122,95,.4)}50%{opacity:0.6;box-shadow:0 0 2px rgba(61,122,95,.1)}}
+@keyframes blink-red{0%,100%{opacity:1;box-shadow:0 0 8px rgba(184,84,80,.4)}50%{opacity:0.6;box-shadow:0 0 2px rgba(184,84,80,.1)}}
+
+.chk-chevron{transition:transform .25s;margin-right:8px}
 .chk-group.collapsed .chk-chevron{transform:rotate(-90deg)}
 .chk-group.collapsed .chk-body{display:none}
 .chk-body{padding:0;border-top:1px solid var(--border)}
@@ -1478,8 +1484,8 @@ function renderChecklist(){
           <h3>${escapeHtml(group.title)}</h3>
         </div>
         <div class="chk-head-meta">
-          <span class="cnt">${faDigits(has)}✓ · ${faDigits(no)}✕</span>
-          <div class="chk-mini-bar"><div class="fill" style="width:${pct}%"></div></div>
+          <div class="cnt-badge has">${faDigits(has)} ✓</div>
+          <div class="cnt-badge no">${faDigits(no)} ✕</div>
           <svg class="ic chk-chevron" style="width:15px;height:15px" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
       </div>
@@ -1536,22 +1542,8 @@ function attachChecklistListeners(){
       const state=getCheck();
       const cur=state[key]||{};
       const newStatus=cur.status===val?'':val;
-      if(newStatus){
-        if(!cur.date||!pToEn(cur.date)){
-          toast('ابتدا تاریخ را وارد کنید','danger');
-          const dInp=row.querySelector('[data-date]');
-          if(dInp){dInp.classList.add('invalid');setTimeout(()=>dInp.classList.remove('invalid'),600);dInp.focus();}
-          input.checked=false;
-          return;
-        }
-        if(!cur.owner||!cur.owner.trim()){
-          toast('ابتدا نام متولی را وارد کنید','danger');
-          const oInp=row.querySelector('[data-owner]');
-          if(oInp){oInp.classList.add('invalid');setTimeout(()=>oInp.classList.remove('invalid'),600);oInp.focus();}
-          input.checked=false;
-          return;
-        }
-      }
+      
+      // No validation here anymore. Just update the state.
       state[key]={...cur,status:newStatus};
       saveCheck(state);
       row.dataset.status=newStatus;
@@ -1602,22 +1594,27 @@ function attachChecklistListeners(){
       const key=btn.dataset.save;
       const state=getCheck();
       const cur=state[key]||{};
-      if(!cur.status){
-        toast('وضعیت (دارد/ندارد) را انتخاب کنید','danger');
+      
+      // Full validation on Save
+      if(!cur.status || !cur.date || !pToEn(cur.date) || !cur.owner || !cur.owner.trim()){
+        toast('لطفا وضعیت (دارد/ندارد)، تاریخ و متولی را وارد کنید','danger');
+        
+        // Highlight missing fields
+        if(!cur.status){
+          row.querySelectorAll('.radio-pill').forEach(p=>p.style.borderColor='var(--danger)');
+          setTimeout(()=>row.querySelectorAll('.radio-pill').forEach(p=>p.style.borderColor=''), 1000);
+        }
+        if(!cur.date || !pToEn(cur.date)){
+          const dInp=row.querySelector('[data-date]');
+          if(dInp){dInp.classList.add('invalid');setTimeout(()=>dInp.classList.remove('invalid'),600);}
+        }
+        if(!cur.owner || !cur.owner.trim()){
+          const oInp=row.querySelector('[data-owner]');
+          if(oInp){oInp.classList.add('invalid');setTimeout(()=>oInp.classList.remove('invalid'),600);}
+        }
         return;
       }
-      if(!cur.date||!pToEn(cur.date)){
-        toast('تاریخ را وارد کنید','danger');
-        const dInp=row.querySelector('[data-date]');
-        if(dInp){dInp.classList.add('invalid');setTimeout(()=>dInp.classList.remove('invalid'),600);dInp.focus();}
-        return;
-      }
-      if(!cur.owner||!cur.owner.trim()){
-        toast('نام متولی را وارد کنید','danger');
-        const oInp=row.querySelector('[data-owner]');
-        if(oInp){oInp.classList.add('invalid');setTimeout(()=>oInp.classList.remove('invalid'),600);oInp.focus();}
-        return;
-      }
+      
       row.classList.remove('dirty');
       btn.classList.add('saved');
       btn.innerHTML='<svg class="ic" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>ثبت شد';
@@ -1645,13 +1642,12 @@ function updateGroupCounts(){
       if(e?.status==='has')has++;
       else if(e?.status==='no')no++;
     });
-    const pct=Math.round(((has+no)/total)*100);
     const g=document.querySelector(`.chk-group[data-g="${gi}"]`);
     if(!g)return;
     const meta=g.querySelector('.chk-head-meta');
     if(meta){
-      meta.querySelector('.cnt').textContent=`${faDigits(has)}✓ · ${faDigits(no)}✕`;
-      meta.querySelector('.fill').style.width=pct+'%';
+      meta.querySelector('.cnt-badge.has').textContent = `${faDigits(has)} ✓`;
+      meta.querySelector('.cnt-badge.no').textContent = `${faDigits(no)} ✕`;
     }
   });
 }
@@ -1882,3 +1878,4 @@ function renderAll(){
 </script>
 </body>
 </html>
+```
