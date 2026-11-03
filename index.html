@@ -62,7 +62,7 @@ img{max-width:100%;display:block}
 #loginScreen{
   position:fixed;inset:0;z-index:100;
   display:grid;
-  grid-template-columns:1fr 440px;
+  grid-template-columns:1fr 460px;
   background:var(--bg);
   opacity:1;
   transition:opacity .5s ease;
@@ -74,38 +74,39 @@ img{max-width:100%;display:block}
   position:relative;overflow:hidden;
   background:radial-gradient(circle at 50% 50%, #1e4a3f 0%, #0d1f1a 70%, #06100c 100%);
   display:flex;align-items:center;justify-content:center;
+  cursor:default;
 }
 [data-theme="dark"] .login-stage{background:radial-gradient(circle at 50% 50%, #132b22 0%, #0a1712 70%, #040a07 100%)}
 
 /* Logo directly on stage, no wrap box */
 .emdad-logo{
-  width:min(600px, 75vw);
+  width:min(800px, 90vw);
+  max-height: 85vh;
   object-fit:contain;
-  filter:drop-shadow(0 20px 50px rgba(0,0,0,.7));
+  filter:drop-shadow(0 20px 60px rgba(0,0,0,.8));
   z-index:2;
-  mix-blend-mode: screen; /* removes white box if PNG has white bg */
 }
 
 /* Fog Layers covering the entire stage */
 .fog-layer {
   position:absolute;inset:0;z-index:5;pointer-events:none;
-  backdrop-filter:blur(40px) brightness(.25) saturate(1.2);
-  -webkit-backdrop-filter:blur(40px) brightness(.25) saturate(1.2);
-  mask-image:radial-gradient(circle 250px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 10%, black 60%, black 100%);
-  -webkit-mask-image:radial-gradient(circle 250px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 10%, black 60%, black 100%);
+  backdrop-filter:blur(45px) brightness(.2) saturate(1.2);
+  -webkit-backdrop-filter:blur(45px) brightness(.2) saturate(1.2);
+  mask-image:radial-gradient(circle 380px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 15%, black 60%, black 100%);
+  -webkit-mask-image:radial-gradient(circle 380px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 15%, black 60%, black 100%);
 }
 .fog-layer-2 {
   position:absolute;inset:0;z-index:4;pointer-events:none;
-  backdrop-filter:blur(20px) brightness(.4);
-  -webkit-backdrop-filter:blur(20px) brightness(.4);
-  mask-image:radial-gradient(circle 450px at var(--sx, 50%) var(--sy, 50%), transparent 0%, rgba(0,0,0,.3) 50%, black 100%);
-  -webkit-mask-image:radial-gradient(circle 450px at var(--sx, 50%) var(--sy, 50%), transparent 0%, rgba(0,0,0,.3) 50%, black 100%);
+  backdrop-filter:blur(25px) brightness(.3);
+  -webkit-backdrop-filter:blur(25px) brightness(.3);
+  mask-image:radial-gradient(circle 650px at var(--sx, 50%) var(--sy, 50%), transparent 0%, rgba(0,0,0,.3) 50%, black 100%);
+  -webkit-mask-image:radial-gradient(circle 650px at var(--sx, 50%) var(--sy, 50%), transparent 0%, rgba(0,0,0,.3) 50%, black 100%);
 }
 
 /* Login Panel - Right Side */
 .login-panel{
   display:flex;flex-direction:column;justify-content:center;align-items:center;
-  padding:48px 40px;
+  padding:56px 40px;
   background:var(--bg-elev);
   border-left:1px solid var(--border);
   position:relative;
@@ -123,7 +124,7 @@ img{max-width:100%;display:block}
 
 /* BCP Logo centered */
 .bcp-logo{
-  width:100px;height:100px;border-radius:50%;object-fit:contain;
+  width:110px;height:110px;border-radius:50%;object-fit:contain;
   margin-bottom:24px;
   box-shadow:0 8px 24px rgba(0,0,0,.15);
 }
@@ -143,9 +144,11 @@ img{max-width:100%;display:block}
 
 @media (max-width:1024px){
   #loginScreen{grid-template-columns:1fr;grid-template-rows:1fr auto}
-  .login-stage{min-height:45vh}
-  .login-panel{width:100%;border-left:none;border-top:1px solid var(--border);padding:32px 24px;min-height:55vh}
-  .emdad-logo{width:min(400px, 80vw)}
+  .login-stage{min-height:50vh;padding:20px}
+  .login-panel{width:100%;border-left:none;border-top:1px solid var(--border);padding:70px 24px 40px;min-height:50vh}
+  .emdad-logo{width:min(500px, 90vw)}
+  .bcp-logo{width:90px;height:90px}
+  .login-title{font-size:1.3rem}
 }
 
 /* ============================== APP SHELL ============================== */
@@ -494,6 +497,9 @@ img{max-width:100%;display:block}
   .tl-bar{height:36px;font-size:.62rem}
   .tl-week{min-width:32px}
   .form-row.two-col{grid-template-columns:1fr}
+  .login-panel{padding:70px 20px 32px}
+  .me-photo{top:16px;left:16px;width:44px;height:44px}
+  .bcp-logo{width:80px;height:80px}
 }
 
 /* ============================== PRINT ============================== */
@@ -1162,24 +1168,36 @@ const fog2=$('fog2');
 let curX=50,curY=50,tarX=50,tarY=50;
 let lastMove=0,idleTime=0;
 
+// Mouse Move
 stage.addEventListener('mousemove',e=>{
   const r=stage.getBoundingClientRect();
   tarX=((e.clientX-r.left)/r.width)*100;
   tarY=((e.clientY-r.top)/r.height)*100;
   lastMove=Date.now();
 });
+// Touch Move (Mobile support)
+stage.addEventListener('touchmove',e=>{
+  if(e.touches.length>0){
+    const r=stage.getBoundingClientRect();
+    tarX=((e.touches[0].clientX-r.left)/r.width)*100;
+    tarY=((e.touches[0].clientY-r.top)/r.height)*100;
+    lastMove=Date.now();
+  }
+},{passive:true});
+
 stage.addEventListener('mouseleave',()=>{lastMove=0;});
+stage.addEventListener('touchend',()=>{setTimeout(()=>{lastMove=0;},1500);});
 
 function tickFog(now){
   const sinceMove=now-lastMove;
-  const idle=sinceMove>1500;
+  const idle=sinceMove>1500; // idle trigger
   if(idle){
-    idleTime+=0.015; // faster motion
-    tarX=50+Math.sin(idleTime*1.5)*30;
-    tarY=50+Math.cos(idleTime*1.2)*25;
+    idleTime+=0.012; // speed
+    tarX=50+Math.sin(idleTime*1.2)*35; // wider sweep
+    tarY=50+Math.cos(idleTime)*25;
   }
-  curX+=(tarX-curX)*0.12; 
-  curY+=(tarY-curY)*0.12;
+  curX+=(tarX-curX)*0.08; // smooth lerp
+  curY+=(tarY-curY)*0.08;
   
   fog1.style.setProperty('--mx',curX+'%');
   fog1.style.setProperty('--my',curY+'%');
