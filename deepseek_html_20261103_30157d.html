@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BCP | کمیته امداد امام خمینی (ره)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+/* ============================== TOKENS ============================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f4ee; --bg-elev:#ffffff; --bg-soft:#faf7f2; --bg-tint:#efe9df;
+  --text:#1a2e28; --text-2:#4a5955; --muted:#8a9691;
+  --primary:#1e4a3f; --primary-2:#2a6355; --primary-glow:rgba(30,74,63,.12);
+  --accent:#b86e4a; --accent-2:#a05f3e;
+  --border:#e5ddd0; --border-2:#d5cbb8;
+  --success:#3d7a5f; --success-bg:rgba(61,122,95,.12);
+  --danger:#b85450; --danger-bg:rgba(184,84,80,.12);
+  --warning:#c98a3e;
+  --shadow-sm:0 1px 2px rgba(26,46,40,.04);
+  --shadow-md:0 4px 20px rgba(26,46,40,.08);
+  --shadow-lg:0 20px 60px rgba(26,46,40,.14);
+  --radius-sm:8px; --radius:14px; --radius-lg:20px; --radius-xl:28px;
+  --transition:.3s cubic-bezier(.4,0,.2,1);
+  --font:'Vazirmatn',system-ui,sans-serif;
+  --header-h:70px;
+}
+[data-theme="dark"]{
+  --bg:#0c1310; --bg-elev:#141d19; --bg-soft:#101a15; --bg-tint:#0a110e;
+  --text:#e8ede8; --text-2:#b8c4be; --muted:#7d8a85;
+  --primary:#6ec5a3; --primary-2:#8dd4b8; --primary-glow:rgba(110,197,163,.12);
+  --accent:#e8a87c; --accent-2:#d9916b;
+  --border:#212e29; --border-2:#2d3e37;
+  --success:#6ec5a3; --success-bg:rgba(110,197,163,.14);
+  --danger:#d97979; --danger-bg:rgba(217,121,121,.14);
+  --warning:#d9a862;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+  --shadow-md:0 4px 20px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 60px rgba(0,0,0,.55);
+}
+html{font-size:15px;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.75;min-height:100vh;overflow-x:hidden;transition:background var(--transition),color var(--transition)}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+[data-theme="dark"] body::before{opacity:.06;mix-blend-mode:screen}
+::selection{background:var(--primary);color:#fff}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:10px;border:2px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:var(--primary)}
+input,button,textarea,select{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.hidden{display:none !important}
+.ic{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.ic-sm{width:16px;height:16px}
+
+/* ============================== LOGIN ============================== */
+#loginScreen{
+  position:fixed;inset:0;z-index:100;
+  display:grid;
+  grid-template-columns:1fr 460px;
+  background:var(--bg);
+  opacity:1;
+  transition:opacity .5s ease, grid-template-columns .6s cubic-bezier(.4,0,.2,1);
+}
+#loginScreen.hidden{opacity:0;pointer-events:none}
+#loginScreen.collapsed{grid-template-columns:1fr 0px}
+
+.login-stage{
+  position:relative;overflow:hidden;
+  background:radial-gradient(circle at 50% 50%, #1e4a3f 0%, #0d1f1a 70%, #06100c 100%);
+  display:flex;align-items:center;justify-content:center;
+}
+[data-theme="dark"] .login-stage{background:radial-gradient(circle at 50% 50%, #132b22 0%, #0a1712 70%, #040a07 100%)}
+
+/* Stage content (Logos) */
+.stage-content{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:32px;
+  transition:transform .6s cubic-bezier(.4,0,.2,1);
+  padding:40px;
+}
+#loginScreen.collapsed .stage-content{transform:scale(1.6)}
+
+.bcp-top-logo{
+  height:80px;width:auto;object-fit:contain;
+  filter:drop-shadow(0 8px 24px rgba(0,0,0,.4));
+}
+.emdad-main-logo{
+  max-width:min(520px,70vw);max-height:340px;object-fit:contain;
+  filter:drop-shadow(0 20px 50px rgba(0,0,0,.6));
+}
+
+/* Fog overlay - specifically over the Emdad logo */
+.fog-overlay{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  backdrop-filter:blur(40px) brightness(.4) saturate(1.2);
+  -webkit-backdrop-filter:blur(40px) brightness(.4) saturate(1.2);
+  /* Mask defines the clear hole */
+  mask-image:radial-gradient(circle 280px at var(--mx,50%) var(--my,50%),transparent 0%,transparent 15%,rgba(0,0,0,.7) 55%,#000 100%);
+  -webkit-mask-image:radial-gradient(circle 280px at var(--mx,50%) var(--my,50%),transparent 0%,transparent 15%,rgba(0,0,0,.7) 55%,#000 100%);
+}
+.fog-overlay-2{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  backdrop-filter:blur(20px) brightness(.6);
+  -webkit-backdrop-filter:blur(20px) brightness(.6);
+  mask-image:radial-gradient(circle 450px at var(--sx,50%) var(--sy,50%),transparent 0%,rgba(0,0,0,.4) 60%,#000 100%);
+  -webkit-mask-image:radial-gradient(circle 450px at var(--sx,50%) var(--sy,50%),transparent 0%,rgba(0,0,0,.4) 60%,#000 100%);
+  opacity:.6;
+}
+
+/* Login Panel */
+.login-panel{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:52px 44px;
+  background:var(--bg-elev);
+  border-left:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
+  white-space:nowrap; /* Prevent text wrapping during collapse */
+}
+#loginScreen.collapsed .login-panel{opacity:0;pointer-events:none}
+
+/* Toggle Button */
+.toggle-panel-btn{
+  position:absolute;top:20px;left:20px;
+  width:34px;height:34px;border-radius:50%;
+  background:var(--bg-soft);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-2);transition:all var(--transition);z-index:10;
+}
+.toggle-panel-btn:hover{background:var(--bg-tint);color:var(--text)}
+#loginScreen.collapsed .toggle-panel-btn{left:auto;right:20px;background:var(--bg-elev)}
+#loginScreen.collapsed .toggle-panel-btn .ic{transform:rotate(180deg)}
+
+/* User Photo */
+.user-photo{
+  width:72px;height:72px;border-radius:50%;object-fit:cover;
+  border:2px solid var(--border-2);box-shadow:0 6px 20px rgba(0,0,0,.1);
+  margin-bottom:24px;
+}
+
+.login-title{font-size:1.55rem;font-weight:800;letter-spacing:-.5px;line-height:1.35;margin-bottom:32px;color:var(--text)}
+.login-title em{font-style:normal;color:var(--primary)}
+
+.field{margin-bottom:16px}
+.field label{display:block;font-size:.76rem;font-weight:600;color:var(--text-2);margin-bottom:7px}
+.field .wrap{position:relative}
+.field .wrap svg{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;width:18px;height:18px}
+.field input{width:100%;padding:13px 42px 13px 14px;background:var(--bg-soft);border:1.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;transition:all var(--transition);font-size:.95rem}
+.field input:focus{border-color:var(--primary);background:var(--bg-elev);box-shadow:0 0 0 4px var(--primary-glow)}
+.login-btn{width:100%;padding:14px;border-radius:var(--radius);background:var(--primary);color:#fff;font-weight:700;font-size:1rem;transition:all var(--transition);margin-top:6px}
+.login-btn:hover{background:var(--primary-2);transform:translateY(-1px);box-shadow:0 10px 30px var(--primary-glow)}
+.login-err{color:var(--danger);font-size:.8rem;min-height:20px;margin-top:8px;text-align:center;font-weight:500}
+
+@media (max-width:1024px){
+  #loginScreen{grid-template-columns:1fr;grid-template-rows:1fr auto}
+  #loginScreen.collapsed{grid-template-columns:1fr;grid-template-rows:1fr 0px}
+  .login-stage{order:1;min-height:50vh}
+  .login-panel{order:2;border-left:none;border-top:1px solid var(--border);padding:32px 28px;min-height:50vh}
+  .emdad-main-logo{max-width:80vw}
+}
+
+/* ============================== APP SHELL ============================== */
+#appScreen{display:none;min-height:100vh;background:var(--bg);flex-direction:column}
+#appScreen.visible{display:flex}
+.app-header{height:var(--header-h);flex-shrink:0;display:flex;align-items:center;padding:0 20px;gap:18px;background:var(--bg-elev);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
+.app-brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.app-brand img{height:40px;width:auto;object-fit:contain}
+.app-brand .fb{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--primary);color:#fff;font-weight:800;font-size:1.1rem}
+.app-brand-text{display:flex;flex-direction:column;line-height:1.2}
+.app-brand-text .t1{font-weight:800;font-size:.82rem;color:var(--text)}
+.app-brand-text .t2{font-size:.62rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:1px}
+.app-tabs{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none}
+.app-tabs::-webkit-scrollbar{display:none}
+.app-tab{padding:8px 16px;border-radius:10px;font-size:.82rem;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:7px;white-space:nowrap;transition:all var(--transition)}
+.app-tab:hover{color:var(--text);background:var(--bg-soft)}
+.app-tab.active{color:var(--primary);background:var(--primary-glow)}
+[data-theme="dark"] .app-tab.active{color:var(--primary-2)}
+.app-tab .ic{width:16px;height:16px}
+.app-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.icon-btn{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--text-2);transition:all var(--transition)}
+.icon-btn:hover{background:var(--bg-soft);color:var(--text)}
+.icon-btn.danger:hover{background:var(--danger-bg);color:var(--danger)}
+.app-main{flex:1;padding:0 clamp(16px,2.5vw,40px) 40px;width:100%}
+.view{display:none;animation:viewIn .35s ease}
+.view.active{display:block}
+@keyframes viewIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.container{max-width:1700px;margin:0 auto;width:100%}
+
+/* ============================== HOME / MOTION PROPOSAL ============================== */
+.prop-wrap{padding:28px 0 40px}
+.prop-hero{position:relative;overflow:hidden;padding:clamp(48px,7vw,88px) clamp(24px,4vw,64px);border-radius:var(--radius-xl);background:linear-gradient(135deg,#0d1f1a 0%,#152b24 45%,#1e4a3f 100%);color:#fff;box-shadow:var(--shadow-lg);margin-bottom:28px}
+[data-theme="dark"] .prop-hero{background:linear-gradient(135deg,#0a1712 0%,#122420 45%,#17392e 100%)}
+.prop-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 15% 20%,rgba(110,197,163,.28) 0%,transparent 50%),radial-gradient(circle at 85% 80%,rgba(232,168,124,.25) 0%,transparent 45%);pointer-events:none}
+.prop-hero::after{content:'';position:absolute;top:-50%;right:-30%;width:80%;height:200%;background:conic-gradient(from 90deg,transparent,rgba(255,255,255,.05),transparent 40%);animation:heroSpin 30s linear infinite;pointer-events:none}
+@keyframes heroSpin{to{transform:rotate(360deg)}}
+.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:center}
+.hero-tagline{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:30px;background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.15);font-size:.75rem;font-weight:600;letter-spacing:.5px;margin-bottom:22px}
+.hero-tagline .dot{width:7px;height:7px;border-radius:50%;background:#6ec5a3;box-shadow:0 0 0 4px rgba(110,197,163,.25);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(110,197,163,.25)}50%{box-shadow:0 0 0 8px rgba(110,197,163,0)}}
+.hero-h1{font-size:clamp(2rem,4vw,3.4rem);font-weight:900;line-height:1.15;letter-spacing:-1.5px;margin-bottom:20px}
+.hero-h1 .accent{color:#e8a87c}
+.hero-h1 .underline{position:relative;display:inline-block}
+.hero-h1 .underline::after{content:'';position:absolute;left:0;right:0;bottom:-6px;height:4px;background:linear-gradient(90deg,#6ec5a3,#e8a87c);border-radius:4px;transform:scaleX(0);transform-origin:right;animation:underlineExpand 1.5s ease .3s forwards}
+@keyframes underlineExpand{to{transform:scaleX(1)}}
+.hero-lead{font-size:clamp(.9rem,1.3vw,1.05rem);line-height:1.85;opacity:.82;max-width:640px;margin-bottom:32px}
+.hero-parties{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.party{display:flex;flex-direction:column;gap:2px}
+.party-label{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;opacity:.55;font-weight:600}
+.party-name{font-size:.92rem;font-weight:700}
+.hero-divider{width:1px;height:36px;background:rgba(255,255,255,.2)}
+.hero-side{display:flex;flex-direction:column;align-items:flex-end;gap:14px}
+.hero-badge{display:inline-flex;flex-direction:column;gap:6px;padding:20px 26px;border-radius:20px;background:rgba(255,255,255,.08);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.15);text-align:right}
+.hero-badge .badge-label{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;opacity:.65;font-weight:600}
+.hero-badge .badge-value{font-size:1.4rem;font-weight:900;letter-spacing:-.5px}
+.hero-badge .badge-sub{font-size:.72rem;opacity:.7;margin-top:2px}
+
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:36px}
+.stat{position:relative;padding:22px 24px;border-radius:var(--radius-lg);background:var(--bg-elev);border:1px solid var(--border);overflow:hidden;transition:all .35s}
+.stat:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--primary)}
+.stat::before{content:'';position:absolute;top:0;right:0;width:60px;height:60px;background:var(--primary-glow);border-radius:50%;transform:translate(30%,-30%)}
+.stat-value{font-size:2.6rem;font-weight:900;line-height:1;color:var(--primary);letter-spacing:-2px;margin-bottom:6px;font-variant-numeric:tabular-nums}
+[data-theme="dark"] .stat-value{color:var(--primary-2)}
+.stat-label{font-size:.78rem;color:var(--muted);font-weight:600}
+
+.prop-section{padding:44px 0;border-top:1px solid var(--border)}
+.prop-section:first-of-type{border-top:none;padding-top:12px}
+.sec-head{display:flex;align-items:flex-start;gap:24px;margin-bottom:32px}
+.sec-num{font-size:clamp(3rem,5vw,4.2rem);font-weight:900;line-height:.85;color:var(--primary);opacity:.15;letter-spacing:-4px;font-variant-numeric:tabular-nums;flex-shrink:0;padding-top:4px}
+[data-theme="dark"] .sec-num{color:var(--primary-2)}
+.sec-tag{display:inline-block;font-size:.72rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:4px}
+.sec-title{font-size:clamp(1.35rem,2.2vw,1.85rem);font-weight:800;line-height:1.3;letter-spacing:-.5px;color:var(--text)}
+.sec-sub{font-size:.88rem;color:var(--muted);margin-top:6px;max-width:720px}
+.sec-body{font-size:.94rem;line-height:1.9;color:var(--text-2)}
+.sec-body p{margin-bottom:14px}
+.sec-body p:last-child{margin-bottom:0}
+.sec-body strong{color:var(--text);font-weight:700}
+
+.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.cards-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px}
+.mini-card{padding:20px 22px;border-radius:var(--radius);background:var(--bg-elev);border:1px solid var(--border);transition:all .3s;position:relative;overflow:hidden}
+.mini-card:hover{transform:translateY(-2px);border-color:var(--primary);box-shadow:var(--shadow-md)}
+.mini-card .icon-box{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--primary-glow);color:var(--primary);margin-bottom:12px}
+[data-theme="dark"] .mini-card .icon-box{color:var(--primary-2)}
+.mini-card .icon-box .ic{width:20px;height:20px}
+.mini-card h4{font-size:.92rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.mini-card p{font-size:.82rem;color:var(--text-2);line-height:1.75}
+
+.goals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-top:20px}
+.goal{display:flex;gap:12px;padding:14px 16px;border-radius:10px;background:var(--bg-soft);border:1px solid var(--border);transition:all .25s}
+.goal:hover{background:var(--bg-elev);border-color:var(--primary)}
+.goal-idx{font-size:.7rem;font-weight:800;color:var(--primary);background:var(--primary-glow);width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:monospace}
+.goal-txt{font-size:.82rem;color:var(--text-2);line-height:1.65}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.step{padding:22px;border-radius:var(--radius);background:var(--bg-elev);border:1px solid var(--border);position:relative;transition:all .3s}
+.step:hover{border-color:var(--primary);transform:translateY(-2px)}
+.step-num{font-size:2.2rem;font-weight:900;line-height:1;color:var(--accent);letter-spacing:-1px;margin-bottom:8px;opacity:.55;font-variant-numeric:tabular-nums}
+.step h4{font-size:.92rem;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.5}
+.step p{font-size:.8rem;color:var(--muted);line-height:1.7}
+.step .step-out{margin-top:12px;padding-top:12px;border-top:1px dashed var(--border);font-size:.78rem;color:var(--primary);font-weight:600}
+
+.timeline{display:flex;gap:4px;margin-top:24px;padding:20px 0;overflow-x:auto}
+.tl-week{flex:1;min-width:44px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.tl-bar{width:100%;height:44px;border-radius:8px;background:var(--bg-tint);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;color:var(--text-2);transition:all .3s}
+.tl-bar.phase-1{background:rgba(30,74,63,.2);color:var(--primary)}
+.tl-bar.phase-2{background:rgba(184,110,74,.2);color:var(--accent)}
+[data-theme="dark"] .tl-bar.phase-1{background:rgba(110,197,163,.2);color:var(--primary-2)}
+.tl-label{font-size:.62rem;color:var(--muted);font-weight:600}
+.tl-legend{display:flex;gap:20px;margin-top:16px;flex-wrap:wrap}
+.tl-legend .lg{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--text-2);font-weight:600}
+.tl-legend .dot{width:12px;height:12px;border-radius:4px}
+
+.sys-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:20px}
+.sys-card{padding:18px 18px;border-radius:var(--radius);background:var(--bg-elev);border:1px solid var(--border);transition:all .3s;position:relative;overflow:hidden}
+.sys-card:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.sys-card .sys-domain{font-family:monospace;font-size:.7rem;color:var(--accent);font-weight:700;letter-spacing:.5px;direction:ltr;text-align:right;margin-bottom:4px}
+.sys-card h4{font-size:.95rem;font-weight:800;color:var(--text);margin-bottom:4px}
+.sys-card p{font-size:.78rem;color:var(--muted);line-height:1.6}
+.sys-card .sys-critical{position:absolute;top:12px;left:12px;padding:2px 8px;border-radius:20px;font-size:.6rem;font-weight:800;letter-spacing:.5px}
+.sys-critical.critical{background:rgba(184,84,80,.12);color:var(--danger)}
+.sys-critical.high{background:rgba(201,138,62,.14);color:var(--warning)}
+.sys-critical.mid{background:var(--primary-glow);color:var(--primary)}
+[data-theme="dark"] .sys-critical.mid{color:var(--primary-2)}
+
+.risk-formula{padding:28px;border-radius:var(--radius-lg);background:linear-gradient(135deg,var(--primary) 0%,var(--primary-2) 100%);color:#fff;display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:24px;flex-wrap:wrap;text-align:center}
+.risk-formula .rpn-lbl{font-size:.75rem;opacity:.75;letter-spacing:2px;text-transform:uppercase;font-weight:600}
+.risk-formula .rpn-eq{font-size:clamp(1.4rem,3vw,2rem);font-weight:900;letter-spacing:-1px;direction:ltr;font-family:monospace}
+.risk-levels{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.risk-level{padding:16px 18px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg-elev);position:relative;overflow:hidden}
+.risk-level::before{content:'';position:absolute;top:0;right:0;bottom:0;width:5px}
+.risk-level.critical::before{background:var(--danger)}
+.risk-level.high::before{background:var(--warning)}
+.risk-level.mid::before{background:var(--primary)}
+.risk-level.low::before{background:var(--muted)}
+.risk-level h5{font-size:.82rem;font-weight:800;color:var(--text);margin-bottom:4px}
+.risk-level .rl-score{font-size:.7rem;color:var(--muted);font-family:monospace;direction:ltr;text-align:right;margin-bottom:6px}
+.risk-level p{font-size:.75rem;color:var(--text-2);line-height:1.6}
+
+.qa-layers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.qa-layer{padding:22px;border-radius:var(--radius);background:var(--bg-elev);border:1px solid var(--border);position:relative;transition:all .3s}
+.qa-layer:hover{border-color:var(--accent);transform:translateY(-2px)}
+.qa-layer .ql-num{font-size:2rem;font-weight:900;line-height:1;color:var(--accent);opacity:.35;margin-bottom:8px;letter-spacing:-2px}
+.qa-layer h4{font-size:.92rem;font-weight:800;color:var(--text);margin-bottom:8px}
+.qa-layer ul{list-style:none;padding:0}
+.qa-layer li{font-size:.78rem;color:var(--text-2);padding-right:14px;position:relative;margin-bottom:4px;line-height:1.65}
+.qa-layer li::before{content:'▸';position:absolute;right:0;color:var(--accent);font-size:.7rem}
+
+.train-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.train-mod{padding:16px 18px;border-radius:var(--radius);background:var(--bg-elev);border:1px solid var(--border)}
+.train-mod h5{font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:4px;display:flex;justify-content:space-between;align-items:baseline}
+.train-mod .hrs{font-size:.72rem;color:var(--accent);font-weight:700;font-family:monospace}
+.train-mod p{font-size:.76rem;color:var(--muted);line-height:1.6}
+.cost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.cost-item{padding:16px 18px;border-radius:var(--radius);background:var(--bg-elev);border:1px solid var(--border);position:relative}
+.cost-item .cost-pct{font-size:1.4rem;font-weight:900;color:var(--primary);letter-spacing:-1px;line-height:1;margin-bottom:4px;font-family:monospace}
+[data-theme="dark"] .cost-item .cost-pct{color:var(--primary-2)}
+.cost-item h5{font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:3px}
+.cost-item .cost-amt{font-size:.72rem;color:var(--muted);font-family:monospace;direction:ltr;text-align:right}
+.cost-total{margin-top:16px;padding:22px 26px;border-radius:var(--radius-lg);background:linear-gradient(135deg,var(--primary) 0%,var(--primary-2) 100%);color:#fff;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.cost-total .ct-label{font-size:.78rem;opacity:.8;letter-spacing:1px;text-transform:uppercase;font-weight:600}
+.cost-total .ct-value{font-size:1.6rem;font-weight:900;letter-spacing:-1px;font-family:monospace;direction:ltr}
+
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ============================== CHECKLIST ============================== */
+.chk-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:20px 0;margin-bottom:16px;border-bottom:1px solid var(--border)}
+.chk-title{font-size:1.2rem;font-weight:800;color:var(--text);letter-spacing:-.3px}
+.chk-title-sub{font-size:.76rem;color:var(--muted);margin-top:2px}
+.chk-toolbar-right{display:flex;gap:8px;align-items:center}
+
+.dash-row{display:grid;grid-template-columns:repeat(4,1fr) 1.3fr;gap:12px;margin-bottom:24px}
+.dash-card{padding:16px 18px;border-radius:var(--radius);background:var(--bg-elev);border:1px solid var(--border);transition:all .25s}
+.dash-card .dc-label{font-size:.7rem;font-weight:600;color:var(--muted);letter-spacing:.3px;display:flex;align-items:center;gap:5px;margin-bottom:4px}
+.dash-card .dc-value{font-size:1.7rem;font-weight:900;color:var(--text);line-height:1;letter-spacing:-1px}
+.dash-card .dc-value small{font-size:.75rem;font-weight:600;color:var(--muted);margin-right:4px;letter-spacing:0}
+.dash-card.has .dc-value{color:var(--success)}
+.dash-card.no .dc-value{color:var(--danger)}
+.dash-card.pending .dc-value{color:var(--warning)}
+.dash-chart{padding:16px 20px;border-radius:var(--radius);background:var(--bg-elev);border:1px solid var(--border);display:flex;align-items:center;gap:16px}
+.chart-svg{width:80px;height:80px;flex-shrink:0}
+.chart-legend{display:flex;flex-direction:column;gap:5px;font-size:.74rem}
+.chart-legend .lg-item{display:flex;align-items:center;gap:6px;color:var(--text-2)}
+.chart-legend .dot{width:9px;height:9px;border-radius:3px;flex-shrink:0}
+.chart-legend .lg-item strong{color:var(--text);font-weight:700;margin-right:auto;font-variant-numeric:tabular-nums}
+
+.chk-group{border-radius:var(--radius);background:var(--bg-elev);border:1px solid var(--border);margin-bottom:10px;overflow:hidden}
+.chk-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;cursor:pointer;user-select:none;transition:background .2s}
+.chk-head:hover{background:var(--bg-soft)}
+.chk-head-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.chk-num{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:var(--primary-glow);color:var(--primary);font-weight:800;font-size:.78rem;flex-shrink:0;font-family:monospace}
+[data-theme="dark"] .chk-num{color:var(--primary-2)}
+.chk-head-left h3{font-size:.88rem;font-weight:700;color:var(--text);line-height:1.3}
+.chk-head-meta{display:flex;align-items:center;gap:10px;font-size:.7rem;color:var(--muted);font-family:monospace;flex-shrink:0}
+.chk-mini-bar{width:60px;height:4px;background:var(--border);border-radius:10px;overflow:hidden}
+.chk-mini-bar .fill{height:100%;background:var(--primary);transition:width .4s}
+.chk-chevron{transition:transform .25s}
+.chk-group.collapsed .chk-chevron{transform:rotate(-90deg)}
+.chk-group.collapsed .chk-body{display:none}
+.chk-body{padding:0;border-top:1px solid var(--border)}
+
+.chk-row{
+  display:grid;
+  grid-template-columns:32px 1fr auto 150px 120px auto;
+  gap:10px;
+  align-items:center;
+  padding:10px 18px;
+  border-top:1px solid var(--border);
+  transition:background .2s;
+}
+.chk-row:first-child{border-top:none}
+.chk-row:hover{background:var(--bg-soft)}
+.chk-row.dirty{background:rgba(201,138,62,.05)}
+.chk-idx{font-size:.68rem;font-weight:800;color:var(--muted);font-family:monospace;text-align:center}
+.chk-txt{font-size:.82rem;color:var(--text);line-height:1.55}
+.chk-row[data-status="has"] .chk-txt{color:var(--success);font-weight:600}
+.chk-row[data-status="no"] .chk-txt{color:var(--danger);font-weight:600}
+
+.radios{display:flex;gap:4px}
+.radio-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:7px;font-size:.72rem;font-weight:700;border:1.5px solid var(--border);background:var(--bg-soft);color:var(--text-2);cursor:pointer;transition:all .2s;white-space:nowrap;user-select:none}
+.radio-pill input{display:none}
+.radio-pill:hover{border-color:var(--border-2);background:var(--bg-tint)}
+.radio-pill.yes.active{background:var(--success);color:#fff;border-color:var(--success);box-shadow:0 3px 10px rgba(61,122,95,.25)}
+.radio-pill.no.active{background:var(--danger);color:#fff;border-color:var(--danger);box-shadow:0 3px 10px rgba(184,84,80,.25)}
+.radio-pill .rp-dot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.35}
+.radio-pill.active .rp-dot{opacity:1}
+
+.date-wrap{position:relative;display:flex;align-items:center}
+.date-wrap input{padding:6px 30px 6px 8px;background:var(--bg-soft);border:1.5px solid var(--border);border-radius:7px;font-size:.76rem;color:var(--text);outline:none;transition:all .2s;width:100%;font-family:monospace;text-align:center;letter-spacing:.5px}
+.date-wrap input:focus{border-color:var(--primary);background:var(--bg-elev);box-shadow:0 0 0 3px var(--primary-glow)}
+.date-wrap input.invalid{border-color:var(--danger);background:rgba(184,84,80,.06);animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.cal-open{position:absolute;left:2px;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .2s}
+.cal-open:hover{background:var(--primary-glow);color:var(--primary)}
+.cal-open .ic{width:13px;height:13px}
+
+.owner-wrap input{padding:6px 10px;background:var(--bg-soft);border:1.5px solid var(--border);border-radius:7px;font-size:.76rem;color:var(--text);outline:none;transition:all .2s;width:100%}
+.owner-wrap input:focus{border-color:var(--primary);background:var(--bg-elev);box-shadow:0 0 0 3px var(--primary-glow)}
+.owner-wrap input.invalid{border-color:var(--danger);background:rgba(184,84,80,.06);animation:shake .4s}
+
+.save-btn{padding:6px 14px;border-radius:7px;font-size:.74rem;font-weight:700;background:var(--bg-soft);color:var(--text-2);border:1.5px solid var(--border);transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:5px}
+.save-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+.save-btn.saved{background:var(--success);color:#fff;border-color:var(--success)}
+.save-btn .ic{width:13px;height:13px}
+
+@media (max-width:1100px){
+  .chk-row{grid-template-columns:28px 1fr auto;grid-template-areas:"idx txt radios" "idx date owner" "idx save save";gap:8px;padding:12px 14px}
+  .chk-idx{grid-area:idx;align-self:start;padding-top:6px}
+  .chk-txt{grid-area:txt}
+  .radios{grid-area:radios}
+  .date-wrap{grid-area:date}
+  .owner-wrap{grid-area:owner}
+  .save-btn{grid-area:save;justify-self:end}
+}
+@media (max-width:520px){
+  .chk-row{grid-template-columns:1fr;grid-template-areas:"txt" "radios" "date" "owner" "save";gap:6px}
+  .chk-idx{display:none}
+  .radios{justify-content:flex-start}
+  .date-wrap,.owner-wrap{width:100%}
+  .save-btn{justify-self:stretch;justify-content:center}
+}
+
+/* ============================== STAKEHOLDERS ============================== */
+.stk-header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:20px 0;margin-bottom:16px;border-bottom:1px solid var(--border)}
+.stk-title-wrap h2{font-size:1.2rem;font-weight:800;letter-spacing:-.3px;margin-bottom:2px}
+.stk-title-wrap p{font-size:.78rem;color:var(--muted)}
+.stk-actions{display:flex;gap:10px;align-items:center}
+.search-wrap{position:relative}
+.search-wrap .ic{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);width:15px;height:15px}
+.search-wrap input{padding:9px 36px 9px 12px;background:var(--bg-elev);border:1px solid var(--border);border-radius:10px;font-size:.82rem;color:var(--text);width:220px;outline:none;transition:all var(--transition)}
+.search-wrap input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow)}
+.btn-primary{padding:9px 16px;border-radius:8px;font-size:.8rem;font-weight:600;background:var(--primary);color:#fff;transition:all var(--transition);display:inline-flex;align-items:center;gap:6px}
+.btn-primary:hover{background:var(--primary-2);transform:translateY(-1px);box-shadow:0 6px 16px var(--primary-glow)}
+.btn-ghost{padding:8px 14px;border-radius:8px;font-size:.76rem;font-weight:600;color:var(--text-2);border:1px solid var(--border);transition:all var(--transition);display:inline-flex;align-items:center;gap:6px;background:var(--bg-elev)}
+.btn-ghost:hover{background:var(--bg-tint);color:var(--text);border-color:var(--border-2)}
+.btn-danger{padding:8px 14px;border-radius:8px;font-size:.76rem;font-weight:600;color:var(--danger);border:1px solid rgba(184,84,80,.3);transition:all var(--transition);display:inline-flex;align-items:center;gap:6px;background:var(--bg-elev)}
+.btn-danger:hover{background:rgba(184,84,80,.08)}
+.stk-table-wrap{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.stk-table{width:100%;border-collapse:collapse}
+.stk-table thead{background:var(--bg-soft)}
+.stk-table th{padding:12px 18px;text-align:right;font-size:.72rem;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);letter-spacing:.3px;text-transform:uppercase}
+.stk-table td{padding:13px 18px;border-bottom:1px solid var(--border);font-size:.86rem;vertical-align:middle}
+.stk-table tbody tr{transition:background var(--transition)}
+.stk-table tbody tr:hover{background:var(--bg-soft)}
+.stk-table tbody tr:last-child td{border-bottom:none}
+.stk-user{display:flex;align-items:center;gap:10px}
+.stk-avatar{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:var(--primary-glow);color:var(--primary);font-weight:800;font-size:.78rem;flex-shrink:0}
+[data-theme="dark"] .stk-avatar{color:var(--primary-2)}
+.stk-name{font-weight:700;color:var(--text);font-size:.86rem}
+.stk-role{font-size:.72rem;color:var(--muted);margin-top:1px}
+.stk-phone,.stk-email{font-size:.8rem;color:var(--text-2);direction:ltr;text-align:right;font-family:monospace}
+.stk-email{color:var(--primary);text-decoration:underline}
+.stk-actions-cell{display:flex;gap:5px;justify-content:flex-end}
+.stk-act{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all var(--transition)}
+.stk-act:hover{background:var(--bg-tint);color:var(--text)}
+.stk-act.danger:hover{background:var(--danger-bg);color:var(--danger)}
+.stk-act .ic{width:14px;height:14px}
+.stk-empty{padding:60px 20px;text-align:center;color:var(--muted)}
+.stk-empty .ic{width:48px;height:48px;color:var(--border-2);margin:0 auto 14px}
+.stk-empty h3{color:var(--text-2);font-size:.95rem;font-weight:600;margin-bottom:6px}
+.stk-empty p{font-size:.8rem;margin-bottom:16px}
+
+/* ============================== MODALS / TOAST ============================== */
+.modal-bg{position:fixed;inset:0;z-index:200;background:rgba(10,20,16,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px;animation:fadeIn .2s ease}
+.modal-bg.open{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{width:100%;max-width:460px;max-height:90vh;overflow-y:auto;background:var(--bg-elev);border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:var(--shadow-lg);animation:modalIn .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--border)}
+.modal-head h3{font-size:1rem;font-weight:800;color:var(--text)}
+.modal-close{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all var(--transition)}
+.modal-close:hover{background:var(--bg-soft);color:var(--text)}
+.modal-body{padding:22px}
+.modal-foot{padding:14px 22px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
+.btn-lg{padding:10px 22px;border-radius:9px;font-size:.86rem;font-weight:700;transition:all var(--transition)}
+.btn-lg.primary{background:var(--primary);color:#fff}
+.btn-lg.primary:hover{background:var(--primary-2)}
+.btn-lg.ghost{background:var(--bg-soft);color:var(--text-2);border:1px solid var(--border)}
+.btn-lg.ghost:hover{background:var(--bg-tint)}
+.form-row{margin-bottom:12px}
+.form-row label{display:block;font-size:.76rem;font-weight:600;color:var(--text-2);margin-bottom:5px}
+.form-row label .req{color:var(--danger)}
+.form-row input,.form-row textarea{width:100%;padding:10px 12px;background:var(--bg-soft);border:1.5px solid var(--border);border-radius:9px;font-size:.86rem;color:var(--text);outline:none;transition:all var(--transition)}
+.form-row input:focus,.form-row textarea:focus{border-color:var(--primary);background:var(--bg-elev);box-shadow:0 0 0 3px var(--primary-glow)}
+.form-row input[type="tel"],.form-row input[type="email"]{direction:ltr;text-align:right}
+.form-row.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-err{color:var(--danger);font-size:.76rem;min-height:16px;margin-top:4px}
+
+.toast-wrap{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:500;display:flex;flex-direction:column;gap:8px;pointer-events:none;align-items:center}
+.toast{padding:10px 18px;border-radius:9px;font-size:.8rem;font-weight:600;background:var(--text);color:var(--bg);box-shadow:var(--shadow-lg);animation:toastIn .3s ease;pointer-events:auto;display:flex;align-items:center;gap:8px}
+.toast.success{background:var(--success);color:#fff}
+.toast.danger{background:var(--danger);color:#fff}
+@keyframes toastIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.cal-modal{max-width:370px}
+.cal-nav-row{display:flex;align-items:center;justify-content:space-between;padding:2px 0 14px;gap:4px}
+.cal-nav{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--text-2);transition:all var(--transition)}
+.cal-nav:hover{background:var(--bg-soft);color:var(--text)}
+.cal-title{font-size:.95rem;font-weight:800;color:var(--text);text-align:center;flex:1}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px}
+.cal-weekdays span{text-align:center;font-size:.66rem;font-weight:700;color:var(--muted);padding:5px 0}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-cell{padding:7px 0;text-align:center;font-size:.82rem;font-weight:500;border-radius:7px;cursor:pointer;color:var(--text);transition:all var(--transition);user-select:none;position:relative}
+.cal-cell:hover{background:var(--primary-glow);color:var(--primary)}
+.cal-cell.today{color:var(--accent);font-weight:800}
+.cal-cell.today::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--accent)}
+.cal-cell.selected{background:var(--primary);color:#fff}
+.cal-cell.other-month{color:var(--muted);opacity:.35;pointer-events:none}
+.cal-cell.weekend{color:var(--danger)}
+.cal-cell.selected.weekend{color:#fff}
+.cal-footer{margin-top:12px;display:flex;gap:8px}
+.cal-today-btn{flex:1;padding:9px;border-radius:7px;background:var(--bg-soft);color:var(--text-2);font-weight:600;font-size:.8rem;border:1px solid var(--border);transition:all var(--transition);display:flex;align-items:center;justify-content:center;gap:6px}
+.cal-today-btn:hover{background:var(--bg-tint);color:var(--text)}
+
+@media (max-width:1024px){
+  .hero-inner{grid-template-columns:1fr;gap:24px}
+  .hero-side{align-items:flex-start}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .cards-3,.steps,.qa-layers,.train-grid,.cost-grid{grid-template-columns:repeat(2,1fr)}
+  .risk-levels{grid-template-columns:repeat(2,1fr)}
+  .dash-row{grid-template-columns:repeat(4,1fr)}
+  .dash-chart{grid-column:1/-1}
+}
+@media (max-width:900px){
+  :root{--header-h:62px}
+  .app-header{padding:0 12px;gap:8px}
+  .app-brand-text{display:none}
+  .app-brand img{height:34px}
+  .app-brand .fb{width:34px;height:34px;font-size:.95rem}
+  .app-tab{padding:7px 10px;font-size:.75rem}
+  .app-tab span{display:none}
+  .app-main{padding:0 12px 24px}
+  .prop-hero{padding:36px 22px;border-radius:var(--radius-lg)}
+  .hero-parties{gap:14px}
+  .sec-head{gap:14px;margin-bottom:22px}
+  .sec-num{font-size:2.6rem}
+  .prop-section{padding:32px 0}
+  .cards-3,.steps,.qa-layers,.train-grid,.cost-grid{grid-template-columns:1fr}
+  .dash-row{grid-template-columns:repeat(2,1fr);gap:10px}
+  .dash-card{padding:12px 14px}
+  .dash-card .dc-value{font-size:1.4rem}
+  .chk-toolbar{flex-direction:column;align-items:stretch}
+  .chk-toolbar-right{justify-content:flex-end;flex-wrap:wrap}
+  .stk-table thead{display:none}
+  .stk-table,.stk-table tbody,.stk-table tr,.stk-table td{display:block;width:100%}
+  .stk-table tr{padding:12px 14px;border-bottom:1px solid var(--border);position:relative}
+  .stk-table tr:last-child{border-bottom:none}
+  .stk-table td{padding:3px 0;border:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .stk-table td::before{content:attr(data-label);font-size:.7rem;color:var(--muted);font-weight:600;flex-shrink:0}
+  .stk-table td:first-child{padding:0 0 8px;border-bottom:1px solid var(--border);margin-bottom:8px;display:block}
+  .stk-table td:first-child::before{display:none}
+  .stk-actions-cell{position:absolute;top:12px;left:12px;padding:0 !important}
+  .stk-actions-cell::before{display:none !important}
+  .search-wrap input{width:100%}
+  .stk-actions{width:100%}
+  .stk-actions .search-wrap{flex:1}
+}
+@media (max-width:520px){
+  .stats-row{grid-template-columns:1fr 1fr;gap:10px}
+  .stat{padding:16px 18px}
+  .stat-value{font-size:2rem}
+  .hero-divider{display:none}
+  .hero-parties{flex-direction:column;gap:10px}
+  .timeline{gap:2px}
+  .tl-bar{height:36px;font-size:.62rem}
+  .tl-week{min-width:32px}
+  .form-row.two-col{grid-template-columns:1fr}
+}
+
+/* ============================== PRINT LAYOUT ============================== */
+@media print{
+  @page { margin: 1cm; size: A4 portrait; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt !important; }
+  body::before { display: none !important; }
+  
+  /* Hide UI elements */
+  .app-header, .app-tabs, .app-actions, .chk-toolbar-right, .radios, .cal-open, .save-btn, .dash-row, .icon-btn, .app-tab, .toast-wrap, .modal-bg, .chk-chevron { 
+    display: none !important; 
+  }
+  .app-main, .container { padding: 0 !important; margin: 0 !important; max-width: 100% !important; width: 100% !important; }
+  .view { display: none !important; }
+  #view-checklist { display: block !important; }
+
+  /* Title for print */
+  .print-header { display: block !important; text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 10px; }
+  .print-header h1 { font-size: 18pt !important; margin-bottom: 5px; }
+  .print-header p { font-size: 10pt !important; color: #555; }
+
+  /* Group styling */
+  .chk-group { border: 1px solid #999 !important; border-radius: 4px !important; margin-bottom: 15px !important; break-inside: avoid; background: #fff !important; }
+  .chk-group.collapsed .chk-body { display: block !important; }
+  .chk-head { background: #f0f0f0 !important; padding: 8px 12px !important; border-bottom: 1px solid #999 !important; }
+  .chk-head-left h3 { font-size: 11pt !important; color: #000 !important; font-weight: bold !important; }
+  .chk-head-meta { display: none !important; } /* Hide progress in print */
+  
+  /* Row layout */
+  .chk-body { padding: 0 !important; }
+  .chk-row { 
+    display: grid !important; 
+    grid-template-columns: 25px 1fr 80px 100px 110px !important; 
+    gap: 8px !important; 
+    padding: 8px 12px !important; 
+    border-top: 1px solid #eee !important; 
+    align-items: center !important;
+  }
+  .chk-row:first-child { border-top: none !important; }
+  .chk-idx { font-size: 9pt !important; color: #555 !important; font-weight: bold !important; text-align: center !important; }
+  .chk-txt { font-size: 10pt !important; color: #000 !important; line-height: 1.4 !important; }
+  
+  /* Status as text prefix */
+  .chk-row[data-status="has"] .chk-txt::before { content: "✓ " !important; color: #0a6b3a !important; font-weight: 900 !important; font-size: 12pt !important; }
+  .chk-row[data-status="no"] .chk-txt::before { content: "✕ " !important; color: #a02020 !important; font-weight: 900 !important; font-size: 12pt !important; }
+  
+  /* Inputs styled as flat text */
+  .date-wrap input, .owner-wrap input { 
+    border: 1px solid #ccc !important; 
+    background: #fff !important; 
+    color: #000 !important; 
+    font-size: 9pt !important; 
+    padding: 4px 8px !important; 
+    border-radius: 3px !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  .owner-wrap input { text-align: right !important; }
+  
+  /* Hide placeholder if empty */
+  .date-wrap input::placeholder, .owner-wrap input::placeholder { color: transparent !important; }
+}
+.print-header { display: none; }
+</style>
+</head>
+<body>
+
+<!-- ============================== LOGIN ============================== -->
+<div id="loginScreen">
+  <div class="login-stage" id="loginStage">
+    <!-- 
+      راهنمای تصاویر لاگین:
+      1. تصویر لوگوی BCP را در پوشه پروژه با نام bcp-logo.png ذخیره کنید.
+      2. تصویر لوگوی کمیته امداد را با نام emdad-logo.png ذخیره کنید.
+      3. عکس خودتان را با نام user-photo.jpg ذخیره کنید.
+    -->
+    <div class="stage-content">
+      <img src="bcp-logo.png" alt="BCP Logo" class="bcp-top-logo" onerror="this.style.display='none'">
+      <img src="emdad-logo.png" alt="کمیته امداد امام خمینی" class="emdad-main-logo" onerror="this.src='https://portal.emdad.ir/Content/media/image/main/logo-footer.png'">
+    </div>
+    <!-- Fog Overlays -->
+    <div class="fog-overlay-2" id="stageFrost2"></div>
+    <div class="fog-overlay" id="stageFrost"></div>
+  </div>
+
+  <div class="login-panel" id="loginPanel">
+    <button class="toggle-panel-btn" id="togglePanelBtn" title="بستن/باز کردن پنل">
+      <svg class="ic" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+
+    <img src="user-photo.jpg" alt="مدیر پروژه" class="user-photo" onerror="this.src='https://ui-avatars.com/api/?name=%D9%85%D8%AF%DB%8C%D8%B1+%D9%BE%D8%B1%D9%88%DA%98%D9%87&background=1e4a3f&color=fff&size=128&rounded=true&bold=true&font-size=0.36'">
+    
+    <h1 class="login-title">سامانه <em>تداوم کسب‌وکار</em></h1>
+    
+    <div class="field">
+      <label for="loginMobile">شماره موبایل</label>
+      <div class="wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+        <input type="tel" id="loginMobile" placeholder="۰۹۱۲۴۰۱۵۰۲۳" dir="ltr" autocomplete="username">
+      </div>
+    </div>
+    <div class="field">
+      <label for="loginPassword">رمز عبور</label>
+      <div class="wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <input type="password" id="loginPassword" placeholder="••••••••" dir="ltr" autocomplete="current-password">
+      </div>
+    </div>
+    <button class="login-btn" id="loginBtn">ورود</button>
+    <div class="login-err" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ============================== APP ============================== -->
+<div id="appScreen">
+  <header class="app-header">
+    <div class="app-brand">
+      <img src="emdad-logo.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="fb" style="display:none">ا</div>
+      <div class="app-brand-text">
+        <span class="t1">کمیته امداد امام خمینی (ره)</span>
+        <span class="t2">BCP Dashboard</span>
+      </div>
+    </div>
+    <nav class="app-tabs">
+      <button class="app-tab active" data-tab="home">
+        <svg class="ic" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>پروپوزال</span>
+      </button>
+      <button class="app-tab" data-tab="checklist">
+        <svg class="ic" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <span>چک‌لیست</span>
+      </button>
+      <button class="app-tab" data-tab="stakeholders">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>ذی‌نفعان</span>
+      </button>
+    </nav>
+    <div class="app-actions">
+      <button class="icon-btn" id="themeBtn" title="تغییر تم">
+        <svg class="ic" viewBox="0 0 24 24" id="themeIcon"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="icon-btn" id="changePassBtn" title="تغییر رمز">
+        <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </button>
+      <button class="icon-btn danger" id="logoutBtn" title="خروج">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="container">
+
+      <!-- ============== HOME - MOTION PROPOSAL ============== -->
+      <section class="view active" id="view-home">
+        <div class="prop-wrap">
+          <header class="prop-hero">
+            <div class="hero-inner">
+              <div class="hero-main">
+                <div class="hero-tagline">
+                  <span class="dot"></span>
+                  طرح پیشنهادی · OPC-PRP-06128 · نسخه ۲.۱
+                </div>
+                <h1 class="hero-h1">
+                  سند <span class="accent">تداوم کسب‌وکار</span>
+                  <br>
+                  برای سازمانی <span class="underline">تاب‌آور</span>
+                </h1>
+                <p class="hero-lead">
+                  چارچوبی جامع برای پاسخ به بحران، بازیابی خدمات حیاتی و حفظ استمرار مأموریت در کمیته امداد امام خمینی (ره)
+                </p>
+                <div class="hero-parties">
+                  <div class="party">
+                    <span class="party-label">کارفرما</span>
+                    <span class="party-name">کمیته امداد امام خمینی (ره)</span>
+                  </div>
+                  <div class="hero-divider"></div>
+                  <div class="party">
+                    <span class="party-label">مجری</span>
+                    <span class="party-name">شرکت مهندسی اوژن تدبیر پارس</span>
+                  </div>
+                </div>
+              </div>
+              <div class="hero-side">
+                <div class="hero-badge">
+                  <span class="badge-label">Business Continuity</span>
+                  <span class="badge-value">BCP · 1405</span>
+                  <span class="badge-sub">انتشار محدود · محرمانه</span>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div class="stats-row reveal">
+            <div class="stat"><div class="stat-value" data-count="16">۰</div><div class="stat-label">هفته مدت اجرا</div></div>
+            <div class="stat"><div class="stat-value" data-count="6">۰</div><div class="stat-label">گام اجرایی</div></div>
+            <div class="stat"><div class="stat-value" data-count="14">۰</div><div class="stat-label">خروجی تعهدی</div></div>
+            <div class="stat"><div class="stat-value" data-count="7">۰</div><div class="stat-label">سامانه حیاتی</div></div>
+          </div>
+
+          <section class="prop-section reveal">
+            <div class="sec-head">
+              <div class="sec-num">۰۱</div>
+              <div class="sec-titles">
+                <div class="sec-tag">چکیده اجرایی</div>
+                <h2 class="sec-title">چرا این پروژه، یک ضرورت راهبردی است</h2>
+                <p class="sec-sub">گذار از اسناد ایستا به یک نظام مدیریت پویای تداوم کسب‌وکار (BCMS)</p>
+              </div>
+            </div>
+            <div class="sec-body">
+              <p>
+                در کمیته امداد امام خمینی (ره)، بخش قابل توجهی از خدمات و فرایندهای اجرایی به سامانه‌های اطلاعاتی، زیرساخت‌های ارتباطی و جریان‌های پردازش داده وابسته است. هرگونه اختلال می‌تواند منجر به کاهش کیفیت خدمت‌رسانی، تأخیر در پاسخ‌گویی، افزایش هزینه‌های عملیاتی و کاهش اعتماد ذی‌نفعان شود. از این رو، وجود یک برنامه مدون، آزموده و به‌روزرسانی‌پذیر نه یک انتخاب اختیاری، بلکه یک ضرورت سازمانی و راهبردی محسوب می‌شود.
+              </p>
+              <div class="cards-3">
+                <div class="mini-card">
+                  <div class="icon-box"><svg class="ic" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                  <h4>ضرورت راهبردی</h4>
+                  <p>حفاظت از مأموریت خدمت‌رسانی و استمرار خدمات حیاتی به مدجویان در شرایط بحران</p>
+                </div>
+                <div class="mini-card">
+                  <div class="icon-box"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+                  <h4>رویکرد یکپارچه</h4>
+                  <p>همراستاسازی اهداف تداوم با مأموریت سازمان از طریق BIA، تحلیل ریسک و تدوین اسناد</p>
+                </div>
+                <div class="mini-card">
+                  <div class="icon-box"><svg class="ic" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+                  <h4>خروجی اجرایی</h4>
+                  <p>مستندات قابل استفاده، قابل ویرایش و قابل بهره‌برداری توسط تیم داخلی سازمان</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="prop-section reveal">
+            <div class="sec-head">
+              <div class="sec-num">۰۲</div>
+              <div class="sec-titles">
+                <div class="sec-tag">اهداف کلیدی</div>
+                <h2 class="sec-title">دوازده هدف راهبردی بر اساس الزامات RFP</h2>
+                <p class="sec-sub">از شناخت وضع موجود تا به‌روزرسانی مستمر</p>
+              </div>
+            </div>
+            <div class="goals-grid">
+              <div class="goal"><span class="goal-idx">01</span><span class="goal-txt">شناخت دقیق وضع موجود و دارایی‌های اطلاعاتی</span></div>
+              <div class="goal"><span class="goal-idx">02</span><span class="goal-txt">تحلیل اثرات کسب‌وکار (BIA) و شناسایی گلوگاه‌ها</span></div>
+              <div class="goal"><span class="goal-idx">03</span><span class="goal-txt">تعیین شاخص‌های حیاتی بازیابی (RTO & RPO)</span></div>
+              <div class="goal"><span class="goal-idx">04</span><span class="goal-txt">ارزیابی مخاطرات و شناسایی تک‌نقطه‌های شکست (SPOF)</span></div>
+              <div class="goal"><span class="goal-idx">05</span><span class="goal-txt">تدوین استراتژی‌های بازیابی و پایداری</span></div>
+              <div class="goal"><span class="goal-idx">06</span><span class="goal-txt">نگارش سند جامع برنامه تداوم کسب‌وکار (BCP)</span></div>
+              <div class="goal"><span class="goal-idx">07</span><span class="goal-txt">تدوین طرح‌های بازیابی از فاجعه در لایه فاوا (DRP)</span></div>
+              <div class="goal"><span class="goal-idx">08</span><span class="goal-txt">طراحی و تسهیل‌گری مانور رومیزی (Tabletop)</span></div>
+              <div class="goal"><span class="goal-idx">09</span><span class="goal-txt">آموزش تخصصی، توانمندسازی و انتقال دانش فنی</span></div>
+              <div class="goal"><span class="goal-idx">10</span><span class="goal-txt">انطباق مستندات با الزامات افتا و پدافند غیرعامل</span></div>
+              <div class="goal"><span class="goal-idx">11</span><span class="goal-txt">مستندسازی و تعریف فرآیند بازنگری و بهبود مستمر</span></div>
+              <div class="goal"><span class="goal-idx">12</span><span class="goal-txt">مدیریت ارتباطات و اطلاع‌رسانی در شرایط بحران</span></div>
+            </div>
+          </section>
+
+          <section class="prop-section reveal">
+            <div class="sec-head">
+              <div class="sec-num">۰۳</div>
+              <div class="sec-titles">
+                <div class="sec-tag">شرح خدمات</div>
+                <h2 class="sec-title">شش گام اصلی اجرای پروژه</h2>
+                <p class="sec-sub">از ارزیابی وضع موجود تا آموزش و تحویل نهایی</p>
+              </div>
+            </div>
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">01</div>
+                <h4>ارزیابی وضع موجود و شناسایی سامانه‌ها</h4>
+                <p>برگزاری جلسه kick-off، بررسی مستندات، مصاحبه با مدیران و کارشناسان فنی، شناسایی شکاف‌ها</p>
+                <div class="step-out">خروجی: گزارش وضع موجود + فهرست سامانه‌های حیاتی</div>
+              </div>
+              <div class="step">
+                <div class="step-num">02</div>
+                <h4>تحلیل اثرگذاری کسب‌وکار (BIA)</h4>
+                <p>شناسایی فرایندهای حیاتی، تعیین MTPD، تعیین شاخص‌های RTO و RPO برای هر سامانه</p>
+                <div class="step-out">خروجی: گزارش BIA + اولویت‌بندی + شاخص‌ها</div>
+              </div>
+              <div class="step">
+                <div class="step-num">03</div>
+                <h4>تحلیل ریسک و طراحی سناریوهای اختلال</h4>
+                <p>شناسایی تهدیدات بالقوه (طبیعی، انسانی، فنی، سایبری)، تحلیل احتمال وقوع و شدت اثر</p>
+                <div class="step-out">خروجی: ماتریس ریسک + سناریوهای اولویت‌دار</div>
+              </div>
+              <div class="step">
+                <div class="step-num">04</div>
+                <h4>تدوین اسناد تداوم کسب‌وکار</h4>
+                <p>نگارش برنامه پاسخ به رخداد، ساختار تیم مدیریت بحران، برنامه‌های بازیابی و سند نهایی BCP</p>
+                <div class="step-out">خروجی: سند BCP + برنامه‌های بازیابی</div>
+              </div>
+              <div class="step">
+                <div class="step-num">05</div>
+                <h4>طراحی و تسهیل‌گری مانور رومیزی</h4>
+                <p>طراحی سناریوی تفصیلی، تسهیل‌گری جلسه مانور، ثبت مشاهدات، تهیه گزارش تحلیلی AAR</p>
+                <div class="step-out">خروجی: سناریوی مانور + گزارش پس از مانور</div>
+              </div>
+              <div class="step">
+                <div class="step-num">06</div>
+                <h4>آموزش، انتقال دانش و تحویل نهایی</h4>
+                <p>برگزاری ۲۰ ساعت آموزش تخصصی، انتقال دانش به تیم داخلی، جلسه پایانی با مدیریت ارشد</p>
+                <div class="step-out">خروجی: بسته آموزشی + مستندات قابل ویرایش</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="prop-section reveal">
+            <div class="sec-head">
+              <div class="sec-num">۰۴</div>
+              <div class="sec-titles">
+                <div class="sec-tag">زمان‌بندی</div>
+                <h2 class="sec-title">۱۶ هفته اجرا در دو فاز</h2>
+                <p class="sec-sub">فاز اول: تشخیص و تحلیل / فاز دوم: تدوین، توانمندسازی و تسهیل‌گری مانور</p>
+              </div>
+            </div>
+            <div class="timeline">
+              <div class="tl-week"><div class="tl-bar phase-1">۱</div><div class="tl-label">هفته ۱</div></div>
+              <div class="tl-week"><div class="tl-bar phase-1">۲</div><div class="tl-label">هفته ۲</div></div>
+              <div class="tl-week"><div class="tl-bar phase-1">۳</div><div class="tl-label">هفته ۳</div></div>
+              <div class="tl-week"><div class="tl-bar phase-1">۴</div><div class="tl-label">هفته ۴</div></div>
+              <div class="tl-week"><div class="tl-bar phase-1">۵</div><div class="tl-label">هفته ۵</div></div>
+              <div class="tl-week"><div class="tl-bar phase-1">۶</div><div class="tl-label">هفته ۶</div></div>
+              <div class="tl-week"><div class="tl-bar phase-1">۷</div><div class="tl-label">هفته ۷</div></div>
+              <div class="tl-week"><div class="tl-bar phase-1">۸</div><div class="tl-label">هفته ۸</div></div>
+              <div class="tl-week"><div class="tl-bar phase-2">۹</div><div class="tl-label">هفته ۹</div></div>
+              <div class="tl-week"><div class="tl-bar phase-2">۱۰</div><div class="tl-label">هفته ۱۰</div></div>
+              <div class="tl-week"><div class="tl-bar phase-2">۱۱</div><div class="tl-label">هفته ۱۱</div></div>
+              <div class="tl-week"><div class="tl-bar phase-2">۱۲</div><div class="tl-label">هفته ۱۲</div></div>
+              <div class="tl-week"><div class="tl-bar phase-2">۱۳</div><div class="tl-label">هفته ۱۳</div></div>
+              <div class="tl-week"><div class="tl-bar phase-2">۱۴</div><div class="tl-label">هفته ۱۴</div></div>
+              <div class="tl-week"><div class="tl-bar phase-2">۱۵</div><div class="tl-label">هفته ۱۵</div></div>
+              <div class="tl-week"><div class="tl-bar phase-2">۱۶</div><div class="tl-label">هفته ۱۶</div></div>
+            </div>
+            <div class="tl-legend">
+              <div class="lg"><span class="dot" style="background:rgba(30,74,63,.7)"></span>فاز اول — تشخیص، تحلیل و طراحی (۸ هفته)</div>
+              <div class="lg"><span class="dot" style="background:rgba(184,110,74,.7)"></span>فاز دوم — تدوین، توانمندسازی و مانور (۸ هفته)</div>
+            </div>
+          </section>
+
+          <section class="prop-section reveal">
+            <div class="sec-head">
+              <div class="sec-num">۰۵</div>
+              <div class="sec-titles">
+                <div class="sec-tag">اکوسیستم دیجیتال</div>
+                <h2 class="sec-title">هفت سامانه حیاتی کمیته امداد</h2>
+                <p class="sec-sub">فهرست اولیه بر اساس بررسی درگاه‌های عمومی — نیازمند تأیید کارفرما</p>
+              </div>
+            </div>
+            <div class="sys-grid">
+              <div class="sys-card"><span class="sys-critical mid">متوسط</span><div class="sys-domain">emdad.ir</div><h4>درگاه ملی و اطلاع‌رسانی</h4><p>هاب مرکزی اطلاع‌رسانی و نقطه اتصال به پنجره ملی خدمات دولت هوشمند</p></div>
+              <div class="sys-card"><span class="sys-critical critical">فوق بحرانی</span><div class="sys-domain">soha.emdad.ir</div><h4>سامانه هوشمند سُها</h4><p>هسته مرکزی خدمات حمایتی و مددکاری الکترونیک</p></div>
+              <div class="sys-card"><span class="sys-critical critical">بحرانی</span><div class="sys-domain">ekram.emdad.ir</div><h4>سامانه اکرام</h4><p>پلتفرم حمایت فردبه‌فرد از ایتام و محسنین</p></div>
+              <div class="sys-card"><span class="sys-critical high">پیک بحرانی</span><div class="sys-domain">mehrabani.ir</div><h4>پلتفرم مهربانی</h4><p>تأمین مالی جمعی و اجرای پویش‌های مشارکت مردمی</p></div>
+              <div class="sys-card"><span class="sys-critical mid">متوسط</span><div class="sys-domain">hayat.emdad.ir</div><h4>سامانه حیات</h4><p>درگاه کارآفرینی، توانمندسازی شغلی و نظارت بر طرح‌های خوداشتغالی</p></div>
+              <div class="sys-card"><span class="sys-critical high">حجم بالا</span><div class="sys-domain">صدقه من</div><h4>اپلیکیشن صدقه من</h4><p>پرداخت خرد و صدقه الکترونیک جایگزین صندوق‌های سنتی</p></div>
+              <div class="sys-card"><span class="sys-critical critical">مالی</span><div class="sys-domain">sqev.ir</div><h4>صندوق امداد ولایت</h4><p>بانکداری قرض‌الحسنه و مدیریت منابع مالی خدمات حمایتی</p></div>
+            </div>
+          </section>
+
+          <section class="prop-section reveal">
+            <div class="sec-head">
+              <div class="sec-num">۰۶</div>
+              <div class="sec-titles">
+                <div class="sec-tag">تحلیل ریسک و تضمین کیفیت</div>
+                <h2 class="sec-title">ماتریس ارزیابی ریسک بر اساس ISO 31000</h2>
+                <p class="sec-sub">RPN = Likelihood × Impact — چهار سطح اقدام</p>
+              </div>
+            </div>
+            <div class="risk-formula">
+              <div>
+                <div class="rpn-lbl">Risk Priority Number</div>
+                <div class="rpn-eq">RPN = L × I</div>
+              </div>
+            </div>
+            <div class="risk-levels">
+              <div class="risk-level critical"><h5>بحرانی</h5><div class="rl-score">Score 16 – 25</div><p>اقدام فوری، تخصیص بودجه، پیاده‌سازی DR فعال و خودکار</p></div>
+              <div class="risk-level high"><h5>بالا</h5><div class="rl-score">Score 10 – 15</div><p>برنامه اقدام مشخص، کاهش RTO/RPO و مانیتورینگ بلادرنگ</p></div>
+              <div class="risk-level mid"><h5>متوسط</h5><div class="rl-score">Score 5 – 9</div><p>دستورالعمل پشتیبان‌گیری دوره‌ای و Fallback دستی</p></div>
+              <div class="risk-level low"><h5>پایین</h5><div class="rl-score">Score 1 – 4</div><p>پذیرش ریسک یا نظارت دوره‌ای</p></div>
+            </div>
+          </section>
+
+        </div>
+      </section>
+
+      <!-- ============== CHECKLIST ============== -->
+      <section class="view" id="view-checklist">
+        <!-- Print Header -->
+        <div class="print-header">
+          <h1>چک‌لیست وضع موجود - طرح تداوم کسب‌وکار (BCP)</h1>
+          <p>کمیته امداد امام خمینی (ره) - شرکت مهندسی اوژن تدبیر پارس</p>
+          <p style="margin-top:8px; font-size:9pt;">تاریخ چاپ: <span id="printDate"></span></p>
+        </div>
+
+        <div class="chk-toolbar">
+          <div>
+            <div class="chk-title">چک‌لیست وضع موجود</div>
+            <div class="chk-title-sub">وضعیت وجود داده، تاریخ و متولی هر مورد را ثبت کنید</div>
+          </div>
+          <div class="chk-toolbar-right">
+            <button class="btn-ghost" id="printBtn">
+              <svg class="ic ic-sm" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              پرینت
+            </button>
+            <button class="btn-ghost" id="resetChecklistBtn">
+              <svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              بازنشانی
+            </button>
+          </div>
+        </div>
+        <div id="dashboardContainer"></div>
+        <div id="checklistContainer"></div>
+      </section>
+
+      <!-- ============== STAKEHOLDERS ============== -->
+      <section class="view" id="view-stakeholders">
+        <div class="stk-header">
+          <div class="stk-title-wrap">
+            <h2>ذی‌نفعان پروژه</h2>
+            <p>مخاطبین کلیدی، مالکان فرایندها و اعضای تیم</p>
+          </div>
+          <div class="stk-actions">
+            <div class="search-wrap">
+              <svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="stkSearch" placeholder="جستجو...">
+            </div>
+            <button class="btn-primary" id="addStakeholderBtn">
+              <svg class="ic ic-sm" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              افزودن
+            </button>
+          </div>
+        </div>
+        <div id="stkTableWrap"></div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ============== MODALS ============== -->
+<div class="modal-bg" id="passModal">
+  <div class="modal">
+    <div class="modal-head"><h3>تغییر رمز عبور</h3><button class="modal-close" data-close="passModal"><svg class="ic" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body">
+      <div class="form-row"><label>رمز فعلی</label><input type="password" id="curPass" dir="ltr"></div>
+      <div class="form-row"><label>رمز جدید</label><input type="password" id="newPass" dir="ltr"></div>
+      <div class="form-row"><label>تکرار رمز جدید</label><input type="password" id="confPass" dir="ltr"></div>
+      <div class="form-err" id="passErr"></div>
+    </div>
+    <div class="modal-foot"><button class="btn-lg ghost" data-close="passModal">انصراف</button><button class="btn-lg primary" id="savePassBtn">ذخیره</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="stkModal">
+  <div class="modal">
+    <div class="modal-head"><h3 id="stkModalTitle">افزودن ذی‌نفع</h3><button class="modal-close" data-close="stkModal"><svg class="ic" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body">
+      <input type="hidden" id="stkId">
+      <div class="form-row"><label>نام و نام خانوادگی <span class="req">*</span></label><input type="text" id="stkName"></div>
+      <div class="form-row two-col">
+        <div><label>سمت / نقش</label><input type="text" id="stkRole"></div>
+        <div><label>واحد سازمانی</label><input type="text" id="stkUnit"></div>
+      </div>
+      <div class="form-row two-col">
+        <div><label>شماره تماس</label><input type="tel" id="stkPhone" dir="ltr"></div>
+        <div><label>ایمیل</label><input type="email" id="stkEmail" dir="ltr"></div>
+      </div>
+      <div class="form-row"><label>یادداشت</label><textarea id="stkNote" rows="2"></textarea></div>
+      <div class="form-err" id="stkErr"></div>
+    </div>
+    <div class="modal-foot"><button class="btn-lg ghost" data-close="stkModal">انصراف</button><button class="btn-lg primary" id="saveStkBtn">ذخیره</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="calModal">
+  <div class="modal cal-modal">
+    <div class="modal-body" style="padding:20px">
+      <div class="cal-nav-row">
+        <button class="cal-nav" data-cal-nav="py"><svg class="ic" viewBox="0 0 24 24" style="width:15px;height:15px"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg></button>
+        <button class="cal-nav" data-cal-nav="pm"><svg class="ic" viewBox="0 0 24 24" style="width:15px;height:15px"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <div class="cal-title" id="calTitle">—</div>
+        <button class="cal-nav" data-cal-nav="nm"><svg class="ic" viewBox="0 0 24 24" style="width:15px;height:15px"><polyline points="9 18 15 12 9 6"/></svg></button>
+        <button class="cal-nav" data-cal-nav="ny"><svg class="ic" viewBox="0 0 24 24" style="width:15px;height:15px"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg></button>
+      </div>
+      <div class="cal-weekdays"><span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span></div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="cal-footer">
+        <button class="cal-today-btn" id="calTodayBtn">
+          <svg class="ic ic-sm" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          امروز
+        </button>
+        <button class="btn-lg ghost" data-close="calModal" style="flex:1">انصراف</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+/* ============================== HELPERS ============================== */
+const $=id=>document.getElementById(id);
+const faDigits=s=>String(s).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const enDigits=s=>String(s).replace(/[۰-۹]/g,d=>String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)));
+const jMonths=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const jWeekDays=['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
+
+function g2j(gy,gm,gd){
+  const gdm=[0,31,59,90,120,151,181,212,243,273,304,334];
+  let jy=(gy<=1600)?0:979; gy-=(gy<=1600)?621:1600;
+  const gy2=(gm>2)?(gy+1):gy;
+  let days=(365*gy)+Math.floor((gy2+3)/4)-Math.floor((gy2+99)/100)+Math.floor((gy2+399)/400)-80+gd+gdm[gm-1];
+  jy+=33*Math.floor(days/12053); days%=12053;
+  jy+=4*Math.floor(days/1461); days%=1461;
+  if(days>365){jy+=Math.floor((days-1)/365);days=(days-1)%365;}
+  const jm=(days<186)?1+Math.floor(days/31):7+Math.floor((days-186)/30);
+  const jd=1+((days<186)?(days%31):((days-186)%30));
+  return [jy,jm,jd];
+}
+function j2g(jy,jm,jd){
+  let gy=(jy<=979)?621:1600; jy-=(jy<=979)?0:979;
+  let days=(365*jy)+(Math.floor(jy/33)*8)+Math.floor(((jy%33)+3)/4)+78+jd+((jm<7)?(jm-1)*31:((jm-7)*30)+186);
+  gy+=400*Math.floor(days/146097); days%=146097;
+  if(days>36524){gy+=100*Math.floor(--days/36524);days%=36524;if(days>=365)days++;}
+  gy+=4*Math.floor(days/1461); days%=1461;
+  if(days>365){gy+=Math.floor((days-1)/365);days=(days-1)%365;}
+  let gd=days+1;
+  const sal=[0,31,((gy%4===0&&gy%100!==0)||(gy%400===0))?29:28,31,30,31,30,31,31,30,31,30,31];
+  let gm; for(gm=0;gm<13&&gd>sal[gm];gm++)gd-=sal[gm];
+  return [gy,gm,gd];
+}
+function pDate(d=new Date()){const [jy,jm,jd]=g2j(d.getFullYear(),d.getMonth()+1,d.getDate());return {jy,jm,jd,weekday:jWeekDays[d.getDay()],monthName:jMonths[jm-1]};}
+function pString(d=new Date(),persian=true){const p=pDate(d);const s=`${p.jy}/${String(p.jm).padStart(2,'0')}/${String(p.jd).padStart(2,'0')}`;return persian?faDigits(s):s;}
+function pToEn(s){if(!s)return '';const e=enDigits(String(s)).replace(/[^\d\/]/g,'');const m=e.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})$/);if(!m)return '';return `${m[1]}/${String(m[2]).padStart(2,'0')}/${String(m[3]).padStart(2,'0')}`;}
+function jMonthDays(jy,jm){if(jm<=6)return 31;if(jm<=11)return 30;const [gy,gm,gd]=j2g(jy,12,30);const [jy2,jm2,jd2]=g2j(gy,gm,gd);return (jy2===jy&&jm2===12&&jd2===30)?30:29;}
+function jFirstWeekday(jy,jm){const [gy,gm,gd]=j2g(jy,jm,1);const d=new Date(gy,gm-1,gd);return (d.getDay()+1)%7;}
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+/* ============================== STORAGE ============================== */
+const Store={
+  get(k,fb){try{const v=localStorage.getItem('bcp_'+k);return v?JSON.parse(v):fb;}catch{return fb;}},
+  set(k,v){try{localStorage.setItem('bcp_'+k,JSON.stringify(v));return true;}catch{return false;}},
+  del(k){try{localStorage.removeItem('bcp_'+k);}catch{}}
+};
+
+/* ============================== TOAST ============================== */
+function toast(msg,type='info'){
+  const w=$('toastWrap');
+  const t=document.createElement('div');
+  t.className='toast '+type;
+  t.textContent=msg;
+  w.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(()=>t.remove(),300);},2200);
+}
+
+/* ============================== AUTH ============================== */
+const DEFAULT_USER='09124015023';
+const getPass=()=>Store.get('pass',DEFAULT_USER);
+const setPass=p=>Store.set('pass',p);
+const isAuth=()=>sessionStorage.getItem('bcp_auth')==='1';
+const setAuth=v=>v?sessionStorage.setItem('bcp_auth','1'):sessionStorage.removeItem('bcp_auth');
+
+/* ============================== THEME ============================== */
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  Store.set('theme',t);
+  const icon=$('themeIcon');
+  if(icon){icon.innerHTML=t==='dark'
+    ?'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'
+    :'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';}
+}
+applyTheme(Store.get('theme','light'));
+$('themeBtn').addEventListener('click',()=>{
+  const cur=document.documentElement.getAttribute('data-theme');
+  applyTheme(cur==='dark'?'light':'dark');
+});
+
+/* ============================== LOGIN LOGIC ============================== */
+const loginScreen = $('loginScreen');
+const toggleBtn = $('togglePanelBtn');
+
+toggleBtn.addEventListener('click', () => {
+  loginScreen.classList.toggle('collapsed');
+});
+
+const stage=$('loginStage');
+const frost=$('stageFrost');
+const frost2=$('stageFrost2');
+let curX=50,curY=50,tarX=50,tarY=50;
+let bgX=50,bgY=50;
+let lastMove=0,idleTime=0;
+
+stage.addEventListener('mousemove',e=>{
+  const r=stage.getBoundingClientRect();
+  tarX=((e.clientX-r.left)/r.width)*100;
+  tarY=((e.clientY-r.top)/r.height)*100;
+  lastMove=Date.now();
+});
+stage.addEventListener('mouseleave',()=>{lastMove=0;});
+
+function tickFog(now){
+  const sinceMove=now-lastMove;
+  const idle=sinceMove>2000;
+  if(idle){
+    idleTime+=0.006;
+    tarX=50+Math.sin(idleTime*1.1)*26;
+    tarY=50+Math.cos(idleTime*0.85)*22;
+  }
+  curX+=(tarX-curX)*0.045; curY+=(tarY-curY)*0.045;
+  const sx=50+Math.sin(idleTime*0.5+1.2)*20;
+  const sy=50+Math.cos(idleTime*0.65+0.4)*18;
+  bgX+=(sx-bgX)*0.02; bgY+=(sy-bgY)*0.02;
+  frost.style.setProperty('--mx',curX+'%');
+  frost.style.setProperty('--my',curY+'%');
+  frost2.style.setProperty('--sx',bgX+'%');
+  frost2.style.setProperty('--sy',bgY+'%');
+  requestAnimationFrame(tickFog);
+}
+requestAnimationFrame(tickFog);
+
+function showApp(){
+  $('loginScreen').classList.add('hidden');
+  $('appScreen').classList.add('visible');
+  renderAll();
+  initReveal();
+  animateCounters();
+}
+function showLogin(){
+  $('loginScreen').classList.remove('hidden');
+  $('appScreen').classList.remove('visible');
+  $('loginPassword').value=''; $('loginError').textContent='';
+  loginScreen.classList.remove('collapsed'); // Reset panel state on logout
+}
+function attemptLogin(){
+  const m=$('loginMobile').value.trim();
+  const p=$('loginPassword').value;
+  if(m!==DEFAULT_USER){$('loginError').textContent='شماره موبایل مجاز نیست.';return;}
+  if(p!==getPass()){$('loginError').textContent='رمز عبور نادرست است.';return;}
+  setAuth(true); showApp();
+}
+$('loginMobile').value=DEFAULT_USER;
+$('loginBtn').addEventListener('click',attemptLogin);
+$('loginPassword').addEventListener('keydown',e=>{if(e.key==='Enter')attemptLogin();});
+$('logoutBtn').addEventListener('click',()=>{setAuth(false);showLogin();});
+if(isAuth())showApp();else showLogin();
+
+/* ============================== TABS ============================== */
+document.querySelectorAll('.app-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.app-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    $('view-'+tab.dataset.tab).classList.add('active');
+    if(tab.dataset.tab==='home'){ initReveal(); animateCounters(); }
+    if(tab.dataset.tab==='checklist'){ updatePrintDate(); }
+  });
+});
+
+/* ============================== REVEAL ANIMATIONS ============================== */
+let revealObserver=null;
+function initReveal(){
+  if(revealObserver) revealObserver.disconnect();
+  revealObserver=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
+    });
+  },{threshold:0.12,rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>{
+    el.classList.remove('visible');
+    revealObserver.observe(el);
+  });
+}
+function animateCounters(){
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const target=parseInt(el.dataset.count,10);
+    let cur=0;
+    const step=Math.max(1,Math.ceil(target/35));
+    el.textContent=faDigits(0);
+    const timer=setInterval(()=>{
+      cur+=step;
+      if(cur>=target){cur=target;clearInterval(timer);}
+      el.textContent=faDigits(cur);
+    },28);
+  });
+}
+
+/* ============================== CHECKLIST DATA ============================== */
+const CHECKLIST=[
+  {title:'تعیین ساختار راهبری و نمایندگان پروژه',items:[
+    'معرفی رسمی نماینده تام‌الاختیار کارفرما',
+    'معرفی مدیر متناظر پروژه از طرف فناوری اطلاعات',
+    'معرفی نماینده مدیریت بحران یا پدافند غیرعامل',
+    'معرفی مسئول فناوری اطلاعات و توسعه سامانه‌ها',
+    'معرفی مسئول زیرساخت و مراکز داده',
+    'معرفی مسئول شبکه و ارتباطات',
+    'معرفی مسئول امنیت اطلاعات و امنیت سایبری',
+    'معرفی مسئول پایگاه داده و ذخیره‌سازی',
+    'معرفی مسئول پشتیبان‌گیری و بازیابی اطلاعات',
+    'معرفی مسئول مدیریت خدمات و پشتیبانی کاربران',
+    'معرفی مسئول واحدهای عملیاتی و مالکین خدمات',
+    'معرفی مالکان فرایندهای اصلی و مدیران واحدها',
+    'مشخص کردن مرجع تأیید نهایی خروجی‌ها',
+    'مشخص کردن روال مکاتبات و تأیید مستندات'
+  ]},
+  {title:'فهرست رسمی خدمات، فرایندها و سامانه‌ها',items:[
+    'فهرست کامل خدمات اصلی و مأموریت‌های سازمان',
+    'فهرست فرایندهای اصلی و پشتیبان سازمان',
+    'فهرست سامانه‌های نرم‌افزاری (داخلی و بیرونی)',
+    'فهرست سامانه‌های استانی و شعب',
+    'مالک کسب‌وکاری و متولی فنی هر سامانه',
+    'وضعیت بهره‌برداری هر سامانه',
+    'سامانه‌های وابسته به پیمانکاران بیرونی',
+    'خدمات قابل ارائه به روش دستی در صورت قطع'
+  ]},
+  {title:'مستندات معماری و زیرساخت فناوری اطلاعات',items:[
+    'آخرین مستند معماری کلان فناوری اطلاعات',
+    'نمودار معماری شبکه سازمان',
+    'نقشه ارتباطی ستاد، استان‌ها و شعب',
+    'مستند معماری مراکز داده اصلی و پشتیبان',
+    'فهرست سرورها و تجهیزات اصلی زیرساختی',
+    'فهرست مجازی‌سازها و بسترهای پردازشی',
+    'فهرست تجهیزات ذخیره‌سازی و SAN/NAS',
+    'مستندات زیرساخت پایگاه داده',
+    'نقشه ارتباطات اینترنت و لینک‌های پشتیبان',
+    'تجهیزات حیاتی شبکه و امنیت',
+    'دیاگرام وابستگی سامانه‌ها به زیرساخت'
+  ]},
+  {title:'مستندات پشتیبان‌گیری و بازیابی',items:[
+    'سیاست و دستورالعمل پشتیبان‌گیری سازمان',
+    'فهرست سامانه‌ها و پایگاه‌های داده تحت Backup',
+    'تناوب پشتیبان‌گیری هر سامانه',
+    'محل نگهداری نسخه‌های پشتیبان',
+    'وضعیت نسخه‌های آفلاین یا خارج از سایت',
+    'مدت نگهداری نسخه‌های پشتیبان',
+    'گزارش آخرین آزمون بازیابی اطلاعات',
+    'مستندات سایت پشتیبان یا Disaster Recovery',
+    'وضعیت Replication و همگام‌سازی داده‌ها',
+    'دستورالعمل بازیابی سرویس‌ها'
+  ]},
+  {title:'برنامه‌ها و مستندات موجود مدیریت بحران',items:[
+    'برنامه یا سند مدیریت بحران سازمان',
+    'برنامه تداوم کسب‌وکار یا BCP قبلی',
+    'برنامه بازیابی از فاجعه یا DRP',
+    'برنامه پاسخ به رخدادهای امنیت اطلاعات',
+    'دستورالعمل‌های واکنش به قطعی مراکز داده',
+    'برنامه‌های پدافند غیرعامل مرتبط',
+    'ساختار کمیته‌ها و تیم‌های تصمیم‌گیری',
+    'فهرست تماس‌های اضطراری و زنجیره اطلاع‌رسانی',
+    'سوابق مانورها و گزارش‌های ارزیابی قبلی'
+  ]},
+  {title:'اطلاعات کسب‌وکاری و عملیاتی هر خدمت',items:[
+    'شرح خدمت و مأموریت آن',
+    'واحد سازمانی متولی خدمت',
+    'مدیر یا مالک فرایند',
+    'گروه‌های دریافت‌کننده خدمت و ذی‌نفعان',
+    'ساعات و روزهای ارائه خدمت',
+    'میزان وابستگی خدمت به سامانه‌ها',
+    'حجم تقریبی تراکنش‌ها یا پرونده‌های روزانه',
+    'دوره‌های اوج فعالیت و زمان‌های حساس',
+    'پیامد توقف خدمت در بازه‌های مختلف',
+    'امکان ارائه خدمت به‌صورت دستی',
+    'وابستگی به استان‌ها، بانک‌ها و سرویس‌های بیرونی',
+    'پیامدهای مالی، حقوقی و اعتباری توقف'
+  ]},
+  {title:'اطلاعات فنی تکمیلی سامانه‌ها',items:[
+    'نام سامانه و شناسه یا کد آن',
+    'مالک کسب‌وکاری',
+    'مسئول فنی',
+    'شرکت پیمانکار یا تأمین‌کننده',
+    'معماری نرم‌افزار و اجزای اصلی',
+    'پایگاه داده و فناوری‌های مورد استفاده',
+    'سرویس‌ها و APIهای وابسته',
+    'سرویس‌های احراز هویت و دسترسی',
+    'وابستگی به سامانه‌های دیگر',
+    'وابستگی به سرویس‌های بیرونی و حاکمیتی',
+    'زیرساخت محل استقرار',
+    'وضعیت High Availability و Failover',
+    'وضعیت سایت DR',
+    'وضعیت Monitoring و Alerting',
+    'نقاط ضعف شناخته‌شده و محدودیت‌های فنی'
+  ]},
+  {title:'سوابق رخدادها و اختلالات',items:[
+    'گزارش قطعی‌های مهم سامانه‌ها در ۱۲ تا ۲۴ ماه گذشته',
+    'گزارش رخدادهای امنیتی مهم',
+    'گزارش اختلال در مراکز داده، شبکه و ارتباطات',
+    'گزارش خرابی تجهیزات یا پایگاه‌های داده',
+    'گزارش اختلالات پیمانکاران و سرویس‌دهندگان بیرونی',
+    'گزارش تحلیل ریشه‌ای علت رخدادها (RCA)',
+    'زمان واقعی تشخیص، پاسخ و بازیابی در گذشته',
+    'اقدامات اصلاحی انجام‌شده یا انجام‌نشده'
+  ]},
+  {title:'اطلاعات منابع و ظرفیت‌های بازیابی',items:[
+    'فهرست نیروهای کلیدی و تخصص آن‌ها',
+    'ظرفیت تیم‌های فنی و پشتیبانی در بحران',
+    'پیمانکاران و تأمین‌کنندگان کلیدی',
+    'قراردادهای پشتیبانی و تعهدات SLA',
+    'وضعیت دسترسی اضطراری به تجهیزات',
+    'امکانات برق اضطراری، UPS و ژنراتور',
+    'امکانات سرمایش، اعلام و اطفای حریق',
+    'امکانات ارتباطی جایگزین',
+    'ظرفیت محل جایگزین در شرایط اضطراری'
+  ]},
+  {title:'مستندات امنیتی و حاکمیتی',items:[
+    'سیاست‌های امنیت اطلاعات',
+    'دستورالعمل مدیریت دسترسی و حساب‌های کاربری',
+    'سیاست مدیریت تغییرات',
+    'سیاست مدیریت آسیب‌پذیری و وصله‌های امنیتی',
+    'دستورالعمل مدیریت رخدادهای امنیتی',
+    'مستندات الزامات افتا و پدافند غیرعامل',
+    'گزارش ارزیابی امنیتی و آزمون‌های نفوذ',
+    'الزامات قانونی، نظارتی و قراردادی'
+  ]},
+  {title:'مستندات قراردادی و تأمین‌کنندگان',items:[
+    'فهرست تأمین‌کنندگان و پیمانکاران حیاتی',
+    'قراردادهای پشتیبانی سامانه‌ها و زیرساخت‌ها',
+    'SLA و تعهدات زمانی بازیابی',
+    'روش تماس و ارجاع اضطراری به پیمانکار',
+    'تعهدات مربوط به Backup، DR و حفظ داده‌ها',
+    'وابستگی به خدمات ابری و دیتاسنترهای بیرونی',
+    'وضعیت جایگزین‌پذیری تأمین‌کنندگان کلیدی'
+  ]},
+  {title:'نیازهای مانور و آموزش',items:[
+    'معرفی افراد حاضر در مانور رومیزی',
+    'معرفی اعضای تیم‌های مدیریت بحران',
+    'تعیین سناریوهای مورد علاقه مدیران',
+    'سطح و گروه مخاطبان دوره آموزشی',
+    'تعیین محل، زمان و امکانات برگزاری',
+    'معرفی افراد مسئول تأیید نتایج مانور'
+  ]}
+];
+
+const getCheck=()=>Store.get('checklist',{});
+const saveCheck=s=>Store.set('checklist',s);
+let CAL_TARGET_KEY=null;
+
+/* ============================== DASHBOARD ============================== */
+function renderDashboard(){
+  const state=getCheck();
+  let total=0,has=0,no=0;
+  CHECKLIST.forEach((g,gi)=>g.items.forEach((_,ii)=>{
+    total++;
+    const e=state[gi+'_'+ii];
+    if(e?.status==='has')has++;
+    else if(e?.status==='no')no++;
+  }));
+  const pending=total-has-no;
+  const pctHas=total?Math.round(has/total*100):0;
+  const pctNo=total?Math.round(no/total*100):0;
+  const pctPend=total?Math.round(pending/total*100):0;
+
+  const C=2*Math.PI*42;
+  const dHas=(has/total)*C;
+  const dNo=(no/total)*C;
+  const dPend=(pending/total)*C;
+  const chartSvg=`
+    <svg class="chart-svg" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="42" fill="none" stroke="var(--border)" stroke-width="11"/>
+      <circle cx="50" cy="50" r="42" fill="none" stroke="var(--success)" stroke-width="11" stroke-dasharray="${dHas} ${C}" stroke-dashoffset="0" transform="rotate(-90 50 50)" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="42" fill="none" stroke="var(--danger)" stroke-width="11" stroke-dasharray="${dNo} ${C}" stroke-dashoffset="${-dHas}" transform="rotate(-90 50 50)" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="42" fill="none" stroke="var(--warning)" stroke-width="11" stroke-dasharray="${dPend} ${C}" stroke-dashoffset="${-(dHas+dNo)}" transform="rotate(-90 50 50)" stroke-linecap="round" opacity=".55"/>
+      <text x="50" y="47" text-anchor="middle" font-family="Vazirmatn,sans-serif" font-size="13" font-weight="900" fill="var(--text)">${faDigits(pctHas)}٪</text>
+      <text x="50" y="60" text-anchor="middle" font-family="Vazirmatn,sans-serif" font-size="5.5" fill="var(--muted)">دارای داده</text>
+    </svg>`;
+
+  $('dashboardContainer').innerHTML=`
+    <div class="dash-row">
+      <div class="dash-card">
+        <div class="dc-label"><svg class="ic" style="width:13px;height:13px" viewBox="0 0 24 24"><path d="M9 11H3v10h6zM21 3h-6v18h6zM15 7H9v14h6z"/></svg>کل موارد</div>
+        <div class="dc-value">${faDigits(total)}</div>
+      </div>
+      <div class="dash-card has">
+        <div class="dc-label"><svg class="ic" style="width:13px;height:13px" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>دارای داده</div>
+        <div class="dc-value">${faDigits(has)}<small>${faDigits(pctHas)}٪</small></div>
+      </div>
+      <div class="dash-card no">
+        <div class="dc-label"><svg class="ic" style="width:13px;height:13px" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>فاقد داده</div>
+        <div class="dc-value">${faDigits(no)}<small>${faDigits(pctNo)}٪</small></div>
+      </div>
+      <div class="dash-card pending">
+        <div class="dc-label"><svg class="ic" style="width:13px;height:13px" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>در انتظار</div>
+        <div class="dc-value">${faDigits(pending)}<small>${faDigits(pctPend)}٪</small></div>
+      </div>
+      <div class="dash-chart">
+        ${chartSvg}
+        <div class="chart-legend">
+          <div class="lg-item"><span class="dot" style="background:var(--success)"></span>دارد <strong>${faDigits(has)}</strong></div>
+          <div class="lg-item"><span class="dot" style="background:var(--danger)"></span>ندارد <strong>${faDigits(no)}</strong></div>
+          <div class="lg-item"><span class="dot" style="background:var(--warning);opacity:.6"></span>در انتظار <strong>${faDigits(pending)}</strong></div>
+        </div>
+      </div>
+    </div>`;
+}
+
+/* ============================== CHECKLIST ============================== */
+function renderChecklist(){
+  const state=getCheck();
+  const container=$('checklistContainer');
+  let html='';
+  CHECKLIST.forEach((group,gi)=>{
+    let has=0,no=0,total=group.items.length;
+    group.items.forEach((_,ii)=>{
+      const e=state[gi+'_'+ii];
+      if(e?.status==='has')has++;
+      else if(e?.status==='no')no++;
+    });
+    const done=has+no;
+    const pct=total?Math.round((done/total)*100):0;
+    html+=`<div class="chk-group collapsed" data-g="${gi}">
+      <div class="chk-head" data-toggle="${gi}">
+        <div class="chk-head-left">
+          <div class="chk-num">${faDigits(gi+1)}</div>
+          <h3>${escapeHtml(group.title)}</h3>
+        </div>
+        <div class="chk-head-meta">
+          <span class="cnt">${faDigits(has)}✓ · ${faDigits(no)}✕</span>
+          <div class="chk-mini-bar"><div class="fill" style="width:${pct}%"></div></div>
+          <svg class="ic chk-chevron" style="width:15px;height:15px" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+      <div class="chk-body">`;
+
+    group.items.forEach((item,ii)=>{
+      const key=gi+'_'+ii;
+      const e=state[key]||{};
+      const status=e.status||'';
+      html+=`<div class="chk-row" data-key="${key}" data-status="${status}">
+        <div class="chk-idx">${faDigits(ii+1).padStart(2,'0')}</div>
+        <div class="chk-txt">${escapeHtml(item)}</div>
+        <div class="radios">
+          <label class="radio-pill yes ${status==='has'?'active':''}">
+            <input type="radio" name="st-${key}" value="has" ${status==='has'?'checked':''}>
+            <span class="rp-dot"></span>دارد
+          </label>
+          <label class="radio-pill no ${status==='no'?'active':''}">
+            <input type="radio" name="st-${key}" value="no" ${status==='no'?'checked':''}>
+            <span class="rp-dot"></span>ندارد
+          </label>
+        </div>
+        <div class="date-wrap">
+          <input type="text" class="chk-in-date" placeholder="تاریخ" value="${escapeHtml(e.date||'')}" data-date="${key}" dir="ltr">
+          <button class="cal-open" data-cal="${key}" title="تقویم">
+            <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </button>
+        </div>
+        <div class="owner-wrap">
+          <input type="text" class="chk-in-owner" placeholder="متولی" value="${escapeHtml(e.owner||'')}" data-owner="${key}">
+        </div>
+        <button class="save-btn" data-save="${key}">
+          <svg class="ic" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          ثبت
+        </button>
+      </div>`;
+    });
+    html+='</div></div>';
+  });
+  container.innerHTML=html;
+  attachChecklistListeners();
+}
+
+function attachChecklistListeners(){
+  document.querySelectorAll('[data-toggle]').forEach(el=>{
+    el.addEventListener('click',()=>el.closest('.chk-group').classList.toggle('collapsed'));
+  });
+
+  document.querySelectorAll('.radio-pill input').forEach(input=>{
+    input.addEventListener('change',e=>{
+      const row=input.closest('.chk-row');
+      const key=row.dataset.key;
+      const val=input.value;
+      const state=getCheck();
+      const cur=state[key]||{};
+      const newStatus=cur.status===val?'':val;
+      if(newStatus){
+        if(!cur.date||!pToEn(cur.date)){
+          toast('ابتدا تاریخ را وارد کنید','danger');
+          const dInp=row.querySelector('[data-date]');
+          if(dInp){dInp.classList.add('invalid');setTimeout(()=>dInp.classList.remove('invalid'),600);dInp.focus();}
+          input.checked=false;
+          return;
+        }
+        if(!cur.owner||!cur.owner.trim()){
+          toast('ابتدا نام متولی را وارد کنید','danger');
+          const oInp=row.querySelector('[data-owner]');
+          if(oInp){oInp.classList.add('invalid');setTimeout(()=>oInp.classList.remove('invalid'),600);oInp.focus();}
+          input.checked=false;
+          return;
+        }
+      }
+      state[key]={...cur,status:newStatus};
+      saveCheck(state);
+      row.dataset.status=newStatus;
+      row.querySelectorAll('.radio-pill').forEach(p=>{
+        p.classList.toggle('active',p.querySelector('input').value===newStatus);
+      });
+      row.classList.add('dirty');
+      updateGroupCounts();
+      renderDashboard();
+    });
+  });
+
+  document.querySelectorAll('[data-date]').forEach(inp=>{
+    inp.addEventListener('input',e=>{
+      let v=e.target.value.replace(/[^\d۰-۹/]/g,'');
+      v=enDigits(v);
+      if(v.length===8&&!v.includes('/')) v=v.slice(0,4)+'/'+v.slice(4,6)+'/'+v.slice(6,8);
+      e.target.value=faDigits(v);
+    });
+    inp.addEventListener('change',e=>{
+      const row=inp.closest('.chk-row');
+      const key=inp.dataset.date;
+      const state=getCheck();
+      if(!state[key])state[key]={};
+      state[key].date=e.target.value;
+      saveCheck(state);
+      row.classList.add('dirty');
+      renderDashboard();
+    });
+  });
+
+  document.querySelectorAll('[data-owner]').forEach(inp=>{
+    inp.addEventListener('change',e=>{
+      const row=inp.closest('.chk-row');
+      const key=inp.dataset.owner;
+      const state=getCheck();
+      if(!state[key])state[key]={};
+      state[key].owner=e.target.value;
+      saveCheck(state);
+      row.classList.add('dirty');
+      renderDashboard();
+    });
+  });
+
+  document.querySelectorAll('[data-save]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const row=btn.closest('.chk-row');
+      const key=btn.dataset.save;
+      const state=getCheck();
+      const cur=state[key]||{};
+      if(!cur.status){
+        toast('وضعیت (دارد/ندارد) را انتخاب کنید','danger');
+        return;
+      }
+      if(!cur.date||!pToEn(cur.date)){
+        toast('تاریخ را وارد کنید','danger');
+        const dInp=row.querySelector('[data-date]');
+        if(dInp){dInp.classList.add('invalid');setTimeout(()=>dInp.classList.remove('invalid'),600);dInp.focus();}
+        return;
+      }
+      if(!cur.owner||!cur.owner.trim()){
+        toast('نام متولی را وارد کنید','danger');
+        const oInp=row.querySelector('[data-owner]');
+        if(oInp){oInp.classList.add('invalid');setTimeout(()=>oInp.classList.remove('invalid'),600);oInp.focus();}
+        return;
+      }
+      row.classList.remove('dirty');
+      btn.classList.add('saved');
+      btn.innerHTML='<svg class="ic" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>ثبت شد';
+      setTimeout(()=>{
+        btn.classList.remove('saved');
+        btn.innerHTML='<svg class="ic" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>ثبت';
+      },1800);
+      updateGroupCounts();
+      renderDashboard();
+      toast('✓ ذخیره شد','success');
+    });
+  });
+
+  document.querySelectorAll('[data-cal]').forEach(btn=>{
+    btn.addEventListener('click',()=>openCalendar(btn.dataset.cal));
+  });
+}
+
+function updateGroupCounts(){
+  const state=getCheck();
+  CHECKLIST.forEach((group,gi)=>{
+    let has=0,no=0,total=group.items.length;
+    group.items.forEach((_,ii)=>{
+      const e=state[gi+'_'+ii];
+      if(e?.status==='has')has++;
+      else if(e?.status==='no')no++;
+    });
+    const pct=Math.round(((has+no)/total)*100);
+    const g=document.querySelector(`.chk-group[data-g="${gi}"]`);
+    if(!g)return;
+    const meta=g.querySelector('.chk-head-meta');
+    if(meta){
+      meta.querySelector('.cnt').textContent=`${faDigits(has)}✓ · ${faDigits(no)}✕`;
+      meta.querySelector('.fill').style.width=pct+'%';
+    }
+  });
+}
+
+/* ============================== CALENDAR ============================== */
+let calYear,calMonth,calSelected;
+
+function openCalendar(key){
+  CAL_TARGET_KEY=key;
+  const state=getCheck();
+  const cur=state[key]?.date||'';
+  const en=pToEn(cur);
+  if(en){
+    const [y,m,d]=en.split('/').map(Number);
+    calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d};
+  } else {
+    const p=pDate(new Date());
+    calYear=p.jy; calMonth=p.jm; calSelected=null;
+  }
+  renderCalendar();
+  $('calModal').classList.add('open');
+}
+
+function renderCalendar(){
+  $('calTitle').textContent=`${jMonths[calMonth-1]} ${faDigits(calYear)}`;
+  const grid=$('calGrid');
+  const firstWd=jFirstWeekday(calYear,calMonth);
+  const days=jMonthDays(calYear,calMonth);
+  const today=pDate(new Date());
+  let html='';
+  for(let i=0;i<firstWd;i++) html+=`<div class="cal-cell other-month"></div>`;
+  for(let d=1;d<=days;d++){
+    const isToday=(today.jy===calYear&&today.jm===calMonth&&today.jd===d);
+    const isSelected=calSelected&&calSelected.jy===calYear&&calSelected.jm===calMonth&&calSelected.jd===d;
+    const wd=(firstWd+d-1)%7;
+    const isWeekend=(wd===6);
+    let cls='cal-cell';
+    if(isToday) cls+=' today';
+    if(isSelected) cls+=' selected';
+    if(isWeekend) cls+=' weekend';
+    html+=`<div class="${cls}" data-day="${d}">${faDigits(d)}</div>`;
+  }
+  grid.innerHTML=html;
+  grid.querySelectorAll('[data-day]').forEach(cell=>{
+    cell.addEventListener('click',()=>pickDate(calYear,calMonth,parseInt(cell.dataset.day,10)));
+  });
+}
+
+function pickDate(jy,jm,jd){
+  const s=faDigits(`${jy}/${String(jm).padStart(2,'0')}/${String(jd).padStart(2,'0')}`);
+  const state=getCheck();
+  if(!state[CAL_TARGET_KEY])state[CAL_TARGET_KEY]={};
+  state[CAL_TARGET_KEY].date=s;
+  saveCheck(state);
+  const inp=document.querySelector(`[data-date="${CAL_TARGET_KEY}"]`);
+  if(inp) inp.value=s;
+  const row=document.querySelector(`.chk-row[data-key="${CAL_TARGET_KEY}"]`);
+  if(row) row.classList.add('dirty');
+  $('calModal').classList.remove('open');
+  renderDashboard();
+  updateGroupCounts();
+  toast('تاریخ ثبت شد','success');
+}
+
+document.querySelectorAll('[data-cal-nav]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const dir=btn.dataset.calNav;
+    if(dir==='py')calYear--;
+    else if(dir==='ny')calYear++;
+    else if(dir==='pm'){calMonth--;if(calMonth<1){calMonth=12;calYear--;}}
+    else if(dir==='nm'){calMonth++;if(calMonth>12){calMonth=1;calYear++;}}
+    renderCalendar();
+  });
+});
+$('calTodayBtn').addEventListener('click',()=>{
+  const t=pDate(new Date());
+  pickDate(t.jy,t.jm,t.jd);
+});
+
+/* ============================== RESET & PRINT ============================== */
+$('resetChecklistBtn').addEventListener('click',()=>{
+  if(confirm('تمام وضعیت‌های چک‌لیست بازنشانی شود؟')){
+    saveCheck({});
+    renderChecklist();
+    renderDashboard();
+    toast('بازنشانی شد','success');
+  }
+});
+
+function updatePrintDate(){
+  const p = pDate(new Date());
+  const el = $('printDate');
+  if(el) el.textContent = `${p.jd} ${p.monthName} ${p.jy}`;
+}
+updatePrintDate();
+
+$('printBtn').addEventListener('click',()=>{
+  // Expand all groups for print
+  document.querySelectorAll('.chk-group').forEach(g=>g.classList.remove('collapsed'));
+  window.print();
+});
+
+/* ============================== STAKEHOLDERS ============================== */
+const getStk=()=>Store.get('stakeholders',[]);
+const saveStk=arr=>Store.set('stakeholders',arr);
+let stkSearch='';
+
+function renderStakeholders(){
+  const wrap=$('stkTableWrap');
+  const list=getStk();
+  const filtered=stkSearch
+    ?list.filter(s=>[s.name,s.role,s.unit,s.phone,s.email,s.note].join(' ').includes(stkSearch))
+    :list;
+
+  if(!filtered.length){
+    wrap.innerHTML=`<div class="stk-table-wrap"><div class="stk-empty">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <h3>${list.length?'موردی یافت نشد':'هنوز ذی‌نفعی ثبت نشده'}</h3>
+      <p>${list.length?'عبارت جستجو را تغییر دهید':'برای شروع روی دکمه «افزودن» کلیک کنید'}</p>
+    </div></div>`;
+    return;
+  }
+  let html=`<div class="stk-table-wrap"><table class="stk-table">
+    <thead><tr>
+      <th>نام و نقش</th><th>واحد سازمانی</th><th>شماره تماس</th><th>ایمیل</th><th style="text-align:left"></th>
+    </tr></thead><tbody>`;
+  filtered.forEach(s=>{
+    const initials=(s.name||'؟').trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('');
+    html+=`<tr data-id="${s.id}">
+      <td data-label="نام">
+        <div class="stk-user">
+          <div class="stk-avatar">${initials}</div>
+          <div>
+            <div class="stk-name">${escapeHtml(s.name)}</div>
+            ${s.role?`<div class="stk-role">${escapeHtml(s.role)}</div>`:''}
+          </div>
+        </div>
+      </td>
+      <td data-label="واحد">${escapeHtml(s.unit||'—')}</td>
+      <td data-label="تلفن"><span class="stk-phone">${escapeHtml(s.phone||'—')}</span></td>
+      <td data-label="ایمیل">${s.email?`<a href="mailto:${escapeHtml(s.email)}" class="stk-email">${escapeHtml(s.email)}</a>`:'<span style="color:var(--muted)">—</span>'}</td>
+      <td class="stk-actions-cell">
+        <button class="stk-act" data-edit="${s.id}" title="ویرایش"><svg class="ic" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        <button class="stk-act danger" data-del="${s.id}" title="حذف"><svg class="ic" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>
+      </td>
+    </tr>`;
+  });
+  html+='</tbody></table></div>';
+  wrap.innerHTML=html;
+  wrap.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openStkModal(b.dataset.edit)));
+  wrap.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>{
+    if(confirm('این ذی‌نفع حذف شود؟')){
+      saveStk(getStk().filter(s=>s.id!==b.dataset.del));
+      renderStakeholders();
+      toast('حذف شد','success');
+    }
+  }));
+}
+
+$('stkSearch').addEventListener('input',e=>{stkSearch=e.target.value.trim();renderStakeholders();});
+$('addStakeholderBtn').addEventListener('click',()=>openStkModal());
+
+function openStkModal(id){
+  $('stkId').value=id||'';
+  const s=id?getStk().find(x=>x.id===id):null;
+  $('stkModalTitle').textContent=id?'ویرایش ذی‌نفع':'افزودن ذی‌نفع';
+  $('stkName').value=s?.name||'';
+  $('stkRole').value=s?.role||'';
+  $('stkUnit').value=s?.unit||'';
+  $('stkPhone').value=s?.phone||'';
+  $('stkEmail').value=s?.email||'';
+  $('stkNote').value=s?.note||'';
+  $('stkErr').textContent='';
+  $('stkModal').classList.add('open');
+}
+
+$('saveStkBtn').addEventListener('click',()=>{
+  const name=$('stkName').value.trim();
+  if(!name){$('stkErr').textContent='نام الزامی است.';return;}
+  const phone=$('stkPhone').value.trim();
+  if(phone&&!/^[\d۰-۹+\-\s]{6,}$/.test(phone)){$('stkErr').textContent='شماره تماس معتبر نیست.';return;}
+  const email=$('stkEmail').value.trim();
+  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){$('stkErr').textContent='ایمیل معتبر نیست.';return;}
+  const list=getStk();
+  const id=$('stkId').value;
+  const data={name,role:$('stkRole').value.trim(),unit:$('stkUnit').value.trim(),phone,email,note:$('stkNote').value.trim()};
+  if(id){
+    const idx=list.findIndex(x=>x.id===id);
+    if(idx>=0)list[idx]={...list[idx],...data};
+  }else{
+    list.push({id:'s_'+Date.now(),...data});
+  }
+  saveStk(list);
+  $('stkModal').classList.remove('open');
+  renderStakeholders();
+  toast('ذخیره شد','success');
+});
+
+/* ============================== MODAL HELPERS ============================== */
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>{
+  $(b.dataset.close).classList.remove('open');
+}));
+document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{
+  if(e.target===m)m.classList.remove('open');
+}));
+
+/* ============================== CHANGE PASS ============================== */
+$('changePassBtn').addEventListener('click',()=>{
+  $('curPass').value='';$('newPass').value='';$('confPass').value='';$('passErr').textContent='';
+  $('passModal').classList.add('open');
+});
+$('savePassBtn').addEventListener('click',()=>{
+  if($('curPass').value!==getPass()){$('passErr').textContent='رمز فعلی نادرست است.';return;}
+  if($('newPass').value.length<4){$('passErr').textContent='رمز جدید حداقل ۴ کاراکتر باشد.';return;}
+  if($('newPass').value!==$('confPass').value){$('passErr').textContent='رمز جدید و تکرار یکسان نیستند.';return;}
+  setPass($('newPass').value);
+  $('passModal').classList.remove('open');
+  toast('رمز عبور تغییر کرد','success');
+});
+
+/* ============================== RENDER ALL ============================== */
+function renderAll(){
+  renderDashboard();
+  renderChecklist();
+  renderStakeholders();
+}
+</script>
+</body>
+</html>
