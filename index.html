@@ -143,7 +143,7 @@ img{max-width:100%;display:block}
 .login-err{color:var(--danger);font-size:.78rem;min-height:18px;margin-top:8px;text-align:center;font-weight:500}
 
 /* ========================================================= */
-/* ============= MOBILE LOGIN FIX (NEW) ==================== */
+/* ============= MOBILE LOGIN FIX ========================== */
 /* ========================================================= */
 @media (max-width: 1024px) {
   #loginScreen {
@@ -151,97 +151,43 @@ img{max-width:100%;display:block}
     padding: 12px;
     gap: 12px;
     height: 100vh;
-    height: 100dvh; /* dynamic viewport height for mobile */
-    overflow-y: auto; /* Enable scrolling if keyboard appears */
+    height: 100dvh;
+    overflow-y: auto;
     justify-content: flex-start;
   }
-  
   .login-stage {
     flex: none;
-    min-height: 30vh; /* Reduced to leave room for form */
+    min-height: 30vh;
     border-radius: var(--radius-lg);
     width: 100%;
   }
-  
-  .emdad-logo {
-    width: min(350px, 80vw);
-  }
-  
+  .emdad-logo { width: min(350px, 80vw); }
   .login-panel {
     width: 100%;
-    flex: none; /* Let it take natural height */
+    flex: none;
     min-height: auto;
-    padding: 60px 20px 30px; /* Top padding for me-photo */
+    padding: 60px 20px 30px;
     border-radius: var(--radius-lg);
     justify-content: flex-start;
   }
-  
-  .me-photo {
-    top: 16px; left: 16px;
-    width: 44px; height: 44px;
-  }
-  
-  .bcp-logo {
-    width: 70px; height: 70px;
-    margin-top: 0;
-    margin-bottom: 16px;
-  }
-  
-  .login-title {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-  }
-  
-  .login-form {
-    width: 100%;
-    max-width: 100%;
-  }
-  
-  .field {
-    margin-bottom: 14px;
-  }
-  
-  .field input {
-    padding: 11px 36px 11px 12px;
-    font-size: 0.9rem;
-  }
-  
-  .login-btn {
-    padding: 13px;
-    margin-bottom: 20px;
-  }
+  .me-photo { top: 16px; left: 16px; width: 44px; height: 44px; }
+  .bcp-logo { width: 70px; height: 70px; margin-top: 0; margin-bottom: 16px; }
+  .login-title { font-size: 1.2rem; margin-bottom: 20px; }
+  .login-form { width: 100%; max-width: 100%; }
+  .field { margin-bottom: 14px; }
+  .field input { padding: 11px 36px 11px 12px; font-size: 0.9rem; }
+  .login-btn { padding: 13px; margin-bottom: 20px; }
 }
-
 @media (max-width: 520px) {
-  .login-stage {
-    min-height: 25vh;
-  }
-  .emdad-logo {
-    width: min(280px, 85vw);
-  }
-  .login-panel {
-    padding: 50px 16px 24px;
-  }
-  .bcp-logo {
-    width: 60px; height: 60px;
-  }
-  .login-title {
-    font-size: 1.1rem;
-    margin-bottom: 16px;
-  }
-  .field label {
-    font-size: 0.75rem;
-  }
-  .field input {
-    font-size: 0.85rem;
-    padding: 10px 32px 10px 10px;
-  }
-  .field .wrap svg {
-    width: 14px; height: 14px;
-    right: 10px;
-  }
+  .login-stage { min-height: 25vh; }
+  .emdad-logo { width: min(280px, 85vw); }
+  .login-panel { padding: 50px 16px 24px; }
+  .bcp-logo { width: 60px; height: 60px; }
+  .login-title { font-size: 1.1rem; margin-bottom: 16px; }
+  .field label { font-size: 0.75rem; }
+  .field input { font-size: 0.85rem; padding: 10px 32px 10px 10px; }
+  .field .wrap svg { width: 14px; height: 14px; right: 10px; }
 }
-/* ========================================================= */
 
 /* ============================== APP SHELL ============================== */
 #appScreen{display:none;min-height:100vh;background:var(--bg);flex-direction:column}
@@ -374,7 +320,7 @@ img{max-width:100%;display:block}
 .cost-total .ct-label{font-size:.78rem;opacity:.8;letter-spacing:1px;text-transform:uppercase;font-weight:600}
 .cost-total .ct-value{font-size:1.6rem;font-weight:900;letter-spacing:-1px;font-family:monospace;direction:ltr}
 
-/* ============================== CHECKLIST (Wider 16:9) ============================== */
+/* ============================== CHECKLIST ============================== */
 .chk-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:24px 0;margin-bottom:16px;border-bottom:1px solid var(--border)}
 .chk-title{font-size:1.3rem;font-weight:800;color:var(--text)}
 .chk-toolbar-right{display:flex;gap:10px;align-items:center}
@@ -401,7 +347,6 @@ img{max-width:100%;display:block}
 .chk-num{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:var(--primary-glow);color:var(--primary);font-weight:800;font-size:.85rem;flex-shrink:0;font-family:monospace}
 .chk-head-left h3{font-size:.95rem;font-weight:700;color:var(--text)}
 
-/* New Blinking Badges */
 .chk-head-meta{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .cnt-badge{padding:4px 10px;border-radius:6px;font-size:.8rem;font-weight:800;font-family:monospace;display:inline-flex;align-items:center;gap:4px;color:#fff}
 .cnt-badge.has{background:var(--success);animation:blink-green 2s infinite}
@@ -610,7 +555,6 @@ img{max-width:100%;display:block}
     display: none !important; 
   }
   
-  /* Dashboard Print */
   .dash-row {
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
@@ -641,70 +585,23 @@ img{max-width:100%;display:block}
   .dash-card.pending .dc-value { color: #b87b10 !important; }
   .dash-chart { display: none !important; }
   
-  /* Checklist Print */
-  .chk-group { 
-    border: 1px solid #999 !important; 
-    border-radius: 4px !important; 
-    margin-bottom: 12px !important; 
-    break-inside: avoid; 
-    background: #fff !important; 
-    display: block !important; 
-  }
+  .chk-group { border: 1px solid #999 !important; border-radius: 4px !important; margin-bottom: 12px !important; break-inside: avoid; background: #fff !important; display: block !important; }
   .chk-body { display: block !important; padding: 0 !important; border-top: 1px solid #999 !important; }
-  
   .chk-head { background: #f0f0f0 !important; padding: 6px 12px !important; border-bottom: none !important; }
   .chk-head-left h3 { font-size: 10pt !important; color: #000 !important; font-weight: bold !important; }
   .chk-head-meta { display: none !important; }
   
-  /* Align Date and Owner perfectly with text on the same row */
-  .chk-row { 
-    display: flex !important; 
-    flex-direction: row-reverse !important; /* In RTL, text goes right, then date, then owner */
-    align-items: center !important; 
-    justify-content: flex-start !important;
-    gap: 12px !important; 
-    padding: 8px 10px !important; 
-    border-top: 1px solid #eee !important; 
-  }
+  .chk-row { display: flex !important; flex-direction: row-reverse !important; align-items: center !important; justify-content: flex-start !important; gap: 12px !important; padding: 8px 10px !important; border-top: 1px solid #eee !important; }
   .chk-row:first-child { border-top: none !important; }
-  
-  .chk-idx { 
-    width: 20px !important;
-    font-size: 8pt !important; 
-    color: #555 !important; 
-    font-weight: bold !important; 
-    text-align: center !important; 
-  }
-  .chk-txt { 
-    flex: 1 !important; 
-    font-size: 9.5pt !important; 
-    color: #000 !important; 
-    line-height: 1.3 !important; 
-    margin: 0 !important;
-  }
-  .date-wrap { 
-    width: 85px !important; 
-    margin: 0 !important;
-  }
-  .owner-wrap { 
-    width: 95px !important; 
-    margin: 0 !important;
-  }
+  .chk-idx { width: 20px !important; font-size: 8pt !important; color: #555 !important; font-weight: bold !important; text-align: center !important; }
+  .chk-txt { flex: 1 !important; font-size: 9.5pt !important; color: #000 !important; line-height: 1.3 !important; margin: 0 !important; }
+  .date-wrap { width: 85px !important; margin: 0 !important; }
+  .owner-wrap { width: 95px !important; margin: 0 !important; }
   
   .chk-row[data-status="has"] .chk-txt::before { content: "✓ " !important; color: #0a6b3a !important; font-weight: 900 !important; font-size: 11pt !important; }
   .chk-row[data-status="no"] .chk-txt::before { content: "✕ " !important; color: #a02020 !important; font-weight: 900 !important; font-size: 11pt !important; }
   
-  .date-wrap input, .owner-wrap input { 
-    border: 1px solid #ccc !important; 
-    background: #fafafa !important; 
-    color: #000 !important; 
-    font-size: 8pt !important; 
-    padding: 3px 4px !important; 
-    border-radius: 2px !important;
-    width: 100% !important;
-    text-align: center !important;
-    visibility: visible !important;
-  }
+  .date-wrap input, .owner-wrap input { border: 1px solid #ccc !important; background: #fafafa !important; color: #000 !important; font-size: 8pt !important; padding: 3px 4px !important; border-radius: 2px !important; width: 100% !important; text-align: center !important; visibility: visible !important; }
   .owner-wrap input { text-align: right !important; }
   
   .date-wrap input::placeholder, .owner-wrap input::placeholder { color: transparent !important; }
@@ -720,13 +617,11 @@ img{max-width:100%;display:block}
 
 <!-- ============================== LOGIN ============================== -->
 <div id="loginScreen">
-  <!-- Stage - Left Side -->
   <div class="login-stage" id="loginStage">
     <img src="logo.png" alt="کمیته امداد امام خمینی" class="emdad-logo" onerror="this.src='https://portal.emdad.ir/Content/media/image/main/logo-footer.png'">
     <div class="stage-dust" id="stageDust"></div>
   </div>
 
-  <!-- Login Panel - Right Side -->
   <div class="login-panel">
     <img src="me.jpg" alt="مدیر پروژه" class="me-photo" title="مدیر پروژه" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23e2e8f0%22/%3E%3Ccircle cx=%2250%22 cy=%2240%22 r=%2220%22 fill=%22%2394a3b8%22/%3E%3Cpath d=%22M20 90 Q50 60 80 90%22 fill=%22%2394a3b8%22/%3E%3C/svg%3E'">
     
@@ -794,8 +689,6 @@ img{max-width:100%;display:block}
 
   <main class="app-main">
     <div class="container">
-
-      <!-- ============== HOME - MOTION PROPOSAL ============== -->
       <section class="view active" id="view-home">
         <div class="prop-wrap">
           <header class="prop-hero">
@@ -1063,7 +956,6 @@ img{max-width:100%;display:block}
 
       <!-- ============== CHECKLIST ============== -->
       <section class="view" id="view-checklist">
-        <!-- Print Header -->
         <div class="print-header">
           <h1>چک‌لیست وضع موجود - طرح تداوم کسب‌وکار (BCP)</h1>
           <p>کمیته امداد امام خمینی (ره) - شرکت مهندسی اوژن تدبیر پارس</p>
@@ -1175,6 +1067,10 @@ img{max-width:100%;display:block}
 <div class="toast-wrap" id="toastWrap"></div>
 
 <script>
+/* ============================== SUPABASE CONFIG ============================== */
+const SUPABASE_URL = 'https://grqvkojxmbqaxacfymcq.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_r59ndRE-SlV0iCNBBpBqIQ_FgIq9v8d';
+
 /* ============================== HELPERS ============================== */
 const $=id=>document.getElementById(id);
 const faDigits=s=>String(s).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
@@ -1213,11 +1109,32 @@ function jMonthDays(jy,jm){if(jm<=6)return 31;if(jm<=11)return 30;const [gy,gm,g
 function jFirstWeekday(jy,jm){const [gy,gm,gd]=j2g(jy,jm,1);const d=new Date(gy,gm-1,gd);return (d.getDay()+1)%7;}
 function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
-/* ============================== STORAGE ============================== */
-const Store={
-  get(k,fb){try{const v=localStorage.getItem('bcp_'+k);return v?JSON.parse(v):fb;}catch{return fb;}},
-  set(k,v){try{localStorage.setItem('bcp_'+k,JSON.stringify(v));return true;}catch{return false;}},
-  del(k){try{localStorage.removeItem('bcp_'+k);}catch{}}
+/* ============================== STORAGE (SUPABASE) ============================== */
+const Store = {
+  async get(k, fallback) {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_storage?key=eq.${k}&select=value`, {
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+      });
+      const data = await res.json();
+      return (data && data.length > 0) ? data[0].value : fallback;
+    } catch (e) { console.error('Fetch error:', e); return fallback; }
+  },
+  async set(k, v) {
+    try {
+      await fetch(`${SUPABASE_URL}/rest/v1/bcp_storage`, {
+        method: 'POST',
+        headers: { 
+          'apikey': SUPABASE_ANON_KEY, 
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'resolution=merge-duplicates'
+        },
+        body: JSON.stringify({ key: k, value: v })
+      });
+      return true;
+    } catch (e) { console.error('Save error:', e); return false; }
+  }
 };
 
 /* ============================== TOAST ============================== */
@@ -1232,21 +1149,21 @@ function toast(msg,type='info'){
 
 /* ============================== AUTH ============================== */
 const DEFAULT_USER='09124015023';
-const getPass=()=>Store.get('pass',DEFAULT_USER);
-const setPass=p=>Store.set('pass',p);
+const getPass=async()=>await Store.get('pass', DEFAULT_USER);
+const setPass=async(p)=>await Store.set('pass', p);
 const isAuth=()=>sessionStorage.getItem('bcp_auth')==='1';
 const setAuth=v=>v?sessionStorage.setItem('bcp_auth','1'):sessionStorage.removeItem('bcp_auth');
 
 /* ============================== THEME ============================== */
 function applyTheme(t){
   document.documentElement.setAttribute('data-theme',t);
-  Store.set('theme',t);
+  localStorage.setItem('bcp_theme',t);
   const icon=$('themeIcon');
   if(icon){icon.innerHTML=t==='dark'
     ?'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'
     :'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';}
 }
-applyTheme(Store.get('theme','light'));
+applyTheme(localStorage.getItem('bcp_theme')||'light');
 $('themeBtn').addEventListener('click',()=>{
   const cur=document.documentElement.getAttribute('data-theme');
   applyTheme(cur==='dark'?'light':'dark');
@@ -1295,10 +1212,10 @@ function tickDust(now){
 }
 requestAnimationFrame(tickDust);
 
-function showApp(){
+async function showApp(){
   $('loginScreen').classList.add('hidden');
   $('appScreen').classList.add('visible');
-  renderAll();
+  await renderAll();
   animateCounters();
 }
 function showLogin(){
@@ -1306,18 +1223,21 @@ function showLogin(){
   $('appScreen').classList.remove('visible');
   $('loginPassword').value=''; $('loginError').textContent='';
 }
-function attemptLogin(){
+async function attemptLogin(){
   const m=$('loginMobile').value.trim();
   const p=$('loginPassword').value;
   if(m!==DEFAULT_USER){$('loginError').textContent='شماره موبایل مجاز نیست.';return;}
-  if(p!==getPass()){$('loginError').textContent='رمز عبور نادرست است.';return;}
+  
+  const savedPass = await getPass();
+  if(p!==savedPass){$('loginError').textContent='رمز عبور نادرست است.';return;}
   setAuth(true); showApp();
 }
 $('loginMobile').value=DEFAULT_USER;
 $('loginBtn').addEventListener('click',attemptLogin);
 $('loginPassword').addEventListener('keydown',e=>{if(e.key==='Enter')attemptLogin();});
 $('logoutBtn').addEventListener('click',()=>{setAuth(false);showLogin();});
-if(isAuth())showApp();else showLogin();
+
+if(isAuth()){ showApp(); } else { showLogin(); }
 
 /* ============================== TABS ============================== */
 document.querySelectorAll('.app-tab').forEach(tab=>{
@@ -1491,13 +1411,13 @@ const CHECKLIST=[
   ]}
 ];
 
-const getCheck=()=>Store.get('checklist',{});
-const saveCheck=s=>Store.set('checklist',s);
+const getCheck = async() => await Store.get('checklist', {});
+const saveCheck = async(s) => await Store.set('checklist', s);
 let CAL_TARGET_KEY=null;
 
 /* ============================== DASHBOARD ============================== */
-function renderDashboard(){
-  const state=getCheck();
+async function renderDashboard(){
+  const state = await getCheck();
   let total=0,has=0,no=0;
   CHECKLIST.forEach((g,gi)=>g.items.forEach((_,ii)=>{
     total++;
@@ -1554,8 +1474,8 @@ function renderDashboard(){
 }
 
 /* ============================== CHECKLIST ============================== */
-function renderChecklist(){
-  const state=getCheck();
+async function renderChecklist(){
+  const state = await getCheck();
   const container=$('checklistContainer');
   let html='';
   CHECKLIST.forEach((group,gi)=>{
@@ -1625,24 +1545,23 @@ function attachChecklistListeners(){
   });
 
   document.querySelectorAll('.radio-pill input').forEach(input=>{
-    input.addEventListener('change',e=>{
+    input.addEventListener('change',async e=>{
       const row=input.closest('.chk-row');
       const key=row.dataset.key;
       const val=input.value;
-      const state=getCheck();
+      const state=await getCheck();
       const cur=state[key]||{};
       const newStatus=cur.status===val?'':val;
       
-      // No validation here anymore. Just update the state.
       state[key]={...cur,status:newStatus};
-      saveCheck(state);
+      await saveCheck(state);
       row.dataset.status=newStatus;
       row.querySelectorAll('.radio-pill').forEach(p=>{
         p.classList.toggle('active',p.querySelector('input').value===newStatus);
       });
       row.classList.add('dirty');
-      updateGroupCounts();
-      renderDashboard();
+      await updateGroupCounts();
+      await renderDashboard();
     });
   });
 
@@ -1653,43 +1572,40 @@ function attachChecklistListeners(){
       if(v.length===8&&!v.includes('/')) v=v.slice(0,4)+'/'+v.slice(4,6)+'/'+v.slice(6,8);
       e.target.value=faDigits(v);
     });
-    inp.addEventListener('change',e=>{
+    inp.addEventListener('change',async e=>{
       const row=inp.closest('.chk-row');
       const key=inp.dataset.date;
-      const state=getCheck();
+      const state=await getCheck();
       if(!state[key])state[key]={};
       state[key].date=e.target.value;
-      saveCheck(state);
+      await saveCheck(state);
       row.classList.add('dirty');
-      renderDashboard();
+      await renderDashboard();
     });
   });
 
   document.querySelectorAll('[data-owner]').forEach(inp=>{
-    inp.addEventListener('change',e=>{
+    inp.addEventListener('change',async e=>{
       const row=inp.closest('.chk-row');
       const key=inp.dataset.owner;
-      const state=getCheck();
+      const state=await getCheck();
       if(!state[key])state[key]={};
       state[key].owner=e.target.value;
-      saveCheck(state);
+      await saveCheck(state);
       row.classList.add('dirty');
-      renderDashboard();
+      await renderDashboard();
     });
   });
 
   document.querySelectorAll('[data-save]').forEach(btn=>{
-    btn.addEventListener('click',()=>{
+    btn.addEventListener('click',async ()=>{
       const row=btn.closest('.chk-row');
       const key=btn.dataset.save;
-      const state=getCheck();
+      const state=await getCheck();
       const cur=state[key]||{};
       
-      // Full validation on Save
       if(!cur.status || !cur.date || !pToEn(cur.date) || !cur.owner || !cur.owner.trim()){
         toast('لطفا وضعیت (دارد/ندارد)، تاریخ و متولی را وارد کنید','danger');
-        
-        // Highlight missing fields
         if(!cur.status){
           row.querySelectorAll('.radio-pill').forEach(p=>p.style.borderColor='var(--danger)');
           setTimeout(()=>row.querySelectorAll('.radio-pill').forEach(p=>p.style.borderColor=''), 1000);
@@ -1712,8 +1628,8 @@ function attachChecklistListeners(){
         btn.classList.remove('saved');
         btn.innerHTML='<svg class="ic" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>ثبت';
       },1800);
-      updateGroupCounts();
-      renderDashboard();
+      await updateGroupCounts();
+      await renderDashboard();
       toast('✓ ذخیره شد','success');
     });
   });
@@ -1723,8 +1639,8 @@ function attachChecklistListeners(){
   });
 }
 
-function updateGroupCounts(){
-  const state=getCheck();
+async function updateGroupCounts(){
+  const state = await getCheck();
   CHECKLIST.forEach((group,gi)=>{
     let has=0,no=0,total=group.items.length;
     group.items.forEach((_,ii)=>{
@@ -1747,18 +1663,19 @@ let calYear,calMonth,calSelected;
 
 function openCalendar(key){
   CAL_TARGET_KEY=key;
-  const state=getCheck();
-  const cur=state[key]?.date||'';
-  const en=pToEn(cur);
-  if(en){
-    const [y,m,d]=en.split('/').map(Number);
-    calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d};
-  } else {
-    const p=pDate(new Date());
-    calYear=p.jy; calMonth=p.jm; calSelected=null;
-  }
-  renderCalendar();
-  $('calModal').classList.add('open');
+  getCheck().then(state=>{
+    const cur=state[key]?.date||'';
+    const en=pToEn(cur);
+    if(en){
+      const [y,m,d]=en.split('/').map(Number);
+      calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d};
+    } else {
+      const p=pDate(new Date());
+      calYear=p.jy; calMonth=p.jm; calSelected=null;
+    }
+    renderCalendar();
+    $('calModal').classList.add('open');
+  });
 }
 
 function renderCalendar(){
@@ -1786,19 +1703,19 @@ function renderCalendar(){
   });
 }
 
-function pickDate(jy,jm,jd){
+async function pickDate(jy,jm,jd){
   const s=faDigits(`${jy}/${String(jm).padStart(2,'0')}/${String(jd).padStart(2,'0')}`);
-  const state=getCheck();
+  const state = await getCheck();
   if(!state[CAL_TARGET_KEY])state[CAL_TARGET_KEY]={};
   state[CAL_TARGET_KEY].date=s;
-  saveCheck(state);
+  await saveCheck(state);
   const inp=document.querySelector(`[data-date="${CAL_TARGET_KEY}"]`);
   if(inp) inp.value=s;
   const row=document.querySelector(`.chk-row[data-key="${CAL_TARGET_KEY}"]`);
   if(row) row.classList.add('dirty');
   $('calModal').classList.remove('open');
-  renderDashboard();
-  updateGroupCounts();
+  await renderDashboard();
+  await updateGroupCounts();
   toast('تاریخ ثبت شد','success');
 }
 
@@ -1818,11 +1735,11 @@ $('calTodayBtn').addEventListener('click',()=>{
 });
 
 /* ============================== RESET & PRINT ============================== */
-$('resetChecklistBtn').addEventListener('click',()=>{
+$('resetChecklistBtn').addEventListener('click',async ()=>{
   if(confirm('تمام وضعیت‌های چک‌لیست بازنشانی شود؟')){
-    saveCheck({});
-    renderChecklist();
-    renderDashboard();
+    await saveCheck({});
+    await renderChecklist();
+    await renderDashboard();
     toast('بازنشانی شد','success');
   }
 });
@@ -1842,13 +1759,13 @@ $('printBtn').addEventListener('click',()=>{
 });
 
 /* ============================== STAKEHOLDERS ============================== */
-const getStk=()=>Store.get('stakeholders',[]);
-const saveStk=arr=>Store.set('stakeholders',arr);
+const getStk = async() => await Store.get('stakeholders', []);
+const saveStk = async(arr) => await Store.set('stakeholders', arr);
 let stkSearch='';
 
-function renderStakeholders(){
+async function renderStakeholders(){
   const wrap=$('stkTableWrap');
-  const list=getStk();
+  const list = await getStk();
   const filtered=stkSearch
     ?list.filter(s=>[s.name,s.role,s.unit,s.phone,s.email,s.note].join(' ').includes(stkSearch))
     :list;
@@ -1889,10 +1806,11 @@ function renderStakeholders(){
   html+='</tbody></table></div>';
   wrap.innerHTML=html;
   wrap.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openStkModal(b.dataset.edit)));
-  wrap.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>{
+  wrap.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',async ()=>{
     if(confirm('این ذی‌نفع حذف شود؟')){
-      saveStk(getStk().filter(s=>s.id!==b.dataset.del));
-      renderStakeholders();
+      const list = await getStk();
+      await saveStk(list.filter(s=>s.id!==b.dataset.del));
+      await renderStakeholders();
       toast('حذف شد','success');
     }
   }));
@@ -1901,9 +1819,9 @@ function renderStakeholders(){
 $('stkSearch').addEventListener('input',e=>{stkSearch=e.target.value.trim();renderStakeholders();});
 $('addStakeholderBtn').addEventListener('click',()=>openStkModal());
 
-function openStkModal(id){
+async function openStkModal(id){
   $('stkId').value=id||'';
-  const s=id?getStk().find(x=>x.id===id):null;
+  const s = id ? (await getStk()).find(x=>x.id===id) : null;
   $('stkModalTitle').textContent=id?'ویرایش ذی‌نفع':'افزودن ذی‌نفع';
   $('stkName').value=s?.name||'';
   $('stkRole').value=s?.role||'';
@@ -1915,14 +1833,15 @@ function openStkModal(id){
   $('stkModal').classList.add('open');
 }
 
-$('saveStkBtn').addEventListener('click',()=>{
+$('saveStkBtn').addEventListener('click',async ()=>{
   const name=$('stkName').value.trim();
   if(!name){$('stkErr').textContent='نام الزامی است.';return;}
   const phone=$('stkPhone').value.trim();
   if(phone&&!/^[\d۰-۹+\-\s]{6,}$/.test(phone)){$('stkErr').textContent='شماره تماس معتبر نیست.';return;}
   const email=$('stkEmail').value.trim();
   if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){$('stkErr').textContent='ایمیل معتبر نیست.';return;}
-  const list=getStk();
+  
+  const list = await getStk();
   const id=$('stkId').value;
   const data={name,role:$('stkRole').value.trim(),unit:$('stkUnit').value.trim(),phone,email,note:$('stkNote').value.trim()};
   if(id){
@@ -1931,9 +1850,9 @@ $('saveStkBtn').addEventListener('click',()=>{
   }else{
     list.push({id:'s_'+Date.now(),...data});
   }
-  saveStk(list);
+  await saveStk(list);
   $('stkModal').classList.remove('open');
-  renderStakeholders();
+  await renderStakeholders();
   toast('ذخیره شد','success');
 });
 
@@ -1950,22 +1869,22 @@ $('changePassBtn').addEventListener('click',()=>{
   $('curPass').value='';$('newPass').value='';$('confPass').value='';$('passErr').textContent='';
   $('passModal').classList.add('open');
 });
-$('savePassBtn').addEventListener('click',()=>{
-  if($('curPass').value!==getPass()){$('passErr').textContent='رمز فعلی نادرست است.';return;}
+$('savePassBtn').addEventListener('click',async ()=>{
+  const currentPass = await getPass();
+  if($('curPass').value!==currentPass){$('passErr').textContent='رمز فعلی نادرست است.';return;}
   if($('newPass').value.length<4){$('passErr').textContent='رمز جدید حداقل ۴ کاراکتر باشد.';return;}
   if($('newPass').value!==$('confPass').value){$('passErr').textContent='رمز جدید و تکرار یکسان نیستند.';return;}
-  setPass($('newPass').value);
+  await setPass($('newPass').value);
   $('passModal').classList.remove('open');
   toast('رمز عبور تغییر کرد','success');
 });
 
 /* ============================== RENDER ALL ============================== */
-function renderAll(){
-  renderDashboard();
-  renderChecklist();
-  renderStakeholders();
+async function renderAll(){
+  await renderDashboard();
+  await renderChecklist();
+  await renderStakeholders();
 }
 </script>
 </body>
 </html>
-```
