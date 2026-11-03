@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>BCP | کمیته امداد امام خمینی (ره)</title>
-<!-- آیکون تب (Favicon) از لوگوی آنلاین کمیته امداد -->
 <link rel="icon" type="image/png" href="https://portal.emdad.ir/Content/media/image/main/logo-footer.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -345,7 +344,6 @@ img{max-width:100%;display:block}
 .radio-pill .rp-dot{width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.35}
 .radio-pill.active .rp-dot{opacity:1}
 
-/* استایل دکمه فایل */
 .file-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:7px;font-size:.75rem;font-weight:700;background:var(--bg-soft);color:var(--text-2);border:1.5px solid var(--border);cursor:pointer;transition:all .2s;user-select:none;white-space:nowrap;}
 .file-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-glow)}
 .file-btn .ic{width:14px;height:14px}
@@ -442,7 +440,6 @@ img{max-width:100%;display:block}
 .form-row.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .form-err{color:var(--danger);font-size:.78rem;min-height:16px;margin-top:4px}
 
-/* استایل لیست فایل ها */
 .file-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:16px;max-height:300px;overflow-y:auto;}
 .file-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--bg-soft);border:1px solid var(--border);border-radius:8px;font-size:.85rem;}
 .file-item a{color:var(--primary);text-decoration:none;display:flex;align-items:center;gap:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -1048,7 +1045,6 @@ img{max-width:100%;display:block}
   </div>
 </div>
 
-<!-- Modal مدیریت فایل ها -->
 <div class="modal-bg" id="filesModal">
   <div class="modal">
     <div class="modal-head">
@@ -1057,7 +1053,6 @@ img{max-width:100%;display:block}
     </div>
     <div class="modal-body">
       <ul class="file-list" id="fileList"></ul>
-      
       <div class="upload-area" id="uploadArea">
         <input type="file" id="fileInput" multiple style="display:none;">
         <svg class="ic" viewBox="0 0 24 24" style="margin:0 auto 10px; width:32px; height:32px; color:var(--muted);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -1077,6 +1072,7 @@ img{max-width:100%;display:block}
 /* ============================== SUPABASE CONFIG ============================== */
 const SUPABASE_URL = 'https://grqvkojxmbqaxacfymcq.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_r59ndRE-SlV0iCNBBpBqIQ_FgIq9v8d';
+const STORAGE_BUCKET = 'emdad';
 
 /* ============================== HELPERS ============================== */
 const $=id=>document.getElementById(id);
@@ -1152,7 +1148,7 @@ function toast(msg,type='info'){
   t.className='toast '+type;
   t.textContent=msg;
   w.appendChild(t);
-  setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(()=>t.remove(),300);},2500);
+  setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(()=>t.remove(),300);},3000);
 }
 
 /* ============================== AUTH ============================== */
@@ -1235,7 +1231,6 @@ async function attemptLogin(){
   let savedPass = DEFAULT_USER;
   try { savedPass = await getPass(); } catch(e) {}
   
-  // اگر پسورد پیش‌فرض یا پسورد ذخیره شده باشد، وارد می‌شود
   if(p === DEFAULT_USER || p === savedPass){
     $('loginError').textContent='';
     setAuth(true); showApp();
@@ -1432,7 +1427,7 @@ const CHECKLIST=[
 const getCheck = async() => await Store.get('checklist', {});
 const saveCheck = async(s) => await Store.set('checklist', s);
 let CAL_TARGET_KEY=null;
-let CURRENT_FILE_KEY=null; // For file modal
+let CURRENT_FILE_KEY=null;
 
 /* ============================== DASHBOARD ============================== */
 async function renderDashboard(){
@@ -1540,7 +1535,6 @@ async function renderChecklist(){
           </label>
         </div>
         
-        <!-- دکمه پیوست فایل -->
         <button class="file-btn" data-file-btn="${key}">
           <svg class="ic" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
           <span>${faDigits(filesCount)}</span>
@@ -1666,7 +1660,6 @@ function attachChecklistListeners(){
     btn.addEventListener('click',()=>openCalendar(btn.dataset.cal));
   });
 
-  // File Modal Listeners
   document.querySelectorAll('[data-file-btn]').forEach(btn=>{
     btn.addEventListener('click',()=>openFilesModal(btn.dataset.fileBtn));
   });
@@ -1691,7 +1684,7 @@ async function updateGroupCounts(){
   });
 }
 
-/* ============================== FILE MANAGEMENT (REST API) ============================== */
+/* ============================== FILE MANAGEMENT ============================== */
 async function openFilesModal(key) {
   CURRENT_FILE_KEY = key;
   $('fileErr').textContent = '';
@@ -1719,7 +1712,6 @@ async function refreshFileList() {
       </li>
     `).join('');
     
-    // Attach delete listeners
     listEl.querySelectorAll('[data-del-file]').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         e.preventDefault();
@@ -1728,22 +1720,27 @@ async function refreshFileList() {
         const idx = parseInt(btn.dataset.delFile);
         const fileToDelete = files[idx];
         
-        // 1. Delete from Storage via REST API
         try {
-          const res = await fetch(`${SUPABASE_URL}/storage/v1/object/emdad/${fileToDelete.path}`, {
+          // حذف از Storage با REST API (به همراه apikey)
+          const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${fileToDelete.path}`, {
             method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+            headers: { 
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}` 
+            }
           });
-          if(!res.ok) throw new Error('Delete failed');
           
-          // 2. Update DB
+          if(!res.ok && res.status !== 404) {
+            console.error('Delete failed:', res.status, await res.text());
+          }
+          
+          // حذف از دیتابیس (چه فایل در سرور بود یا نه)
           const state = await getCheck();
           state[CURRENT_FILE_KEY].files.splice(idx, 1);
           await saveCheck(state);
           
-          // 3. Refresh UI
           await refreshFileList();
-          await renderChecklist(); // To update the badge number
+          await renderChecklist();
           toast('فایل حذف شد', 'success');
         } catch (err) {
           console.error(err);
@@ -1778,12 +1775,13 @@ $('uploadArea').addEventListener('drop', async (e) => {
 $('fileInput').addEventListener('change', async (e) => {
   if (e.target.files.length > 0) {
     await handleFileUpload(e.target.files);
-    e.target.value = ''; // Reset input
+    e.target.value = '';
   }
 });
 
 async function handleFileUpload(fileList) {
   const errEl = $('fileErr');
+  errEl.style.color = 'var(--muted)';
   errEl.textContent = 'در حال آپلود...';
   
   const state = await getCheck();
@@ -1791,13 +1789,13 @@ async function handleFileUpload(fileList) {
   if(!state[CURRENT_FILE_KEY].files) state[CURRENT_FILE_KEY].files = [];
   
   let successCount = 0;
+  let lastError = '';
   
   for (let i = 0; i < fileList.length; i++) {
     const file = fileList[i];
     
-    // 50MB Limit check
     if(file.size > 50 * 1024 * 1024) {
-      errEl.textContent = `فایل ${file.name} بزرگتر از ۵۰ مگابایت است و آپلود نشد.`;
+      lastError = `فایل «${file.name}» بزرگتر از ۵۰ مگابایت است.`;
       continue;
     }
     
@@ -1805,19 +1803,36 @@ async function handleFileUpload(fileList) {
     const filePath = `${CURRENT_FILE_KEY}/${Date.now()}_${cleanName}`;
     
     try {
-      // استفاده از REST API برای آپلود (بدون نیاز به کتابخانه)
-      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/emdad/${filePath}`, {
+      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${filePath}`, {
         method: 'POST',
         headers: {
+          'apikey': SUPABASE_ANON_KEY,
           'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Content-Type': file.type || 'application/octet-stream'
+          'Content-Type': file.type || 'application/octet-stream',
+          'x-upsert': 'true'
         },
         body: file
       });
       
-      if(!res.ok) throw new Error('Upload failed');
+      if(!res.ok) {
+        const errorBody = await res.text();
+        console.error('Upload failed:', res.status, errorBody);
+        
+        if(res.status === 401) {
+          lastError = 'خطای احراز هویت (401). کلید API را چک کنید.';
+        } else if(res.status === 403) {
+          lastError = 'دسترسی رد شد (403). Policy آپلود را در Supabase اجرا کنید.';
+        } else if(res.status === 404) {
+          lastError = `باکت «${STORAGE_BUCKET}» یافت نشد. نام باکت را چک کنید.`;
+        } else if(res.status === 413) {
+          lastError = 'فایل خیلی بزرگ است (413).';
+        } else {
+          lastError = `خطا ${res.status}: ${errorBody.substring(0, 100)}`;
+        }
+        continue;
+      }
       
-      const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/emdad/${filePath}`;
+      const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${filePath}`;
       
       state[CURRENT_FILE_KEY].files.push({
         name: file.name,
@@ -1827,8 +1842,8 @@ async function handleFileUpload(fileList) {
       successCount++;
       
     } catch (error) {
-      console.error(error);
-      errEl.textContent = `خطا در آپلود ${file.name}: ${error.message}`;
+      console.error('Upload error:', error);
+      lastError = `خطای شبکه: ${error.message}`;
     }
   }
   
@@ -1836,10 +1851,12 @@ async function handleFileUpload(fileList) {
     await saveCheck(state);
     errEl.textContent = '';
     await refreshFileList();
-    await renderChecklist(); // To update the badge
-    toast(`${successCount} فایل با موفقیت آپلود شد`, 'success');
+    await renderChecklist();
+    toast(`✓ ${successCount} فایل با موفقیت آپلود شد`, 'success');
   } else {
-    errEl.textContent = 'هیچ فایلی آپلود نشد.';
+    errEl.style.color = 'var(--danger)';
+    errEl.textContent = lastError || 'هیچ فایلی آپلود نشد.';
+    toast('خطا در آپلود', 'danger');
   }
 }
 
