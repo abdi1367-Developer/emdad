@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BCP | کمیته امداد امام خمینی (ره)</title>
-<!-- Favicon (لوگوی امداد در تب مرورگر) -->
+<!-- Favicon -->
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,94 +62,66 @@ img{max-width:100%;display:block}
 /* ============================== LOGIN ============================== */
 #loginScreen{
   position:fixed;inset:0;z-index:100;
-  display:flex;
-  justify-content:space-between;
+  display:grid;
+  grid-template-columns:1fr 440px;
   background:var(--bg);
   opacity:1;
   transition:opacity .5s ease;
-  overflow:hidden;
 }
 #loginScreen.hidden{opacity:0;pointer-events:none}
 
 /* Stage - Left Side */
 .login-stage{
-  position:relative;flex:1;overflow:hidden;
+  position:relative;overflow:hidden;
   background:radial-gradient(circle at 50% 50%, #1e4a3f 0%, #0d1f1a 70%, #06100c 100%);
   display:flex;align-items:center;justify-content:center;
-  transition:all .6s cubic-bezier(.4,0,.2,1);
 }
 [data-theme="dark"] .login-stage{background:radial-gradient(circle at 50% 50%, #132b22 0%, #0a1712 70%, #040a07 100%)}
 
-.stage-inner{
-  position:relative;width:100%;height:100%;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:40px;
-  transition:transform .6s cubic-bezier(.4,0,.2,1);
-}
-
-.bcp-logo{ height:90px; width:auto; object-fit:contain; z-index:2; filter:drop-shadow(0 10px 30px rgba(0,0,0,.5)); }
-
-.emdad-logo-wrap{
-  position:relative;z-index:2;
+/* Fog Container precisely around the logo */
+.fog-wrap{
+  position:relative;
+  width:min(600px, 80vw);
   display:flex;align-items:center;justify-content:center;
+  z-index:2;
 }
-.emdad-logo{ width:min(480px, 60vw); object-fit:contain; filter:drop-shadow(0 20px 40px rgba(0,0,0,.7)); }
+.emdad-logo{
+  width:100%;
+  object-fit:contain;
+  filter:drop-shadow(0 20px 50px rgba(0,0,0,.7));
+}
 
 /* Fog Layers */
 .fog-layer {
-  position:absolute;inset:-10%;z-index:5;pointer-events:none;
+  position:absolute;inset:-20%;z-index:5;pointer-events:none;
   backdrop-filter:blur(35px) brightness(.3) saturate(1.2);
   -webkit-backdrop-filter:blur(35px) brightness(.3) saturate(1.2);
-  mask-image:radial-gradient(circle 250px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 15%, black 60%, black 100%);
-  -webkit-mask-image:radial-gradient(circle 250px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 15%, black 60%, black 100%);
+  mask-image:radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 15%, black 60%, black 100%);
+  -webkit-mask-image:radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 15%, black 60%, black 100%);
 }
 .fog-layer-2 {
-  position:absolute;inset:-10%;z-index:4;pointer-events:none;
+  position:absolute;inset:-20%;z-index:4;pointer-events:none;
   backdrop-filter:blur(15px) brightness(.5);
   -webkit-backdrop-filter:blur(15px) brightness(.5);
-  mask-image:radial-gradient(circle 500px at var(--sx, 50%) var(--sy, 50%), transparent 0%, rgba(0,0,0,.4) 60%, black 100%);
-  -webkit-mask-image:radial-gradient(circle 500px at var(--sx, 50%) var(--sy, 50%), transparent 0%, rgba(0,0,0,.4) 60%, black 100%);
+  mask-image:radial-gradient(circle 400px at var(--sx, 50%) var(--sy, 50%), transparent 0%, rgba(0,0,0,.4) 60%, black 100%);
+  -webkit-mask-image:radial-gradient(circle 400px at var(--sx, 50%) var(--sy, 50%), transparent 0%, rgba(0,0,0,.4) 60%, black 100%);
 }
 
 /* Login Panel - Right Side */
 .login-panel{
-  width:440px;flex-shrink:0;
   display:flex;flex-direction:column;justify-content:center;
   padding:48px 40px;
   background:var(--bg-elev);
   border-left:1px solid var(--border);
   position:relative;
-  transition:transform .6s cubic-bezier(.4,0,.2,1), opacity .5s ease;
   z-index:10;
   box-shadow:-10px 0 40px rgba(0,0,0,.05);
 }
-#loginScreen.collapsed .login-panel{
-  transform:translateX(-100%);
-  opacity:0;pointer-events:none;
-}
-#loginScreen.collapsed .login-stage{
-  width:100vw; /* Expand to full width */
-}
 
-/* Toggle Button - Fixed to screen edge, not inside panel */
-.toggle-panel-btn{
-  position:fixed;top:50%;right:440px;transform:translateY(-50%);
-  width:28px;height:54px;border-radius:6px 0 0 6px;
-  background:var(--bg-elev);border:1px solid var(--border);border-right:none;
-  display:flex;align-items:center;justify-content:center;
-  color:var(--text-2);transition:all .6s cubic-bezier(.4,0,.2,1);z-index:20;
-  box-shadow:-4px 0 10px rgba(0,0,0,.05);
-}
-.toggle-panel-btn:hover{background:var(--bg-soft);color:var(--text)}
-#loginScreen.collapsed .toggle-panel-btn{
-  right:0;border-radius:6px 0 0 6px;
-}
-#loginScreen.collapsed .toggle-panel-btn .ic{transform:rotate(180deg)}
-
-.user-photo{
-  width:64px;height:64px;border-radius:50%;object-fit:cover;
+.login-logo{
+  width:80px;height:80px;border-radius:50%;object-fit:cover;
   border:2px solid var(--border-2);box-shadow:0 6px 20px rgba(0,0,0,.1);
-  margin-bottom:24px;background:var(--bg-soft);
+  margin-bottom:24px;
 }
 .login-title{font-size:1.5rem;font-weight:800;letter-spacing:-.5px;line-height:1.35;margin-bottom:32px;color:var(--text)}
 .login-title em{font-style:normal;color:var(--primary)}
@@ -164,10 +136,10 @@ img{max-width:100%;display:block}
 .login-err{color:var(--danger);font-size:.78rem;min-height:18px;margin-top:8px;text-align:center;font-weight:500}
 
 @media (max-width:1024px){
-  #loginScreen{flex-direction:column}
+  #loginScreen{grid-template-columns:1fr;grid-template-rows:1fr auto}
   .login-stage{min-height:45vh}
-  .login-panel{width:100%;border-left:none;border-top:1px solid var(--border);padding:32px 24px;min-height:55vh;transform:none !important;opacity:1 !important;pointer-events:auto !important}
-  .toggle-panel-btn{display:none}
+  .login-panel{width:100%;border-left:none;border-top:1px solid var(--border);padding:32px 24px;min-height:55vh}
+  .fog-wrap{width:min(400px, 80vw)}
 }
 
 /* ============================== APP SHELL ============================== */
@@ -178,7 +150,6 @@ img{max-width:100%;display:block}
 .app-brand img{height:36px;width:auto;object-fit:contain}
 .app-brand-text{display:flex;flex-direction:column;line-height:1.2}
 .app-brand-text .t1{font-weight:800;font-size:.82rem;color:var(--text)}
-.app-brand-text .t2{font-size:.62rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:1px}
 .app-tabs{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none}
 .app-tabs::-webkit-scrollbar{display:none}
 .app-tab{padding:8px 16px;border-radius:10px;font-size:.82rem;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:7px;white-space:nowrap;transition:all var(--transition)}
@@ -186,7 +157,8 @@ img{max-width:100%;display:block}
 .app-tab.active{color:var(--primary);background:var(--primary-glow)}
 [data-theme="dark"] .app-tab.active{color:var(--primary-2)}
 .app-tab .ic{width:16px;height:16px}
-.app-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.app-actions{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.user-avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1.5px solid var(--border-2)}
 .icon-btn{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--text-2);transition:all var(--transition)}
 .icon-btn:hover{background:var(--bg-soft);color:var(--text)}
 .icon-btn.danger:hover{background:var(--danger-bg);color:var(--danger)}
@@ -285,6 +257,21 @@ img{max-width:100%;display:block}
 .risk-level h5{font-size:.82rem;font-weight:800;color:var(--text);margin-bottom:4px}
 .risk-level .rl-score{font-size:.7rem;color:var(--muted);font-family:monospace;direction:ltr;text-align:right;margin-bottom:6px}
 .risk-level p{font-size:.75rem;color:var(--text-2);line-height:1.6}
+
+.train-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.train-mod{padding:16px 18px;border-radius:var(--radius);background:var(--bg-elev);border:1px solid var(--border)}
+.train-mod h5{font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:4px;display:flex;justify-content:space-between;align-items:baseline}
+.train-mod .hrs{font-size:.72rem;color:var(--accent);font-weight:700;font-family:monospace}
+.train-mod p{font-size:.76rem;color:var(--muted);line-height:1.6}
+.cost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.cost-item{padding:16px 18px;border-radius:var(--radius);background:var(--bg-elev);border:1px solid var(--border);position:relative}
+.cost-item .cost-pct{font-size:1.4rem;font-weight:900;color:var(--primary);letter-spacing:-1px;line-height:1;margin-bottom:4px;font-family:monospace}
+[data-theme="dark"] .cost-item .cost-pct{color:var(--primary-2)}
+.cost-item h5{font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:3px}
+.cost-item .cost-amt{font-size:.72rem;color:var(--muted);font-family:monospace;direction:ltr;text-align:right}
+.cost-total{margin-top:16px;padding:22px 26px;border-radius:var(--radius-lg);background:linear-gradient(135deg,var(--primary) 0%,var(--primary-2) 100%);color:#fff;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.cost-total .ct-label{font-size:.78rem;opacity:.8;letter-spacing:1px;text-transform:uppercase;font-weight:600}
+.cost-total .ct-value{font-size:1.6rem;font-weight:900;letter-spacing:-1px;font-family:monospace;direction:ltr}
 
 /* ============================== CHECKLIST ============================== */
 .chk-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:20px 0;margin-bottom:16px;border-bottom:1px solid var(--border)}
@@ -458,7 +445,7 @@ img{max-width:100%;display:block}
   .hero-inner{grid-template-columns:1fr;gap:24px}
   .hero-side{align-items:flex-start}
   .stats-row{grid-template-columns:repeat(2,1fr)}
-  .cards-3,.steps{grid-template-columns:repeat(2,1fr)}
+  .cards-3,.steps,.train-grid,.cost-grid{grid-template-columns:repeat(2,1fr)}
   .risk-levels{grid-template-columns:repeat(2,1fr)}
   .dash-row{grid-template-columns:repeat(4,1fr)}
   .dash-chart{grid-column:1/-1}
@@ -474,7 +461,7 @@ img{max-width:100%;display:block}
   .sec-head{gap:14px;margin-bottom:22px}
   .sec-num{font-size:2.6rem}
   .prop-section{padding:32px 0}
-  .cards-3,.steps{grid-template-columns:1fr}
+  .cards-3,.steps,.train-grid,.cost-grid{grid-template-columns:1fr}
   .dash-row{grid-template-columns:repeat(2,1fr);gap:10px}
   .chk-toolbar{flex-direction:column;align-items:stretch}
   .chk-toolbar-right{justify-content:flex-end;flex-wrap:wrap}
@@ -506,53 +493,89 @@ img{max-width:100%;display:block}
 /* ============================== PRINT ============================== */
 @media print {
   @page { margin: 1cm; size: A4 portrait; }
-  body { background: #fff !important; color: #000 !important; font-size: 11pt !important; }
+  body { background: #fff !important; color: #000 !important; font-size: 10pt !important; }
   body::before { display: none !important; }
   
-  /* Hide everything by default */
   body * { visibility: hidden; }
-  
-  /* Show only the checklist view */
   #view-checklist, #view-checklist * { visibility: visible; }
-  
-  /* Position the checklist at the top-left */
   #view-checklist { position: absolute; left: 0; top: 0; width: 100%; padding: 0; margin: 0; }
   
-  /* Hide UI elements */
-  .app-header, .app-tabs, .app-actions, .chk-toolbar, .radios, .cal-open, .save-btn, .dash-row, .toast-wrap, .modal-bg { 
+  .app-header, .app-tabs, .app-actions, .chk-toolbar, .radios, .cal-open, .save-btn, .toast-wrap, .modal-bg { 
     display: none !important; 
   }
   
-  /* Force expand all groups */
-  .chk-group { border: 1px solid #999 !important; border-radius: 4px !important; margin-bottom: 15px !important; break-inside: avoid; background: #fff !important; display: block !important; }
+  /* Dashboard Print */
+  .dash-row {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 15px !important;
+    margin-bottom: 30px !important;
+    width: 100% !important;
+  }
+  .dash-card {
+    border: 2px solid #333 !important;
+    border-radius: 8px !important;
+    padding: 24px 20px !important;
+    text-align: center !important;
+    background: #fff !important;
+  }
+  .dash-card .dc-label {
+    font-size: 12pt !important;
+    color: #333 !important;
+    font-weight: bold !important;
+    margin-bottom: 12px !important;
+  }
+  .dash-card .dc-value {
+    font-size: 32pt !important;
+    color: #000 !important;
+    font-weight: 900 !important;
+  }
+  .dash-card.has .dc-value { color: #0a6b3a !important; }
+  .dash-card.no .dc-value { color: #a02020 !important; }
+  .dash-card.pending .dc-value { color: #b87b10 !important; }
+  .dash-chart { display: none !important; }
+  
+  /* Checklist Print */
+  .chk-group { 
+    border: 1px solid #999 !important; 
+    border-radius: 4px !important; 
+    margin-bottom: 12px !important; 
+    break-inside: avoid; 
+    background: #fff !important; 
+    display: block !important; 
+  }
   .chk-body { display: block !important; padding: 0 !important; border-top: 1px solid #999 !important; }
   
-  .chk-head { background: #f0f0f0 !important; padding: 8px 12px !important; border-bottom: none !important; }
-  .chk-head-left h3 { font-size: 11pt !important; color: #000 !important; font-weight: bold !important; }
+  .chk-head { background: #f0f0f0 !important; padding: 6px 12px !important; border-bottom: none !important; }
+  .chk-head-left h3 { font-size: 10pt !important; color: #000 !important; font-weight: bold !important; }
   .chk-head-meta { display: none !important; }
   
+  /* Put Date and Owner IN FRONT of text (RTL) */
   .chk-row { 
     display: grid !important; 
-    grid-template-columns: 25px 1fr 80px 100px 110px !important; 
+    grid-template-columns: 20px 70px 90px 1fr !important; /* Index, Date, Owner, Text */
     gap: 8px !important; 
-    padding: 8px 12px !important; 
+    padding: 6px 10px !important; 
     border-top: 1px solid #eee !important; 
     align-items: center !important;
   }
   .chk-row:first-child { border-top: none !important; }
-  .chk-idx { font-size: 9pt !important; color: #555 !important; font-weight: bold !important; text-align: center !important; }
-  .chk-txt { font-size: 10pt !important; color: #000 !important; line-height: 1.4 !important; }
   
-  .chk-row[data-status="has"] .chk-txt::before { content: "✓ " !important; color: #0a6b3a !important; font-weight: 900 !important; font-size: 12pt !important; }
-  .chk-row[data-status="no"] .chk-txt::before { content: "✕ " !important; color: #a02020 !important; font-weight: 900 !important; font-size: 12pt !important; }
+  .chk-idx { grid-column: 1 !important; font-size: 8pt !important; color: #555 !important; font-weight: bold !important; text-align: center !important; }
+  .date-wrap { grid-column: 2 !important; width: 100% !important; }
+  .owner-wrap { grid-column: 3 !important; width: 100% !important; }
+  .chk-txt { grid-column: 4 !important; font-size: 9pt !important; color: #000 !important; line-height: 1.4 !important; }
+  
+  .chk-row[data-status="has"] .chk-txt::before { content: "✓ " !important; color: #0a6b3a !important; font-weight: 900 !important; font-size: 11pt !important; }
+  .chk-row[data-status="no"] .chk-txt::before { content: "✕ " !important; color: #a02020 !important; font-weight: 900 !important; font-size: 11pt !important; }
   
   .date-wrap input, .owner-wrap input { 
     border: 1px solid #ccc !important; 
-    background: #fff !important; 
+    background: #fafafa !important; 
     color: #000 !important; 
-    font-size: 9pt !important; 
-    padding: 4px 8px !important; 
-    border-radius: 3px !important;
+    font-size: 8pt !important; 
+    padding: 2px 4px !important; 
+    border-radius: 2px !important;
     width: 100% !important;
     text-align: center !important;
     visibility: visible !important;
@@ -561,10 +584,9 @@ img{max-width:100%;display:block}
   
   .date-wrap input::placeholder, .owner-wrap input::placeholder { color: transparent !important; }
   
-  /* Print Header */
   .print-header { display: block !important; text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 10px; visibility: visible !important; }
-  .print-header h1 { font-size: 18pt !important; margin-bottom: 5px; color: #000 !important; }
-  .print-header p { font-size: 10pt !important; color: #555 !important; }
+  .print-header h1 { font-size: 16pt !important; margin-bottom: 5px; color: #000 !important; }
+  .print-header p { font-size: 9pt !important; color: #555 !important; }
 }
 .print-header { display: none; }
 </style>
@@ -573,31 +595,18 @@ img{max-width:100%;display:block}
 
 <!-- ============================== LOGIN ============================== -->
 <div id="loginScreen">
-  <!-- Toggle Button (Fixed position) -->
-  <button class="toggle-panel-btn" id="togglePanelBtn" title="بستن/باز کردن پنل">
-    <svg class="ic" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-  </button>
-
   <!-- Stage - Left Side -->
   <div class="login-stage" id="loginStage">
-    <div class="stage-inner">
-      <!-- BCP Logo -->
-      <img src="bcp.jpg" alt="BCP Logo" class="bcp-logo" onerror="this.style.display='none'">
-      
-      <!-- Emdad Logo under fog -->
-      <div class="emdad-logo-wrap">
-        <img src="logo.png" alt="کمیته امداد امام خمینی" class="emdad-logo" onerror="this.src='https://portal.emdad.ir/Content/media/image/main/logo-footer.png'">
-      </div>
+    <div class="fog-wrap">
+      <img src="logo.png" alt="کمیته امداد امام خمینی" class="emdad-logo" onerror="this.src='https://portal.emdad.ir/Content/media/image/main/logo-footer.png'">
+      <div class="fog-layer-2" id="fog2"></div>
+      <div class="fog-layer" id="fog1"></div>
     </div>
-    <!-- Fog Layers -->
-    <div class="fog-layer-2" id="fog2"></div>
-    <div class="fog-layer" id="fog1"></div>
   </div>
 
   <!-- Login Panel - Right Side -->
   <div class="login-panel">
-    <!-- User Photo -->
-    <img src="me.jpg" alt="مدیر پروژه" class="user-photo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23e2e8f0%22/%3E%3Ccircle cx=%2250%22 cy=%2240%22 r=%2220%22 fill=%22%2394a3b8%22/%3E%3Cpath d=%22M20 90 Q50 60 80 90%22 fill=%22%2394a3b8%22/%3E%3C/svg%3E'">
+    <img src="bcp.jpg" alt="BCP Logo" class="login-logo" onerror="this.style.display='none'">
     
     <h1 class="login-title">سامانه <em>تداوم کسب‌وکار</em></h1>
     
@@ -627,7 +636,6 @@ img{max-width:100%;display:block}
       <img src="logo.png" alt="لوگو" onerror="this.style.display='none'">
       <div class="app-brand-text">
         <span class="t1">کمیته امداد امام خمینی (ره)</span>
-        <span class="t2">BCP Dashboard</span>
       </div>
     </div>
     <nav class="app-tabs">
@@ -645,6 +653,7 @@ img{max-width:100%;display:block}
       </button>
     </nav>
     <div class="app-actions">
+      <img src="me.jpg" alt="مدیر پروژه" class="user-avatar" title="مدیر پروژه" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23e2e8f0%22/%3E%3Ccircle cx=%2250%22 cy=%2240%22 r=%2220%22 fill=%22%2394a3b8%22/%3E%3Cpath d=%22M20 90 Q50 60 80 90%22 fill=%22%2394a3b8%22/%3E%3C/svg%3E'">
       <button class="icon-btn" id="themeBtn" title="تغییر تم">
         <svg class="ic" viewBox="0 0 24 24" id="themeIcon"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
       </button>
@@ -886,6 +895,44 @@ img{max-width:100%;display:block}
             </div>
           </section>
 
+          <!-- SECTION 07: TRAINING & COST -->
+          <section class="prop-section">
+            <div class="sec-head">
+              <div class="sec-num">۰۷</div>
+              <div class="sec-titles">
+                <div class="sec-tag">آموزش و سرمایه‌گذاری</div>
+                <h2 class="sec-title">۲۶ ساعت آموزش تخصصی و شش مایل‌استون هزینه‌ای</h2>
+                <p class="sec-sub">انتقال دانش به تیم داخلی و مدل پرداخت مرحله‌ای</p>
+              </div>
+            </div>
+            
+            <h3 style="font-size:1rem;font-weight:800;color:var(--text);margin-bottom:14px">سرفصل‌های آموزشی</h3>
+            <div class="train-grid">
+              <div class="train-mod"><h5>مفاهیم پایه و استانداردها <span class="hrs">۵ ساعت</span></h5><p>ISO 22301، ISO 31000، NIST و ساختار حاکمیت</p></div>
+              <div class="train-mod"><h5>شناسایی و BIA <span class="hrs">۶ ساعت</span></h5><p>روش‌شناسی، تعیین MTPD، RTO و RPO</p></div>
+              <div class="train-mod"><h5>تحلیل ریسک و سناریو <span class="hrs">۴ ساعت</span></h5><p>شناسایی تهدیدها و ارزیابی اثر</p></div>
+              <div class="train-mod"><h5>طراحی استراتژی بازیابی <span class="hrs">۴ ساعت</span></h5><p>تدوین BCP و DRP، الزامات Backup</p></div>
+              <div class="train-mod"><h5>مانور و آزمون <span class="hrs">۳ ساعت</span></h5><p>طراحی سناریو، تسهیل‌گری، مستندسازی</p></div>
+              <div class="train-mod"><h5>پاسخ به بحران و بهبود <span class="hrs">۴ ساعت</span></h5><p>فعال‌سازی، ارتباطات بحران، بازگشت به حالت عادی</p></div>
+            </div>
+
+            <h3 style="font-size:1rem;font-weight:800;color:var(--text);margin:32px 0 14px">مایل‌استون‌های هزینه‌ای</h3>
+            <div class="cost-grid">
+              <div class="cost-item"><div class="cost-pct">15%</div><h5>ارزیابی وضع موجود</h5><div class="cost-amt">5,025,000,000 ریال</div></div>
+              <div class="cost-item"><div class="cost-pct">20%</div><h5>تحلیل BIA و اولویت‌بندی</h5><div class="cost-amt">6,496,000,000 ریال</div></div>
+              <div class="cost-item"><div class="cost-pct">15%</div><h5>تحلیل ریسک و سناریو</h5><div class="cost-amt">5,025,000,000 ریال</div></div>
+              <div class="cost-item"><div class="cost-pct">20%</div><h5>مدیریت بحران و پاسخ</h5><div class="cost-amt">6,496,000,000 ریال</div></div>
+              <div class="cost-item"><div class="cost-pct">15%</div><h5>سند نهایی BCP</h5><div class="cost-amt">5,025,000,000 ریال</div></div>
+              <div class="cost-item"><div class="cost-pct">15%</div><h5>مانور، آموزش و تحویل</h5><div class="cost-amt">5,025,000,000 ریال</div></div>
+            </div>
+            <div class="cost-total">
+              <div>
+                <div class="ct-label">جمع کل پیشنهاد (بدون مالیات و عوارض)</div>
+              </div>
+              <div class="ct-value">43,700,000,000 ریال</div>
+            </div>
+          </section>
+
         </div>
       </section>
 
@@ -1083,12 +1130,6 @@ $('themeBtn').addEventListener('click',()=>{
 
 /* ============================== LOGIN LOGIC ============================== */
 const loginScreen = $('loginScreen');
-const toggleBtn = $('togglePanelBtn');
-
-toggleBtn.addEventListener('click', () => {
-  loginScreen.classList.toggle('collapsed');
-});
-
 const stage=$('loginStage');
 const fog1=$('fog1');
 const fog2=$('fog2');
@@ -1105,14 +1146,15 @@ stage.addEventListener('mouseleave',()=>{lastMove=0;});
 
 function tickFog(now){
   const sinceMove=now-lastMove;
-  const idle=sinceMove>2000;
+  const idle=sinceMove>1500; // faster idle trigger
   if(idle){
-    idleTime+=0.005;
-    tarX=50+Math.sin(idleTime)*25;
-    tarY=50+Math.cos(idleTime*0.8)*20;
+    idleTime+=0.012; // faster movement
+    tarX=50+Math.sin(idleTime*1.2)*28;
+    tarY=50+Math.cos(idleTime)*22;
   }
-  curX+=(tarX-curX)*0.06; 
-  curY+=(tarY-curY)*0.06;
+  // faster lerp (smoother but quicker)
+  curX+=(tarX-curX)*0.1; 
+  curY+=(tarY-curY)*0.1;
   
   fog1.style.setProperty('--mx',curX+'%');
   fog1.style.setProperty('--my',curY+'%');
@@ -1133,7 +1175,6 @@ function showLogin(){
   $('loginScreen').classList.remove('hidden');
   $('appScreen').classList.remove('visible');
   $('loginPassword').value=''; $('loginError').textContent='';
-  loginScreen.classList.remove('collapsed');
 }
 function attemptLogin(){
   const m=$('loginMobile').value.trim();
