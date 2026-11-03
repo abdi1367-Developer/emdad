@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BCP | کمیته امداد امام خمینی (ره)</title>
-<!-- Favicon -->
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -78,38 +77,34 @@ img{max-width:100%;display:block}
 }
 [data-theme="dark"] .login-stage{background:radial-gradient(circle at 50% 50%, #132b22 0%, #0a1712 70%, #040a07 100%)}
 
-/* Fog Container precisely around the logo */
-.fog-wrap{
-  position:relative;
-  width:min(600px, 80vw);
-  display:flex;align-items:center;justify-content:center;
-  z-index:2;
-}
+/* Logo directly on stage, no wrap box */
 .emdad-logo{
-  width:100%;
+  width:min(600px, 75vw);
   object-fit:contain;
   filter:drop-shadow(0 20px 50px rgba(0,0,0,.7));
+  z-index:2;
+  mix-blend-mode: screen; /* removes white box if PNG has white bg */
 }
 
-/* Fog Layers */
+/* Fog Layers covering the entire stage */
 .fog-layer {
-  position:absolute;inset:-20%;z-index:5;pointer-events:none;
-  backdrop-filter:blur(35px) brightness(.3) saturate(1.2);
-  -webkit-backdrop-filter:blur(35px) brightness(.3) saturate(1.2);
-  mask-image:radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 15%, black 60%, black 100%);
-  -webkit-mask-image:radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 15%, black 60%, black 100%);
+  position:absolute;inset:0;z-index:5;pointer-events:none;
+  backdrop-filter:blur(40px) brightness(.25) saturate(1.2);
+  -webkit-backdrop-filter:blur(40px) brightness(.25) saturate(1.2);
+  mask-image:radial-gradient(circle 250px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 10%, black 60%, black 100%);
+  -webkit-mask-image:radial-gradient(circle 250px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 10%, black 60%, black 100%);
 }
 .fog-layer-2 {
-  position:absolute;inset:-20%;z-index:4;pointer-events:none;
-  backdrop-filter:blur(15px) brightness(.5);
-  -webkit-backdrop-filter:blur(15px) brightness(.5);
-  mask-image:radial-gradient(circle 400px at var(--sx, 50%) var(--sy, 50%), transparent 0%, rgba(0,0,0,.4) 60%, black 100%);
-  -webkit-mask-image:radial-gradient(circle 400px at var(--sx, 50%) var(--sy, 50%), transparent 0%, rgba(0,0,0,.4) 60%, black 100%);
+  position:absolute;inset:0;z-index:4;pointer-events:none;
+  backdrop-filter:blur(20px) brightness(.4);
+  -webkit-backdrop-filter:blur(20px) brightness(.4);
+  mask-image:radial-gradient(circle 450px at var(--sx, 50%) var(--sy, 50%), transparent 0%, rgba(0,0,0,.3) 50%, black 100%);
+  -webkit-mask-image:radial-gradient(circle 450px at var(--sx, 50%) var(--sy, 50%), transparent 0%, rgba(0,0,0,.3) 50%, black 100%);
 }
 
 /* Login Panel - Right Side */
 .login-panel{
-  display:flex;flex-direction:column;justify-content:center;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
   padding:48px 40px;
   background:var(--bg-elev);
   border-left:1px solid var(--border);
@@ -118,20 +113,31 @@ img{max-width:100%;display:block}
   box-shadow:-10px 0 40px rgba(0,0,0,.05);
 }
 
-.login-logo{
-  width:80px;height:80px;border-radius:50%;object-fit:cover;
-  border:2px solid var(--border-2);box-shadow:0 6px 20px rgba(0,0,0,.1);
-  margin-bottom:24px;
+/* User photo top left of panel */
+.me-photo{
+  position:absolute;top:24px;left:24px;
+  width:56px;height:56px;border-radius:50%;object-fit:cover;
+  border:2px solid var(--border-2);box-shadow:0 4px 12px rgba(0,0,0,.1);
+  background:var(--bg-soft);
 }
-.login-title{font-size:1.5rem;font-weight:800;letter-spacing:-.5px;line-height:1.35;margin-bottom:32px;color:var(--text)}
+
+/* BCP Logo centered */
+.bcp-logo{
+  width:100px;height:100px;border-radius:50%;object-fit:contain;
+  margin-bottom:24px;
+  box-shadow:0 8px 24px rgba(0,0,0,.15);
+}
+.login-title{font-size:1.5rem;font-weight:800;letter-spacing:-.5px;line-height:1.35;margin-bottom:32px;color:var(--text);text-align:center}
 .login-title em{font-style:normal;color:var(--primary)}
-.field{margin-bottom:16px}
+
+.login-form{width:100%;max-width:340px}
+.field{margin-bottom:18px}
 .field label{display:block;font-size:.78rem;font-weight:600;color:var(--text-2);margin-bottom:6px}
 .field .wrap{position:relative}
 .field .wrap svg{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;width:16px;height:16px}
-.field input{width:100%;padding:12px 38px 12px 14px;background:var(--bg-soft);border:1.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;transition:all var(--transition);font-size:.9rem}
+.field input{width:100%;padding:13px 38px 13px 14px;background:var(--bg-soft);border:1.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;transition:all var(--transition);font-size:.9rem}
 .field input:focus{border-color:var(--primary);background:var(--bg-elev);box-shadow:0 0 0 4px var(--primary-glow)}
-.login-btn{width:100%;padding:13px;border-radius:var(--radius);background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;transition:all var(--transition);margin-top:8px}
+.login-btn{width:100%;padding:14px;border-radius:var(--radius);background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;transition:all var(--transition);margin-top:8px}
 .login-btn:hover{background:var(--primary-2);transform:translateY(-1px);box-shadow:0 10px 30px var(--primary-glow)}
 .login-err{color:var(--danger);font-size:.78rem;min-height:18px;margin-top:8px;text-align:center;font-weight:500}
 
@@ -139,7 +145,7 @@ img{max-width:100%;display:block}
   #loginScreen{grid-template-columns:1fr;grid-template-rows:1fr auto}
   .login-stage{min-height:45vh}
   .login-panel{width:100%;border-left:none;border-top:1px solid var(--border);padding:32px 24px;min-height:55vh}
-  .fog-wrap{width:min(400px, 80vw)}
+  .emdad-logo{width:min(400px, 80vw)}
 }
 
 /* ============================== APP SHELL ============================== */
@@ -168,7 +174,7 @@ img{max-width:100%;display:block}
 @keyframes viewIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .container{max-width:1700px;margin:0 auto;width:100%}
 
-/* ============================== HOME / MOTION PROPOSAL ============================== */
+/* ============================== HOME / PROPOSAL ============================== */
 .prop-wrap{padding:28px 0 40px}
 .prop-hero{position:relative;overflow:hidden;padding:clamp(40px,6vw,80px) clamp(24px,4vw,60px);border-radius:var(--radius-xl);background:linear-gradient(135deg,#0d1f1a 0%,#152b24 45%,#1e4a3f 100%);color:#fff;box-shadow:var(--shadow-lg);margin-bottom:28px}
 [data-theme="dark"] .prop-hero{background:linear-gradient(135deg,#0a1712 0%,#122420 45%,#17392e 100%)}
@@ -280,10 +286,10 @@ img{max-width:100%;display:block}
 .chk-toolbar-right{display:flex;gap:8px;align-items:center}
 
 .dash-row{display:grid;grid-template-columns:repeat(4,1fr) 1.3fr;gap:12px;margin-bottom:24px}
-.dash-card{padding:16px 18px;border-radius:var(--radius);background:var(--bg-elev);border:1px solid var(--border)}
-.dash-card .dc-label{font-size:.7rem;font-weight:600;color:var(--muted);margin-bottom:4px}
-.dash-card .dc-value{font-size:1.7rem;font-weight:900;color:var(--text);line-height:1}
-.dash-card .dc-value small{font-size:.75rem;font-weight:600;color:var(--muted);margin-right:4px}
+.dash-card{padding:20px 18px;border-radius:var(--radius);background:var(--bg-elev);border:1px solid var(--border);text-align:center}
+.dash-card .dc-label{font-size:.8rem;font-weight:700;color:var(--muted);margin-bottom:8px}
+.dash-card .dc-value{font-size:2rem;font-weight:900;color:var(--text);line-height:1}
+.dash-card .dc-value small{font-size:.8rem;font-weight:600;color:var(--muted);margin-right:4px}
 .dash-card.has .dc-value{color:var(--success)}
 .dash-card.no .dc-value{color:var(--danger)}
 .dash-card.pending .dc-value{color:var(--warning)}
@@ -550,21 +556,40 @@ img{max-width:100%;display:block}
   .chk-head-left h3 { font-size: 10pt !important; color: #000 !important; font-weight: bold !important; }
   .chk-head-meta { display: none !important; }
   
-  /* Put Date and Owner IN FRONT of text (RTL) */
+  /* Align Date and Owner perfectly with text on the same row */
   .chk-row { 
-    display: grid !important; 
-    grid-template-columns: 20px 70px 90px 1fr !important; /* Index, Date, Owner, Text */
-    gap: 8px !important; 
-    padding: 6px 10px !important; 
+    display: flex !important; 
+    flex-direction: row-reverse !important; /* In RTL, text goes right, then date, then owner */
+    align-items: center !important; 
+    justify-content: flex-start !important;
+    gap: 12px !important; 
+    padding: 8px 10px !important; 
     border-top: 1px solid #eee !important; 
-    align-items: center !important;
   }
   .chk-row:first-child { border-top: none !important; }
   
-  .chk-idx { grid-column: 1 !important; font-size: 8pt !important; color: #555 !important; font-weight: bold !important; text-align: center !important; }
-  .date-wrap { grid-column: 2 !important; width: 100% !important; }
-  .owner-wrap { grid-column: 3 !important; width: 100% !important; }
-  .chk-txt { grid-column: 4 !important; font-size: 9pt !important; color: #000 !important; line-height: 1.4 !important; }
+  .chk-idx { 
+    width: 20px !important;
+    font-size: 8pt !important; 
+    color: #555 !important; 
+    font-weight: bold !important; 
+    text-align: center !important; 
+  }
+  .chk-txt { 
+    flex: 1 !important; 
+    font-size: 9.5pt !important; 
+    color: #000 !important; 
+    line-height: 1.3 !important; 
+    margin: 0 !important;
+  }
+  .date-wrap { 
+    width: 85px !important; 
+    margin: 0 !important;
+  }
+  .owner-wrap { 
+    width: 95px !important; 
+    margin: 0 !important;
+  }
   
   .chk-row[data-status="has"] .chk-txt::before { content: "✓ " !important; color: #0a6b3a !important; font-weight: 900 !important; font-size: 11pt !important; }
   .chk-row[data-status="no"] .chk-txt::before { content: "✕ " !important; color: #a02020 !important; font-weight: 900 !important; font-size: 11pt !important; }
@@ -574,7 +599,7 @@ img{max-width:100%;display:block}
     background: #fafafa !important; 
     color: #000 !important; 
     font-size: 8pt !important; 
-    padding: 2px 4px !important; 
+    padding: 3px 4px !important; 
     border-radius: 2px !important;
     width: 100% !important;
     text-align: center !important;
@@ -597,35 +622,37 @@ img{max-width:100%;display:block}
 <div id="loginScreen">
   <!-- Stage - Left Side -->
   <div class="login-stage" id="loginStage">
-    <div class="fog-wrap">
-      <img src="logo.png" alt="کمیته امداد امام خمینی" class="emdad-logo" onerror="this.src='https://portal.emdad.ir/Content/media/image/main/logo-footer.png'">
-      <div class="fog-layer-2" id="fog2"></div>
-      <div class="fog-layer" id="fog1"></div>
-    </div>
+    <img src="logo.png" alt="کمیته امداد امام خمینی" class="emdad-logo" onerror="this.src='https://portal.emdad.ir/Content/media/image/main/logo-footer.png'">
+    <div class="fog-layer-2" id="fog2"></div>
+    <div class="fog-layer" id="fog1"></div>
   </div>
 
   <!-- Login Panel - Right Side -->
   <div class="login-panel">
-    <img src="bcp.jpg" alt="BCP Logo" class="login-logo" onerror="this.style.display='none'">
+    <img src="me.jpg" alt="مدیر پروژه" class="me-photo" title="مدیر پروژه" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23e2e8f0%22/%3E%3Ccircle cx=%2250%22 cy=%2240%22 r=%2220%22 fill=%22%2394a3b8%22/%3E%3Cpath d=%22M20 90 Q50 60 80 90%22 fill=%22%2394a3b8%22/%3E%3C/svg%3E'">
+    
+    <img src="bcp.jpg" alt="BCP Logo" class="bcp-logo" onerror="this.style.display='none'">
     
     <h1 class="login-title">سامانه <em>تداوم کسب‌وکار</em></h1>
     
-    <div class="field">
-      <label for="loginMobile">شماره موبایل</label>
-      <div class="wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
-        <input type="tel" id="loginMobile" placeholder="۰۹۱۲۴۰۱۵۰۲۳" dir="ltr" autocomplete="username">
+    <div class="login-form">
+      <div class="field">
+        <label for="loginMobile">شماره موبایل</label>
+        <div class="wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+          <input type="tel" id="loginMobile" placeholder="۰۹۱۲۴۰۱۵۰۲۳" dir="ltr" autocomplete="username">
+        </div>
       </div>
-    </div>
-    <div class="field">
-      <label for="loginPassword">رمز عبور</label>
-      <div class="wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        <input type="password" id="loginPassword" placeholder="••••••••" dir="ltr" autocomplete="current-password">
+      <div class="field">
+        <label for="loginPassword">رمز عبور</label>
+        <div class="wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <input type="password" id="loginPassword" placeholder="••••••••" dir="ltr" autocomplete="current-password">
+        </div>
       </div>
+      <button class="login-btn" id="loginBtn">ورود به سامانه</button>
+      <div class="login-err" id="loginError"></div>
     </div>
-    <button class="login-btn" id="loginBtn">ورود</button>
-    <div class="login-err" id="loginError"></div>
   </div>
 </div>
 
@@ -895,7 +922,6 @@ img{max-width:100%;display:block}
             </div>
           </section>
 
-          <!-- SECTION 07: TRAINING & COST -->
           <section class="prop-section">
             <div class="sec-head">
               <div class="sec-num">۰۷</div>
@@ -1146,15 +1172,14 @@ stage.addEventListener('mouseleave',()=>{lastMove=0;});
 
 function tickFog(now){
   const sinceMove=now-lastMove;
-  const idle=sinceMove>1500; // faster idle trigger
+  const idle=sinceMove>1500;
   if(idle){
-    idleTime+=0.012; // faster movement
-    tarX=50+Math.sin(idleTime*1.2)*28;
-    tarY=50+Math.cos(idleTime)*22;
+    idleTime+=0.015; // faster motion
+    tarX=50+Math.sin(idleTime*1.5)*30;
+    tarY=50+Math.cos(idleTime*1.2)*25;
   }
-  // faster lerp (smoother but quicker)
-  curX+=(tarX-curX)*0.1; 
-  curY+=(tarY-curY)*0.1;
+  curX+=(tarX-curX)*0.12; 
+  curY+=(tarY-curY)*0.12;
   
   fog1.style.setProperty('--mx',curX+'%');
   fog1.style.setProperty('--my',curY+'%');
@@ -1394,22 +1419,23 @@ function renderDashboard(){
       <text x="50" y="60" text-anchor="middle" font-family="Vazirmatn,sans-serif" font-size="5.5" fill="var(--muted)">دارای داده</text>
     </svg>`;
 
+  // Icons removed from dc-label
   $('dashboardContainer').innerHTML=`
     <div class="dash-row">
       <div class="dash-card">
-        <div class="dc-label"><svg class="ic" style="width:13px;height:13px" viewBox="0 0 24 24"><path d="M9 11H3v10h6zM21 3h-6v18h6zM15 7H9v14h6z"/></svg>کل موارد</div>
+        <div class="dc-label">کل موارد</div>
         <div class="dc-value">${faDigits(total)}</div>
       </div>
       <div class="dash-card has">
-        <div class="dc-label"><svg class="ic" style="width:13px;height:13px" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>دارای داده</div>
+        <div class="dc-label">دارای داده</div>
         <div class="dc-value">${faDigits(has)}<small>${faDigits(pctHas)}٪</small></div>
       </div>
       <div class="dash-card no">
-        <div class="dc-label"><svg class="ic" style="width:13px;height:13px" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>فاقد داده</div>
+        <div class="dc-label">فاقد داده</div>
         <div class="dc-value">${faDigits(no)}<small>${faDigits(pctNo)}٪</small></div>
       </div>
       <div class="dash-card pending">
-        <div class="dc-label"><svg class="ic" style="width:13px;height:13px" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>در انتظار</div>
+        <div class="dc-label">در انتظار</div>
         <div class="dc-value">${faDigits(pending)}<small>${faDigits(pctPend)}٪</small></div>
       </div>
       <div class="dash-chart">
@@ -1715,9 +1741,7 @@ function updatePrintDate(){
 updatePrintDate();
 
 $('printBtn').addEventListener('click',()=>{
-  // Expand all groups for print
   document.querySelectorAll('.chk-group').forEach(g=>g.classList.remove('collapsed'));
-  // Delay slightly to allow DOM to update
   setTimeout(() => {
     window.print();
   }, 100);
