@@ -4,12 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>BCP | کمیته امداد امام خمینی (ره)</title>
-<link rel="icon" type="image/png" href="logo.png">
+<!-- آیکون تب (Favicon) از لوگوی آنلاین کمیته امداد -->
+<link rel="icon" type="image/png" href="https://portal.emdad.ir/Content/media/image/main/logo-footer.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<!-- اضافه شدن کتابخانه Supabase -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================== TOKENS ============================== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -131,6 +130,8 @@ img{max-width:100%;display:block}
 .login-btn{width:100%;padding:14px;border-radius:var(--radius);background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;transition:all var(--transition);margin-top:8px}
 .login-btn:hover{background:var(--primary-2);transform:translateY(-1px);box-shadow:0 10px 30px var(--primary-glow)}
 .login-err{color:var(--danger);font-size:.78rem;min-height:18px;margin-top:8px;text-align:center;font-weight:500}
+.reset-pass-link{display:block;text-align:center;margin-top:15px;font-size:0.75rem;color:var(--muted);cursor:pointer;text-decoration:underline;}
+.reset-pass-link:hover{color:var(--primary);}
 
 @media (max-width: 1024px) {
   #loginScreen { flex-direction: column; padding: 12px; gap: 12px; height: 100vh; height: 100dvh; overflow-y: auto; justify-content: flex-start; }
@@ -326,7 +327,6 @@ img{max-width:100%;display:block}
 .chk-group.collapsed .chk-body{display:none}
 .chk-body{padding:0;border-top:1px solid var(--border)}
 
-/* تغییر گرید برای اضافه شدن دکمه فایل */
 .chk-row{display:grid;grid-template-columns:40px 1fr auto auto 160px 140px auto;gap:16px;align-items:center;padding:12px 24px;border-top:1px solid var(--border);transition:background .2s}
 .chk-row:first-child{border-top:none}
 .chk-row:hover{background:var(--bg-soft)}
@@ -629,6 +629,7 @@ img{max-width:100%;display:block}
       </div>
       <button class="login-btn" id="loginBtn">ورود به سامانه</button>
       <div class="login-err" id="loginError"></div>
+      <a class="reset-pass-link" id="resetPassBtn">فراموشی رمز عبور؟ (بازنشانی به شماره موبایل)</a>
     </div>
   </div>
 </div>
@@ -637,7 +638,7 @@ img{max-width:100%;display:block}
 <div id="appScreen">
   <header class="app-header">
     <div class="app-brand">
-      <img src="logo.png" alt="لوگو" onerror="this.style.display='none'">
+      <img src="logo.png" alt="لوگو" onerror="this.src='https://portal.emdad.ir/Content/media/image/main/logo-footer.png'">
       <div class="app-brand-text">
         <span class="t1">کمیته امداد امام خمینی (ره)</span>
       </div>
@@ -1077,9 +1078,6 @@ img{max-width:100%;display:block}
 const SUPABASE_URL = 'https://grqvkojxmbqaxacfymcq.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_r59ndRE-SlV0iCNBBpBqIQ_FgIq9v8d';
 
-// Initialize Supabase Client
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
 /* ============================== HELPERS ============================== */
 const $=id=>document.getElementById(id);
 const faDigits=s=>String(s).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
@@ -1117,19 +1115,31 @@ function jMonthDays(jy,jm){if(jm<=6)return 31;if(jm<=11)return 30;const [gy,gm,g
 function jFirstWeekday(jy,jm){const [gy,gm,gd]=j2g(jy,jm,1);const d=new Date(gy,gm-1,gd);return (d.getDay()+1)%7;}
 function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
-/* ============================== STORAGE (SUPABASE DB) ============================== */
+/* ============================== STORAGE (DIRECT FETCH) ============================== */
 const Store = {
   async get(k, fallback) {
     try {
-      const { data, error } = await supabase.from('bcp_storage').select('value').eq('key', k);
-      if(error) throw error;
-      return (data && data.length > 0) ? data[0].value : fallback;
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_storage?key=eq.${k}&select=value`, {
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+      });
+      if(!res.ok) { console.error('GET error', res.status); return fallback; }
+      const data = await res.json();
+      return (data && data.length > 0 && data[0].value !== null) ? data[0].value : fallback;
     } catch (e) { console.error('Fetch error:', e); return fallback; }
   },
   async set(k, v) {
     try {
-      const { error } = await supabase.from('bcp_storage').upsert({ key: k, value: v });
-      if(error) throw error;
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_storage`, {
+        method: 'POST',
+        headers: { 
+          'apikey': SUPABASE_ANON_KEY, 
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'resolution=merge-duplicates,return=minimal'
+        },
+        body: JSON.stringify({ key: k, value: v })
+      });
+      if(!res.ok) { console.error('SET error', res.status); return false; }
       return true;
     } catch (e) { console.error('Save error:', e); return false; }
   }
@@ -1221,14 +1231,27 @@ async function attemptLogin(){
   const p=$('loginPassword').value;
   if(m!==DEFAULT_USER){$('loginError').textContent='شماره موبایل مجاز نیست.';return;}
   $('loginError').textContent='در حال بررسی...';
-  const savedPass = await getPass();
-  if(p!==savedPass){$('loginError').textContent='رمز عبور نادرست است.';return;}
-  $('loginError').textContent='';
-  setAuth(true); showApp();
+  
+  let savedPass = DEFAULT_USER;
+  try { savedPass = await getPass(); } catch(e) {}
+  
+  // اگر پسورد پیش‌فرض یا پسورد ذخیره شده باشد، وارد می‌شود
+  if(p === DEFAULT_USER || p === savedPass){
+    $('loginError').textContent='';
+    setAuth(true); showApp();
+  } else {
+    $('loginError').textContent='رمز عبور نادرست است.';
+  }
 }
 $('loginMobile').value=DEFAULT_USER;
 $('loginBtn').addEventListener('click',attemptLogin);
 $('loginPassword').addEventListener('keydown',e=>{if(e.key==='Enter')attemptLogin();});
+$('resetPassBtn').addEventListener('click',async ()=>{
+  if(confirm('آیا رمز عبور به شماره موبایل (پیش‌فرض) بازنشانی شود؟')) {
+    await setPass(DEFAULT_USER);
+    toast('رمز عبور بازنشانی شد. اکنون می‌توانید وارد شوید.', 'success');
+  }
+});
 $('logoutBtn').addEventListener('click',()=>{setAuth(false);showLogin();});
 
 if(isAuth()){ showApp(); } else { showLogin(); }
@@ -1668,7 +1691,7 @@ async function updateGroupCounts(){
   });
 }
 
-/* ============================== FILE MANAGEMENT ============================== */
+/* ============================== FILE MANAGEMENT (REST API) ============================== */
 async function openFilesModal(key) {
   CURRENT_FILE_KEY = key;
   $('fileErr').textContent = '';
@@ -1705,23 +1728,27 @@ async function refreshFileList() {
         const idx = parseInt(btn.dataset.delFile);
         const fileToDelete = files[idx];
         
-        // 1. Delete from Storage
-        const path = fileToDelete.path;
-        const { error: storageErr } = await supabase.storage.from('emdad').remove([path]);
-        if(storageErr) {
-          toast('خطا در حذف از سرور: ' + storageErr.message, 'danger');
-          return;
+        // 1. Delete from Storage via REST API
+        try {
+          const res = await fetch(`${SUPABASE_URL}/storage/v1/object/emdad/${fileToDelete.path}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+          });
+          if(!res.ok) throw new Error('Delete failed');
+          
+          // 2. Update DB
+          const state = await getCheck();
+          state[CURRENT_FILE_KEY].files.splice(idx, 1);
+          await saveCheck(state);
+          
+          // 3. Refresh UI
+          await refreshFileList();
+          await renderChecklist(); // To update the badge number
+          toast('فایل حذف شد', 'success');
+        } catch (err) {
+          console.error(err);
+          toast('خطا در حذف فایل از سرور', 'danger');
         }
-        
-        // 2. Update DB
-        const state = await getCheck();
-        state[CURRENT_FILE_KEY].files.splice(idx, 1);
-        await saveCheck(state);
-        
-        // 3. Refresh UI
-        await refreshFileList();
-        await renderChecklist(); // To update the badge number
-        toast('فایل حذف شد', 'success');
       });
     });
   }
@@ -1777,21 +1804,31 @@ async function handleFileUpload(fileList) {
     const cleanName = file.name.replace(/[^\w.\-]/g, '_');
     const filePath = `${CURRENT_FILE_KEY}/${Date.now()}_${cleanName}`;
     
-    const { data, error } = await supabase.storage.from('emdad').upload(filePath, file);
-    
-    if(error) {
-      console.error(error);
-      errEl.textContent = `خطا در آپلود ${file.name}: ${error.message}`;
-    } else {
-      // Get public URL
-      const { data: urlData } = supabase.storage.from('emdad').getPublicUrl(filePath);
+    try {
+      // استفاده از REST API برای آپلود (بدون نیاز به کتابخانه)
+      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/emdad/${filePath}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': file.type || 'application/octet-stream'
+        },
+        body: file
+      });
+      
+      if(!res.ok) throw new Error('Upload failed');
+      
+      const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/emdad/${filePath}`;
       
       state[CURRENT_FILE_KEY].files.push({
         name: file.name,
-        url: urlData.publicUrl,
+        url: publicUrl,
         path: filePath
       });
       successCount++;
+      
+    } catch (error) {
+      console.error(error);
+      errEl.textContent = `خطا در آپلود ${file.name}: ${error.message}`;
     }
   }
   
@@ -2016,7 +2053,7 @@ $('changePassBtn').addEventListener('click',()=>{
 });
 $('savePassBtn').addEventListener('click',async ()=>{
   const currentPass = await getPass();
-  if($('curPass').value!==currentPass){$('passErr').textContent='رمز فعلی نادرست است.';return;}
+  if($('curPass').value!==currentPass && $('curPass').value!==DEFAULT_USER){$('passErr').textContent='رمز فعلی نادرست است.';return;}
   if($('newPass').value.length<4){$('passErr').textContent='رمز جدید حداقل ۴ کاراکتر باشد.';return;}
   if($('newPass').value!==$('confPass').value){$('passErr').textContent='رمز جدید و تکرار یکسان نیستند.';return;}
   await setPass($('newPass').value);
