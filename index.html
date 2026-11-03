@@ -69,8 +69,6 @@ img{max-width:100%;display:block}
   transition:opacity .5s ease;
 }
 #loginScreen.hidden{opacity:0;pointer-events:none}
-
-/* Stage - Left Side */
 .login-stage{
   position:relative;flex:1;
   border-radius:var(--radius-xl);
@@ -81,7 +79,6 @@ img{max-width:100%;display:block}
   cursor:default;
 }
 [data-theme="dark"] .login-stage{background:radial-gradient(circle at 50% 50%, #1e4a3f 0%, #0a1712 100%)}
-
 .emdad-logo{
   width:min(800px, 85%);
   max-height: 80%;
@@ -89,8 +86,6 @@ img{max-width:100%;display:block}
   filter:drop-shadow(0 20px 60px rgba(0,0,0,.6));
   z-index:2;
 }
-
-/* Dust/Glass Overlay */
 .stage-dust {
   position:absolute;inset:0;z-index:5;pointer-events:none;
   backdrop-filter:blur(40px) brightness(1.15) grayscale(0.4);
@@ -101,8 +96,6 @@ img{max-width:100%;display:block}
   mask-image: radial-gradient(circle 250px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 15%, rgba(0,0,0,0.85) 60%, black 100%);
   -webkit-mask-image: radial-gradient(circle 250px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 15%, rgba(0,0,0,0.85) 60%, black 100%);
 }
-
-/* Login Panel - Right Side */
 .login-panel{
   width:440px;flex-shrink:0;
   display:flex;flex-direction:column;justify-content:center;align-items:center;
@@ -113,16 +106,12 @@ img{max-width:100%;display:block}
   position:relative;
   z-index:10;
 }
-
-/* User photo top left of panel */
 .me-photo{
   position:absolute;top:24px;left:24px;
   width:56px;height:56px;border-radius:50%;object-fit:cover;
   border:2px solid var(--border-2);box-shadow:0 4px 12px rgba(0,0,0,.1);
   background:var(--bg-soft);
 }
-
-/* BCP Logo centered */
 .bcp-logo{
   width:110px;height:110px;border-radius:50%;object-fit:contain;
   margin-bottom:24px;
@@ -130,7 +119,6 @@ img{max-width:100%;display:block}
 }
 .login-title{font-size:1.5rem;font-weight:800;letter-spacing:-.5px;line-height:1.35;margin-bottom:32px;color:var(--text);text-align:center}
 .login-title em{font-style:normal;color:var(--primary)}
-
 .login-form{width:100%;max-width:340px}
 .field{margin-bottom:18px}
 .field label{display:block;font-size:.78rem;font-weight:600;color:var(--text-2);margin-bottom:6px}
@@ -142,34 +130,11 @@ img{max-width:100%;display:block}
 .login-btn:hover{background:var(--primary-2);transform:translateY(-1px);box-shadow:0 10px 30px var(--primary-glow)}
 .login-err{color:var(--danger);font-size:.78rem;min-height:18px;margin-top:8px;text-align:center;font-weight:500}
 
-/* ========================================================= */
-/* ============= MOBILE LOGIN FIX ========================== */
-/* ========================================================= */
 @media (max-width: 1024px) {
-  #loginScreen {
-    flex-direction: column;
-    padding: 12px;
-    gap: 12px;
-    height: 100vh;
-    height: 100dvh;
-    overflow-y: auto;
-    justify-content: flex-start;
-  }
-  .login-stage {
-    flex: none;
-    min-height: 30vh;
-    border-radius: var(--radius-lg);
-    width: 100%;
-  }
+  #loginScreen { flex-direction: column; padding: 12px; gap: 12px; height: 100vh; height: 100dvh; overflow-y: auto; justify-content: flex-start; }
+  .login-stage { flex: none; min-height: 30vh; border-radius: var(--radius-lg); width: 100%; }
   .emdad-logo { width: min(350px, 80vw); }
-  .login-panel {
-    width: 100%;
-    flex: none;
-    min-height: auto;
-    padding: 60px 20px 30px;
-    border-radius: var(--radius-lg);
-    justify-content: flex-start;
-  }
+  .login-panel { width: 100%; flex: none; min-height: auto; padding: 60px 20px 30px; border-radius: var(--radius-lg); justify-content: flex-start; }
   .me-photo { top: 16px; left: 16px; width: 44px; height: 44px; }
   .bcp-logo { width: 70px; height: 70px; margin-top: 0; margin-bottom: 16px; }
   .login-title { font-size: 1.2rem; margin-bottom: 20px; }
@@ -624,11 +589,8 @@ img{max-width:100%;display:block}
 
   <div class="login-panel">
     <img src="me.jpg" alt="مدیر پروژه" class="me-photo" title="مدیر پروژه" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23e2e8f0%22/%3E%3Ccircle cx=%2250%22 cy=%2240%22 r=%2220%22 fill=%22%2394a3b8%22/%3E%3Cpath d=%22M20 90 Q50 60 80 90%22 fill=%22%2394a3b8%22/%3E%3C/svg%3E'">
-    
     <img src="bcp.jpg" alt="BCP Logo" class="bcp-logo" onerror="this.style.display='none'">
-    
     <h1 class="login-title">سامانه <em>تداوم کسب‌وکار</em></h1>
-    
     <div class="login-form">
       <div class="field">
         <label for="loginMobile">شماره موبایل</label>
@@ -1103,7 +1065,6 @@ function j2g(jy,jm,jd){
   return [gy,gm,gd];
 }
 function pDate(d=new Date()){const [jy,jm,jd]=g2j(d.getFullYear(),d.getMonth()+1,d.getDate());return {jy,jm,jd,weekday:jWeekDays[d.getDay()],monthName:jMonths[jm-1]};}
-function pString(d=new Date(),persian=true){const p=pDate(d);const s=`${p.jy}/${String(p.jm).padStart(2,'0')}/${String(p.jd).padStart(2,'0')}`;return persian?faDigits(s):s;}
 function pToEn(s){if(!s)return '';const e=enDigits(String(s)).replace(/[^\d\/]/g,'');const m=e.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})$/);if(!m)return '';return `${m[1]}/${String(m[2]).padStart(2,'0')}/${String(m[3]).padStart(2,'0')}`;}
 function jMonthDays(jy,jm){if(jm<=6)return 31;if(jm<=11)return 30;const [gy,gm,gd]=j2g(jy,12,30);const [jy2,jm2,jd2]=g2j(gy,gm,gd);return (jy2===jy&&jm2===12&&jd2===30)?30:29;}
 function jFirstWeekday(jy,jm){const [gy,gm,gd]=j2g(jy,jm,1);const d=new Date(gy,gm-1,gd);return (d.getDay()+1)%7;}
@@ -1116,22 +1077,24 @@ const Store = {
       const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_storage?key=eq.${k}&select=value`, {
         headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
       });
+      if(!res.ok) { console.error('GET error', res.status, await res.text()); return fallback; }
       const data = await res.json();
-      return (data && data.length > 0) ? data[0].value : fallback;
+      return (data && data.length > 0 && data[0].value !== null) ? data[0].value : fallback;
     } catch (e) { console.error('Fetch error:', e); return fallback; }
   },
   async set(k, v) {
     try {
-      await fetch(`${SUPABASE_URL}/rest/v1/bcp_storage`, {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_storage`, {
         method: 'POST',
         headers: { 
           'apikey': SUPABASE_ANON_KEY, 
           'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
           'Content-Type': 'application/json',
-          'Prefer': 'resolution=merge-duplicates'
+          'Prefer': 'resolution=merge-duplicates,return=minimal'
         },
         body: JSON.stringify({ key: k, value: v })
       });
+      if(!res.ok) { console.error('SET error', res.status, await res.text()); return false; }
       return true;
     } catch (e) { console.error('Save error:', e); return false; }
   }
@@ -1170,7 +1133,6 @@ $('themeBtn').addEventListener('click',()=>{
 });
 
 /* ============================== LOGIN LOGIC ============================== */
-const loginScreen = $('loginScreen');
 const stage=$('loginStage');
 const dust=$('stageDust');
 let curX=50,curY=50,tarX=50,tarY=50;
@@ -1190,7 +1152,6 @@ stage.addEventListener('touchmove',e=>{
     lastMove=Date.now();
   }
 },{passive:true});
-
 stage.addEventListener('mouseleave',()=>{lastMove=0;});
 stage.addEventListener('touchend',()=>{setTimeout(()=>{lastMove=0;},1500);});
 
@@ -1202,12 +1163,9 @@ function tickDust(now){
     tarX=50+Math.sin(idleTime*1.2)*35;
     tarY=50+Math.cos(idleTime)*25;
   }
-  curX+=(tarX-curX)*0.1; 
-  curY+=(tarY-curY)*0.1;
-  
+  curX+=(tarX-curX)*0.1; curY+=(tarY-curY)*0.1;
   dust.style.setProperty('--mx',curX+'%');
   dust.style.setProperty('--my',curY+'%');
-  
   requestAnimationFrame(tickDust);
 }
 requestAnimationFrame(tickDust);
@@ -1227,9 +1185,10 @@ async function attemptLogin(){
   const m=$('loginMobile').value.trim();
   const p=$('loginPassword').value;
   if(m!==DEFAULT_USER){$('loginError').textContent='شماره موبایل مجاز نیست.';return;}
-  
+  $('loginError').textContent='در حال بررسی...';
   const savedPass = await getPass();
   if(p!==savedPass){$('loginError').textContent='رمز عبور نادرست است.';return;}
+  $('loginError').textContent='';
   setAuth(true); showApp();
 }
 $('loginMobile').value=DEFAULT_USER;
@@ -1247,7 +1206,8 @@ document.querySelectorAll('.app-tab').forEach(tab=>{
     document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
     $('view-'+tab.dataset.tab).classList.add('active');
     if(tab.dataset.tab==='home'){ animateCounters(); }
-    if(tab.dataset.tab==='checklist'){ updatePrintDate(); }
+    if(tab.dataset.tab==='checklist'){ renderDashboard(); renderChecklist(); }
+    if(tab.dataset.tab==='stakeholders'){ renderStakeholders(); }
   });
 });
 
@@ -1552,7 +1512,6 @@ function attachChecklistListeners(){
       const state=await getCheck();
       const cur=state[key]||{};
       const newStatus=cur.status===val?'':val;
-      
       state[key]={...cur,status:newStatus};
       await saveCheck(state);
       row.dataset.status=newStatus;
@@ -1604,8 +1563,9 @@ function attachChecklistListeners(){
       const state=await getCheck();
       const cur=state[key]||{};
       
+      // فقط چک میکنیم همه فیلدها پر باشن (بدون هیچ شرط دیگری)
       if(!cur.status || !cur.date || !pToEn(cur.date) || !cur.owner || !cur.owner.trim()){
-        toast('لطفا وضعیت (دارد/ندارد)، تاریخ و متولی را وارد کنید','danger');
+        toast('لطفا وضعیت، تاریخ و متولی را پر کنید','danger');
         if(!cur.status){
           row.querySelectorAll('.radio-pill').forEach(p=>p.style.borderColor='var(--danger)');
           setTimeout(()=>row.querySelectorAll('.radio-pill').forEach(p=>p.style.borderColor=''), 1000);
@@ -1621,6 +1581,8 @@ function attachChecklistListeners(){
         return;
       }
       
+      // ذخیره مجدد (فقط یه بار صدا میزنیم، saveCheck هم قبلا صدا زده شده)
+      const ok = await saveCheck(state);
       row.classList.remove('dirty');
       btn.classList.add('saved');
       btn.innerHTML='<svg class="ic" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>ثبت شد';
@@ -1630,7 +1592,7 @@ function attachChecklistListeners(){
       },1800);
       await updateGroupCounts();
       await renderDashboard();
-      toast('✓ ذخیره شد','success');
+      toast(ok ? '✓ در سرور ذخیره شد' : 'خطا در ذخیره! اتصال را بررسی کنید', ok?'success':'danger');
     });
   });
 
@@ -1661,21 +1623,20 @@ async function updateGroupCounts(){
 /* ============================== CALENDAR ============================== */
 let calYear,calMonth,calSelected;
 
-function openCalendar(key){
+async function openCalendar(key){
   CAL_TARGET_KEY=key;
-  getCheck().then(state=>{
-    const cur=state[key]?.date||'';
-    const en=pToEn(cur);
-    if(en){
-      const [y,m,d]=en.split('/').map(Number);
-      calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d};
-    } else {
-      const p=pDate(new Date());
-      calYear=p.jy; calMonth=p.jm; calSelected=null;
-    }
-    renderCalendar();
-    $('calModal').classList.add('open');
-  });
+  const state = await getCheck();
+  const cur=state[key]?.date||'';
+  const en=pToEn(cur);
+  if(en){
+    const [y,m,d]=en.split('/').map(Number);
+    calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d};
+  } else {
+    const p=pDate(new Date());
+    calYear=p.jy; calMonth=p.jm; calSelected=null;
+  }
+  renderCalendar();
+  $('calModal').classList.add('open');
 }
 
 function renderCalendar(){
@@ -1753,9 +1714,7 @@ updatePrintDate();
 
 $('printBtn').addEventListener('click',()=>{
   document.querySelectorAll('.chk-group').forEach(g=>g.classList.remove('collapsed'));
-  setTimeout(() => {
-    window.print();
-  }, 100);
+  setTimeout(() => { window.print(); }, 100);
 });
 
 /* ============================== STAKEHOLDERS ============================== */
