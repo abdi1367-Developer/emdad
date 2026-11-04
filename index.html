@@ -115,6 +115,11 @@ img{max-width:100%;display:block}
 .app-brand img{height:36px;width:auto;object-fit:contain}
 .app-brand-text{display:flex;flex-direction:column;line-height:1.2}
 .app-brand-text .t1{font-weight:800;font-size:.82rem;color:var(--text)}
+
+/* Mobile Menu Button */
+.mobile-menu-btn{display:none; width:36px;height:36px;border-radius:10px;align-items:center;justify-content:center;color:var(--text-2);}
+.mobile-menu-btn:hover{background:var(--bg-soft);color:var(--text);}
+
 .app-tabs{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none}
 .app-tabs::-webkit-scrollbar{display:none}
 .app-tab{padding:8px 16px;border-radius:10px;font-size:.82rem;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:7px;white-space:nowrap;transition:all var(--transition)}
@@ -380,6 +385,41 @@ img{max-width:100%;display:block}
 .min-empty h3 { color:var(--text-2); font-size:1rem; margin-bottom:6px; }
 .min-empty p { font-size:.85rem; }
 
+/* File upload in minutes */
+.min-file-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.min-file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+.min-file-item a {
+  color: var(--primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.min-file-item a:hover { text-decoration: underline; }
+.min-file-item .del-file { color: var(--danger); background: none; border: none; cursor: pointer; padding: 4px; display: flex; align-items: center; }
+.min-file-item .del-file:hover { background: var(--danger-bg); border-radius: 4px; }
+.min-upload-area { border: 2px dashed var(--border-2); border-radius: 10px; padding: 20px; text-align: center; cursor: pointer; transition: all .2s; }
+.min-upload-area:hover { border-color: var(--primary); background: var(--primary-glow); }
+.min-upload-area p { font-size: .85rem; color: var(--muted); margin-bottom: 10px; }
+
 /* Print specific styles for minutes */
 #printableMinute { display: none; }
 @media print {
@@ -411,6 +451,26 @@ img{max-width:100%;display:block}
   body.printing-minute .print-section p { font-size: 11pt; white-space: pre-wrap; margin: 0; color: #222; }
   body.printing-minute .print-meta { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 11pt; font-weight: bold; }
 }
+
+/* ============================== PERSONAL NOTEBOOK (NEW TAB) ============================== */
+.note-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 24px 0; margin-bottom: 16px; border-bottom: 1px solid var(--border); }
+.note-title { font-size: 1.3rem; font-weight: 800; color: var(--text); }
+.note-actions { display: flex; gap: 10px; align-items: center; }
+
+.note-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.note-card { padding: 20px; border-radius: var(--radius); background: var(--bg-elev); border: 1px solid var(--border); position: relative; transition: all .3s; }
+.note-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+.note-card .note-date { font-family: monospace; font-weight: 800; color: var(--accent); font-size: .85rem; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
+.note-card .note-title { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+.note-card .note-content { font-size: .85rem; color: var(--text-2); line-height: 1.7; white-space: pre-wrap; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 16px; }
+.note-card .note-actions { display: flex; gap: 6px; justify-content: flex-end; position: absolute; bottom: 16px; left: 16px; }
+.note-act { width: 30px; height: 30px; border-radius: 7px; display: flex; align-items: center; justify-content: center; color: var(--muted); transition: all .2s; background: var(--bg-soft); }
+.note-act:hover { background: var(--bg-tint); color: var(--text); }
+.note-act.danger:hover { background: var(--danger-bg); color: var(--danger); }
+.note-act .ic { width: 14px; height: 14px; }
+.note-empty { padding: 60px 20px; text-align: center; color: var(--muted); grid-column: 1 / -1; }
+.note-empty h3 { color: var(--text-2); font-size: 1rem; margin-bottom: 6px; }
+.note-empty p { font-size: .85rem; }
 
 /* ============================== STAKEHOLDERS ============================== */
 .stk-header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:24px 0;margin-bottom:16px;border-bottom:1px solid var(--border)}
@@ -510,8 +570,19 @@ img{max-width:100%;display:block}
   :root{--header-h:62px}
   .app-header{padding:0 12px;gap:8px}
   .app-brand-text{display:none}
-  .app-tab{padding:7px 10px;font-size:.75rem}
-  .app-tab span{display:none}
+  
+  /* Mobile Menu */
+  .mobile-menu-btn { display: flex; }
+  .app-tabs { 
+    position: absolute; top: var(--header-h); left: 0; right: 0; 
+    background: var(--bg-elev); flex-direction: column; padding: 12px;
+    border-bottom: 1px solid var(--border); box-shadow: var(--shadow-md);
+    display: none; z-index: 100;
+  }
+  .app-tabs.active { display: flex; }
+  .app-tab { justify-content: flex-start; padding: 12px 16px; }
+  .app-tab span { display: inline; }
+
   .app-main{padding:0 12px 24px}
   .prop-hero{padding:36px 22px}
   .sec-head{gap:14px;margin-bottom:22px}
@@ -533,6 +604,7 @@ img{max-width:100%;display:block}
   .min-table td:first-child::before{display:none}
   .min-actions-cell{position:absolute;top:14px;left:14px;padding:0 !important}
   .min-actions-cell::before{display:none !important}
+  
   .stk-table thead{display:none}
   .stk-table,.stk-table tbody,.stk-table tr,.stk-table td{display:block;width:100%}
   .stk-table tr{padding:14px 16px;border-bottom:1px solid var(--border);position:relative}
@@ -568,7 +640,7 @@ img{max-width:100%;display:block}
   body:not(.printing-minute) #view-checklist, body:not(.printing-minute) #view-checklist * { visibility: visible; }
   body:not(.printing-minute) #view-checklist { position: absolute; left: 0; top: 0; width: 100%; padding: 0; margin: 0; }
   
-  .app-header, .app-tabs, .app-actions, .chk-toolbar, .radios, .cal-open, .save-btn, .toast-wrap, .modal-bg, .file-btn { 
+  .app-header, .app-tabs, .app-actions, .chk-toolbar, .radios, .cal-open, .save-btn, .toast-wrap, .modal-bg, .file-btn, .min-file-list, .min-upload-area { 
     display: none !important; 
   }
   
@@ -668,13 +740,16 @@ img{max-width:100%;display:block}
 <!-- ============================== APP ============================== -->
 <div id="appScreen">
   <header class="app-header">
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <svg class="ic" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
     <div class="app-brand">
       <img src="logo.png" alt="لوگو" onerror="this.src='https://portal.emdad.ir/Content/media/image/main/logo-footer.png'">
       <div class="app-brand-text">
         <span class="t1">کمیته امداد امام خمینی (ره)</span>
       </div>
     </div>
-    <nav class="app-tabs">
+    <nav class="app-tabs" id="appTabs">
       <button class="app-tab active" data-tab="home">
         <svg class="ic" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         <span>پروپوزال</span>
@@ -686,6 +761,10 @@ img{max-width:100%;display:block}
       <button class="app-tab" data-tab="minutes">
         <svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         <span>صورتجلسات</span>
+      </button>
+      <button class="app-tab" data-tab="notebook">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <span>دفترچه یادداشت</span>
       </button>
       <button class="app-tab" data-tab="stakeholders">
         <svg class="ic" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -1054,6 +1133,18 @@ img{max-width:100%;display:block}
             <textarea id="minuteNotebook" placeholder="یادداشت‌های شخصی شما..."></textarea>
           </div>
 
+          <!-- File Upload for Minutes -->
+          <div class="form-row">
+            <label>پیوست‌ها (اسکن صورت‌جلسه و...)</label>
+            <ul class="min-file-list" id="minFileList"></ul>
+            <div class="min-upload-area" id="minUploadArea">
+              <input type="file" id="minFileInput" multiple style="display:none;">
+              <svg class="ic" viewBox="0 0 24 24" style="margin:0 auto 10px; width:32px; height:32px; color:var(--muted);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <p>برای آپلود فایل جدید کلیک کنید یا فایل را اینجا رها کنید</p>
+            </div>
+            <div class="form-err" id="minFileErr"></div>
+          </div>
+
           <div class="form-actions">
             <button class="btn-ghost" id="cancelMinuteBtn">انصراف</button>
             <button class="btn-ghost" id="printMinuteBtn">
@@ -1066,6 +1157,54 @@ img{max-width:100%;display:block}
 
         <!-- History -->
         <div id="minutesHistoryContainer"></div>
+      </section>
+
+      <!-- ============== PERSONAL NOTEBOOK (NEW TAB) ============== -->
+      <section class="view" id="view-notebook">
+        <div class="note-toolbar">
+          <div class="note-title">دفترچه یادداشت شخصی</div>
+          <div class="note-actions">
+            <button class="btn-primary" id="newNoteBtn">
+              <svg class="ic ic-sm" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              یادداشت جدید
+            </button>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="min-form-card" id="noteFormCard">
+          <h3 class="min-form-title" id="noteFormTitle">ثبت یادداشت جدید</h3>
+          <input type="hidden" id="noteId">
+          
+          <div class="form-row two-col">
+            <div>
+              <label>تاریخ <span style="color:var(--danger)">*</span></label>
+              <div class="date-wrap">
+                <input type="text" id="noteDate" placeholder="۱۴۰۳/۰۹/۱۵" dir="ltr">
+                <button class="cal-open" id="noteCalBtn" title="تقویم">
+                  <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </button>
+              </div>
+            </div>
+            <div>
+              <label>عنوان</label>
+              <input type="text" id="noteTitle" placeholder="موضوع یادداشت...">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label>متن یادداشت</label>
+            <textarea id="noteContent" placeholder="متن یادداشت خود را اینجا بنویسید..." style="min-height:150px;"></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn-ghost" id="cancelNoteBtn">انصراف</button>
+            <button class="btn-primary" id="saveNoteBtn">ذخیره یادداشت</button>
+          </div>
+        </div>
+
+        <!-- Notes Grid -->
+        <div class="note-grid" id="notesContainer"></div>
       </section>
 
       <!-- ============== STAKEHOLDERS ============== -->
@@ -1360,6 +1499,11 @@ $('logoutBtn').addEventListener('click',()=>{setAuth(false);showLogin();});
 
 if(isAuth()){ showApp(); } else { showLogin(); }
 
+/* ============================== MOBILE MENU ============================== */
+$('mobileMenuBtn').addEventListener('click', () => {
+  $('appTabs').classList.toggle('active');
+});
+
 /* ============================== TABS ============================== */
 document.querySelectorAll('.app-tab').forEach(tab=>{
   tab.addEventListener('click',()=>{
@@ -1367,9 +1511,16 @@ document.querySelectorAll('.app-tab').forEach(tab=>{
     tab.classList.add('active');
     document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
     $('view-'+tab.dataset.tab).classList.add('active');
+    
+    // Close mobile menu if open
+    if(window.innerWidth <= 900) {
+      $('appTabs').classList.remove('active');
+    }
+
     if(tab.dataset.tab==='home'){ animateCounters(); }
     if(tab.dataset.tab==='checklist'){ renderDashboard(); renderChecklist(); }
     if(tab.dataset.tab==='minutes'){ renderMinutes(); }
+    if(tab.dataset.tab==='notebook'){ renderNotebook(); }
     if(tab.dataset.tab==='stakeholders'){ renderStakeholders(); }
   });
 });
@@ -1794,7 +1945,7 @@ async function updateGroupCounts(){
   });
 }
 
-/* ============================== FILE MANAGEMENT ============================== */
+/* ============================== FILE MANAGEMENT (Checklist) ============================== */
 async function openFilesModal(key) {
   CURRENT_FILE_KEY = key;
   $('fileErr').textContent = '';
@@ -1968,6 +2119,134 @@ async function handleFileUpload(fileList) {
   }
 }
 
+/* ============================== FILE MANAGEMENT (Minutes) ============================== */
+let MINUTE_FILES = []; // Temp storage for minute files being edited
+
+function renderMinuteFiles() {
+  const listEl = $('minFileList');
+  if (MINUTE_FILES.length === 0) {
+    listEl.innerHTML = '';
+    return;
+  }
+  listEl.innerHTML = MINUTE_FILES.map((f, idx) => `
+    <li class="min-file-item">
+      <a href="${f.url}" target="_blank">
+        <svg class="ic" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+        ${escapeHtml(f.name)}
+      </a>
+      <button class="del-file" data-del-min-file="${idx}" title="حذف فایل">
+        <svg class="ic" viewBox="0 0 24 24" style="width:16px;height:16px;"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+      </button>
+    </li>
+  `).join('');
+
+  listEl.querySelectorAll('[data-del-min-file]').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      if(!confirm('آیا از حذف این فایل اطمینان دارید؟')) return;
+      const idx = parseInt(btn.dataset.delMinFile);
+      const fileToDelete = MINUTE_FILES[idx];
+      
+      try {
+        await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${fileToDelete.path}`, {
+          method: 'DELETE',
+          headers: { 
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}` 
+          }
+        });
+      } catch (err) {
+        console.error('Delete from storage failed:', err);
+      }
+      
+      MINUTE_FILES.splice(idx, 1);
+      renderMinuteFiles();
+      toast('فایل حذف شد', 'success');
+    });
+  });
+}
+
+$('minUploadArea').addEventListener('click', () => $('minFileInput').click());
+$('minUploadArea').addEventListener('dragover', (e) => {
+  e.preventDefault();
+  $('minUploadArea').style.borderColor = 'var(--primary)';
+  $('minUploadArea').style.background = 'var(--primary-glow)';
+});
+$('minUploadArea').addEventListener('dragleave', (e) => {
+  e.preventDefault();
+  $('minUploadArea').style.borderColor = 'var(--border-2)';
+  $('minUploadArea').style.background = '';
+});
+$('minUploadArea').addEventListener('drop', async (e) => {
+  e.preventDefault();
+  $('minUploadArea').style.borderColor = 'var(--border-2)';
+  $('minUploadArea').style.background = '';
+  if (e.dataTransfer.files.length > 0) await handleMinuteFileUpload(e.dataTransfer.files);
+});
+$('minFileInput').addEventListener('change', async (e) => {
+  if (e.target.files.length > 0) {
+    await handleMinuteFileUpload(e.target.files);
+    e.target.value = '';
+  }
+});
+
+async function handleMinuteFileUpload(fileList) {
+  const errEl = $('minFileErr');
+  errEl.style.color = 'var(--muted)';
+  errEl.textContent = 'در حال آپلود...';
+  
+  let successCount = 0;
+  let lastError = '';
+  
+  for (let i = 0; i < fileList.length; i++) {
+    const file = fileList[i];
+    if(file.size > 50 * 1024 * 1024) {
+      lastError = `فایل «${file.name}» بزرگتر از ۵۰ مگابایت است.`;
+      continue;
+    }
+    
+    const cleanName = file.name.replace(/[^\w.\-]/g, '_');
+    const filePath = `minutes/${Date.now()}_${cleanName}`;
+    
+    try {
+      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${filePath}`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': file.type || 'application/octet-stream',
+          'x-upsert': 'true'
+        },
+        body: file
+      });
+      
+      if(!res.ok) {
+        lastError = `خطا ${res.status} در آپلود ${file.name}`;
+        continue;
+      }
+      
+      const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${filePath}`;
+      MINUTE_FILES.push({
+        name: file.name,
+        url: publicUrl,
+        path: filePath
+      });
+      successCount++;
+    } catch (error) {
+      lastError = `خطای شبکه: ${error.message}`;
+    }
+  }
+  
+  if(successCount > 0) {
+    errEl.textContent = '';
+    renderMinuteFiles();
+    toast(`✓ ${successCount} فایل آپلود شد`, 'success');
+  } else {
+    errEl.style.color = 'var(--danger)';
+    errEl.textContent = lastError || 'هیچ فایلی آپلود نشد.';
+  }
+}
+
 /* ============================== CALENDAR (Shared) ============================== */
 let calYear,calMonth,calSelected;
 
@@ -1976,6 +2255,16 @@ async function openCalendar(key){
   
   if(key === 'minute') {
     const cur = $('minuteDate').value;
+    const en = pToEn(cur);
+    if(en){
+      const [y,m,d]=en.split('/').map(Number);
+      calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d};
+    } else {
+      const p=pDate(new Date());
+      calYear=p.jy; calMonth=p.jm; calSelected=null;
+    }
+  } else if(key === 'note') {
+    const cur = $('noteDate').value;
     const en = pToEn(cur);
     if(en){
       const [y,m,d]=en.split('/').map(Number);
@@ -2031,6 +2320,11 @@ async function pickDate(jy,jm,jd){
   
   if(CAL_TARGET_KEY === 'minute') {
     $('minuteDate').value = s;
+    $('calModal').classList.remove('open');
+    return;
+  }
+  if(CAL_TARGET_KEY === 'note') {
+    $('noteDate').value = s;
     $('calModal').classList.remove('open');
     return;
   }
@@ -2101,12 +2395,15 @@ $('newMinuteBtn').addEventListener('click', () => {
   $('minuteDesc').value = '';
   $('minuteResolutions').value = '';
   $('minuteNotebook').value = '';
+  MINUTE_FILES = [];
+  renderMinuteFiles();
   $('minuteFormCard').classList.add('active');
   $('minuteDate').focus();
 });
 
 $('cancelMinuteBtn').addEventListener('click', () => {
   $('minuteFormCard').classList.remove('active');
+  MINUTE_FILES = [];
 });
 
 $('saveMinuteBtn').addEventListener('click', async () => {
@@ -2129,6 +2426,7 @@ $('saveMinuteBtn').addEventListener('click', async () => {
     desc: desc,
     resolutions: res,
     notebook: notebook,
+    files: MINUTE_FILES,
     timestamp: Date.now()
   };
   
@@ -2143,6 +2441,7 @@ $('saveMinuteBtn').addEventListener('click', async () => {
   if(ok) {
     toast('صورت‌جلسه با موفقیت ذخیره شد', 'success');
     $('minuteFormCard').classList.remove('active');
+    MINUTE_FILES = [];
     await renderMinutes();
   } else {
     toast('خطا در ذخیره‌سازی. اتصال به سرور را بررسی کنید.', 'danger');
@@ -2210,14 +2509,21 @@ async function renderMinutes() {
 
   let html = `<div class="min-table-wrap"><table class="min-table">
     <thead><tr>
-      <th>تاریخ</th><th>اعضا</th><th>شرح جلسه</th><th style="text-align:left"></th>
+      <th>تاریخ</th><th>اعضا</th><th>شرح جلسه</th><th>پیوست</th><th style="text-align:left"></th>
     </tr></thead><tbody>`;
     
   filtered.forEach(m => {
+    const filesCount = m.files ? m.files.length : 0;
     html += `<tr>
       <td data-label="تاریخ"><span class="min-date">${escapeHtml(m.date)}</span></td>
       <td data-label="اعضا"><span class="min-subject">${escapeHtml(m.attendees)}</span></td>
       <td data-label="شرح"><div class="min-desc">${escapeHtml(m.desc || '—')}</div></td>
+      <td data-label="پیوست">
+        <button class="file-btn" data-min-files-btn="${m.id}" title="مشاهده فایل‌ها">
+          <svg class="ic" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+          <span>${faDigits(filesCount)}</span>
+        </button>
+      </td>
       <td class="min-actions-cell">
         <button class="min-act" data-edit-min="${m.id}" title="ویرایش / مشاهده">
           <svg class="ic" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -2243,6 +2549,8 @@ async function renderMinutes() {
       $('minuteDesc').value = m.desc || '';
       $('minuteResolutions').value = m.resolutions || '';
       $('minuteNotebook').value = m.notebook || '';
+      MINUTE_FILES = m.files ? [...m.files] : [];
+      renderMinuteFiles();
       $('minuteFormCard').classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -2259,12 +2567,150 @@ async function renderMinutes() {
       }
     });
   });
+
+  container.querySelectorAll('[data-min-files-btn]').forEach(b => {
+    b.addEventListener('click', () => {
+      const m = filtered.find(x => x.id === b.dataset.minFilesBtn);
+      if(m && m.files && m.files.length > 0) {
+        // We can just reuse the main file modal or show a simple alert with links
+        // For simplicity, let's open a basic modal. Actually, the checklist has a nice file modal. Let's just show them in a new window or simple prompt? 
+        // Let's use the existing filesModal but adapt it. 
+        // Actually, let's just make a simple alert or use the printable area.
+        // Better: Use a simple custom modal for viewing. Or just redirect to the first file.
+        const win = window.open(m.files[0].url, '_blank');
+        if(!win) alert('لطفا به مرورگر اجازه باز کردن پنجره جدید را بدهید.');
+      } else {
+        toast('فایلی پیوست نشده است', 'info');
+      }
+    });
+  });
 }
 
 $('minSearch').addEventListener('input', e => {
   minSearch = e.target.value.trim();
   renderMinutes();
 });
+
+/* ============================== PERSONAL NOTEBOOK LOGIC ============================== */
+const getNotes = async() => await Store.get('personal_notebook', []);
+const saveNotes = async(arr) => await Store.set('personal_notebook', arr);
+
+$('noteCalBtn').addEventListener('click', () => openCalendar('note'));
+
+$('newNoteBtn').addEventListener('click', () => {
+  $('noteId').value = '';
+  $('noteFormTitle').textContent = 'ثبت یادداشت جدید';
+  $('noteDate').value = '';
+  $('noteTitle').value = '';
+  $('noteContent').value = '';
+  $('noteFormCard').classList.add('active');
+  $('noteDate').focus();
+});
+
+$('cancelNoteBtn').addEventListener('click', () => {
+  $('noteFormCard').classList.remove('active');
+});
+
+$('saveNoteBtn').addEventListener('click', async () => {
+  const date = $('noteDate').value.trim();
+  const title = $('noteTitle').value.trim();
+  const content = $('noteContent').value.trim();
+  
+  if(!date || !pToEn(date)) { toast('تاریخ را به درستی وارد کنید', 'danger'); $('noteDate').focus(); return; }
+  if(!content) { toast('متن یادداشت را وارد کنید', 'danger'); $('noteContent').focus(); return; }
+  
+  const id = $('noteId').value;
+  const list = await getNotes();
+  
+  const data = {
+    id: id || 'n_' + Date.now(),
+    date: date,
+    title: title,
+    content: content,
+    timestamp: Date.now()
+  };
+  
+  if(id) {
+    const idx = list.findIndex(x => x.id === id);
+    if(idx >= 0) list[idx] = data;
+  } else {
+    list.unshift(data);
+  }
+  
+  const ok = await saveNotes(list);
+  if(ok) {
+    toast('یادداشت ذخیره شد', 'success');
+    $('noteFormCard').classList.remove('active');
+    await renderNotebook();
+  } else {
+    toast('خطا در ذخیره‌سازی', 'danger');
+  }
+});
+
+async function renderNotebook() {
+  const list = await getNotes();
+  // Sort by date descending (newest first)
+  list.sort((a, b) => {
+    const aEn = pToEn(a.date) || '';
+    const bEn = pToEn(b.date) || '';
+    return bEn.localeCompare(aEn);
+  });
+
+  const container = $('notesContainer');
+  
+  if (list.length === 0) {
+    container.innerHTML = `<div class="note-empty">
+      <svg class="ic" viewBox="0 0 24 24" style="width:48px;height:48px;margin:0 auto 14px;color:var(--border-2)"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <h3>هنوز یادداشتی ثبت نشده</h3>
+      <p>برای شروع دکمه «یادداشت جدید» را بزنید</p>
+    </div>`;
+    return;
+  }
+
+  let html = '';
+  list.forEach(n => {
+    html += `<div class="note-card">
+      <div class="note-date">${escapeHtml(n.date)}</div>
+      <div class="note-title">${escapeHtml(n.title || 'بدون عنوان')}</div>
+      <div class="note-content">${escapeHtml(n.content)}</div>
+      <div class="note-actions">
+        <button class="note-act" data-edit-note="${n.id}" title="ویرایش">
+          <svg class="ic" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+        <button class="note-act danger" data-del-note="${n.id}" title="حذف">
+          <svg class="ic" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+        </button>
+      </div>
+    </div>`;
+  });
+  
+  container.innerHTML = html;
+
+  container.querySelectorAll('[data-edit-note]').forEach(b => {
+    b.addEventListener('click', () => {
+      const n = list.find(x => x.id === b.dataset.editNote);
+      if(!n) return;
+      $('noteId').value = n.id;
+      $('noteFormTitle').textContent = 'ویرایش یادداشت';
+      $('noteDate').value = n.date || '';
+      $('noteTitle').value = n.title || '';
+      $('noteContent').value = n.content || '';
+      $('noteFormCard').classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  container.querySelectorAll('[data-del-note]').forEach(b => {
+    b.addEventListener('click', async () => {
+      if(confirm('آیا از حذف این یادداشت اطمینان دارید؟')) {
+        const list = await getNotes();
+        await saveNotes(list.filter(x => x.id !== b.dataset.delNote));
+        await renderNotebook();
+        toast('یادداشت حذف شد', 'success');
+      }
+    });
+  });
+}
 
 /* ============================== STAKEHOLDERS ============================== */
 const getStk = async() => await Store.get('stakeholders', []);
@@ -2392,6 +2838,7 @@ async function renderAll(){
   await renderDashboard();
   await renderChecklist();
   await renderMinutes();
+  await renderNotebook();
   await renderStakeholders();
 }
 </script>
