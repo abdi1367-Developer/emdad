@@ -59,64 +59,15 @@ img{max-width:100%;display:block}
 .ic-sm{width:16px;height:16px}
 
 /* ============================== LOGIN ============================== */
-#loginScreen{
-  position:fixed;inset:0;z-index:100;
-  display:flex;
-  gap:24px;
-  padding:24px;
-  background:var(--bg-soft);
-  opacity:1;
-  transition:opacity .5s ease;
-}
+#loginScreen{position:fixed;inset:0;z-index:100;display:flex;gap:24px;padding:24px;background:var(--bg-soft);opacity:1;transition:opacity .5s ease;}
 #loginScreen.hidden{opacity:0;pointer-events:none}
-.login-stage{
-  position:relative;flex:1;
-  border-radius:var(--radius-xl);
-  overflow:hidden;
-  background:radial-gradient(circle at 50% 50%, #2a6355 0%, #132b22 100%);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:var(--shadow-md);
-  cursor:default;
-}
+.login-stage{position:relative;flex:1;border-radius:var(--radius-xl);overflow:hidden;background:radial-gradient(circle at 50% 50%, #2a6355 0%, #132b22 100%);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);cursor:default;}
 [data-theme="dark"] .login-stage{background:radial-gradient(circle at 50% 50%, #1e4a3f 0%, #0a1712 100%)}
-.emdad-logo{
-  width:min(800px, 85%);
-  max-height: 80%;
-  object-fit:contain;
-  filter:drop-shadow(0 20px 60px rgba(0,0,0,.6));
-  z-index:2;
-}
-.stage-dust {
-  position:absolute;inset:0;z-index:5;pointer-events:none;
-  backdrop-filter:blur(40px) brightness(1.15) grayscale(0.4);
-  -webkit-backdrop-filter:blur(40px) brightness(1.15) grayscale(0.4);
-  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.0) 50%, rgba(255,255,255,0.1) 100%);
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E"),
-                    linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.15) 100%);
-  mask-image: radial-gradient(circle 250px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 15%, rgba(0,0,0,0.85) 60%, black 100%);
-  -webkit-mask-image: radial-gradient(circle 250px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 15%, rgba(0,0,0,0.85) 60%, black 100%);
-}
-.login-panel{
-  width:440px;flex-shrink:0;
-  display:flex;flex-direction:column;justify-content:center;align-items:center;
-  padding:48px 40px;
-  background:var(--bg-elev);
-  border-radius:var(--radius-xl);
-  box-shadow:var(--shadow-lg);
-  position:relative;
-  z-index:10;
-}
-.me-photo{
-  position:absolute;top:24px;left:24px;
-  width:56px;height:56px;border-radius:50%;object-fit:cover;
-  border:2px solid var(--border-2);box-shadow:0 4px 12px rgba(0,0,0,.1);
-  background:var(--bg-soft);
-}
-.bcp-logo{
-  width:110px;height:110px;border-radius:50%;object-fit:contain;
-  margin-bottom:24px;
-  box-shadow:0 8px 24px rgba(0,0,0,.15);
-}
+.emdad-logo{width:min(800px, 85%);max-height: 80%;object-fit:contain;filter:drop-shadow(0 20px 60px rgba(0,0,0,.6));z-index:2;}
+.stage-dust {position:absolute;inset:0;z-index:5;pointer-events:none;backdrop-filter:blur(40px) brightness(1.15) grayscale(0.4);-webkit-backdrop-filter:blur(40px) brightness(1.15) grayscale(0.4);background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.0) 50%, rgba(255,255,255,0.1) 100%);background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E"),linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.15) 100%);mask-image: radial-gradient(circle 250px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 15%, rgba(0,0,0,0.85) 60%, black 100%);-webkit-mask-image: radial-gradient(circle 250px at var(--mx, 50%) var(--my, 50%), transparent 0%, transparent 15%, rgba(0,0,0,0.85) 60%, black 100%);}
+.login-panel{width:440px;flex-shrink:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:48px 40px;background:var(--bg-elev);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);position:relative;z-index:10;}
+.me-photo{position:absolute;top:24px;left:24px;width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--border-2);box-shadow:0 4px 12px rgba(0,0,0,.1);background:var(--bg-soft);}
+.bcp-logo{width:110px;height:110px;border-radius:50%;object-fit:contain;margin-bottom:24px;box-shadow:0 8px 24px rgba(0,0,0,.15);}
 .login-title{font-size:1.5rem;font-weight:800;letter-spacing:-.5px;line-height:1.35;margin-bottom:32px;color:var(--text);text-align:center}
 .login-title em{font-style:normal;color:var(--primary)}
 .login-form{width:100%;max-width:340px}
@@ -384,6 +335,83 @@ img{max-width:100%;display:block}
   .file-btn{justify-self:flex-start}
 }
 
+/* ============================== MINUTES (NEW TAB) ============================== */
+.min-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:24px 0;margin-bottom:16px;border-bottom:1px solid var(--border)}
+.min-title{font-size:1.3rem;font-weight:800;color:var(--text)}
+.min-actions{display:flex;gap:10px;align-items:center}
+
+.min-form-card{
+  background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius-lg);
+  padding:24px; margin-bottom:24px; display:none;
+  box-shadow:var(--shadow-md);
+  animation: viewIn .3s ease;
+}
+.min-form-card.active { display:block; }
+.min-form-title { font-size:1.1rem; font-weight:800; margin-bottom:20px; color:var(--text); border-bottom:2px solid var(--primary-glow); padding-bottom:10px; }
+
+.form-row { margin-bottom:16px; }
+.form-row label { display:block; font-size:.82rem; font-weight:700; color:var(--text-2); margin-bottom:8px; }
+.form-row input[type="text"], .form-row textarea, .form-row input[type="date"] {
+  width:100%; padding:12px 14px; background:var(--bg-soft); border:1.5px solid var(--border);
+  border-radius:10px; font-size:.9rem; color:var(--text); outline:none; transition:all .2s;
+  font-family:inherit;
+}
+.form-row input:focus, .form-row textarea:focus { border-color:var(--primary); background:var(--bg-elev); box-shadow:0 0 0 3px var(--primary-glow); }
+.form-row textarea { resize:vertical; min-height:90px; }
+.form-row.two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.form-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:24px; padding-top:20px; border-top:1px solid var(--border); }
+
+.min-table-wrap { background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; }
+.min-table { width:100%; border-collapse:collapse; }
+.min-table thead { background:var(--bg-soft); }
+.min-table th { padding:14px 20px; text-align:right; font-size:.78rem; font-weight:700; color:var(--muted); border-bottom:1px solid var(--border); }
+.min-table td { padding:14px 20px; border-bottom:1px solid var(--border); font-size:.88rem; vertical-align:middle; }
+.min-table tbody tr:hover { background:var(--bg-soft); }
+.min-table tbody tr:last-child td { border-bottom:none; }
+.min-date { font-family:monospace; font-weight:700; color:var(--primary); direction:ltr; text-align:right; }
+.min-subject { font-weight:700; color:var(--text); }
+.min-desc { font-size:.8rem; color:var(--muted); max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.min-actions-cell { display:flex; gap:6px; justify-content:flex-end; }
+.min-act { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--muted); transition:all .2s; }
+.min-act:hover { background:var(--bg-tint); color:var(--text); }
+.min-act.danger:hover { background:var(--danger-bg); color:var(--danger); }
+.min-act .ic { width:15px; height:15px; }
+.min-empty { padding:60px 20px; text-align:center; color:var(--muted); }
+.min-empty h3 { color:var(--text-2); font-size:1rem; margin-bottom:6px; }
+.min-empty p { font-size:.85rem; }
+
+/* Print specific styles for minutes */
+#printableMinute { display: none; }
+@media print {
+  body.printing-minute * { visibility: hidden; }
+  body.printing-minute #printableMinute, body.printing-minute #printableMinute * { visibility: visible; }
+  body.printing-minute #printableMinute {
+    display: block !important;
+    position: absolute;
+    left: 0; top: 0; width: 100%;
+    padding: 2cm;
+    background: #fff;
+    color: #000;
+    font-size: 12pt;
+    line-height: 1.8;
+  }
+  body.printing-minute .personal-notebook-wrap {
+    display: none !important;
+  }
+  body.printing-minute .print-header-min {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 15px;
+  }
+  body.printing-minute .print-header-min h1 { font-size: 20pt; margin-bottom: 5px; color: #000; }
+  body.printing-minute .print-header-min p { font-size: 11pt; color: #333; }
+  body.printing-minute .print-section { margin-bottom: 20px; border: 1px solid #ccc; padding: 15px; border-radius: 6px; }
+  body.printing-minute .print-section h3 { font-size: 13pt; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; color: #111; }
+  body.printing-minute .print-section p { font-size: 11pt; white-space: pre-wrap; margin: 0; color: #222; }
+  body.printing-minute .print-meta { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 11pt; font-weight: bold; }
+}
+
 /* ============================== STAKEHOLDERS ============================== */
 .stk-header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:24px 0;margin-bottom:16px;border-bottom:1px solid var(--border)}
 .stk-title-wrap h2{font-size:1.3rem;font-weight:800;margin-bottom:2px}
@@ -432,12 +460,6 @@ img{max-width:100%;display:block}
 .btn-lg.primary{background:var(--primary);color:#fff}
 .btn-lg.primary:hover{background:var(--primary-2)}
 .btn-lg.ghost{background:var(--bg-soft);color:var(--text-2);border:1px solid var(--border)}
-.form-row{margin-bottom:14px}
-.form-row label{display:block;font-size:.78rem;font-weight:600;color:var(--text-2);margin-bottom:6px}
-.form-row input,.form-row textarea{width:100%;padding:11px 14px;background:var(--bg-soft);border:1.5px solid var(--border);border-radius:9px;font-size:.88rem;color:var(--text);outline:none}
-.form-row input:focus,.form-row textarea:focus{border-color:var(--primary);background:var(--bg-elev);box-shadow:0 0 0 3px var(--primary-glow)}
-.form-row input[type="tel"],.form-row input[type="email"]{direction:ltr;text-align:right}
-.form-row.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .form-err{color:var(--danger);font-size:.78rem;min-height:16px;margin-top:4px}
 
 .file-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:16px;max-height:300px;overflow-y:auto;}
@@ -499,6 +521,18 @@ img{max-width:100%;display:block}
   .dash-row{grid-template-columns:repeat(2,1fr);gap:10px}
   .chk-toolbar{flex-direction:column;align-items:stretch}
   .chk-toolbar-right{justify-content:flex-end;flex-wrap:wrap}
+  .min-toolbar{flex-direction:column;align-items:stretch; gap:16px}
+  .min-actions{width:100%; flex-wrap:wrap}
+  .search-wrap{flex:1}
+  .min-table thead{display:none}
+  .min-table,.min-table tbody,.min-table tr,.min-table td{display:block;width:100%}
+  .min-table tr{padding:14px 16px;border-bottom:1px solid var(--border);position:relative}
+  .min-table td{padding:3px 0;border:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .min-table td::before{content:attr(data-label);font-size:.75rem;color:var(--muted);font-weight:600}
+  .min-table td:first-child{padding:0 0 8px;border-bottom:1px solid var(--border);margin-bottom:8px;display:block}
+  .min-table td:first-child::before{display:none}
+  .min-actions-cell{position:absolute;top:14px;left:14px;padding:0 !important}
+  .min-actions-cell::before{display:none !important}
   .stk-table thead{display:none}
   .stk-table,.stk-table tbody,.stk-table tr,.stk-table td{display:block;width:100%}
   .stk-table tr{padding:14px 16px;border-bottom:1px solid var(--border);position:relative}
@@ -524,15 +558,15 @@ img{max-width:100%;display:block}
   .form-row.two-col{grid-template-columns:1fr}
 }
 
-/* ============================== PRINT ============================== */
+/* ============================== PRINT (Checklist) ============================== */
 @media print {
   @page { margin: 1cm; size: A4 portrait; }
   body { background: #fff !important; color: #000 !important; font-size: 10pt !important; }
   body::before { display: none !important; }
   
-  body * { visibility: hidden; }
-  #view-checklist, #view-checklist * { visibility: visible; }
-  #view-checklist { position: absolute; left: 0; top: 0; width: 100%; padding: 0; margin: 0; }
+  body:not(.printing-minute) * { visibility: hidden; }
+  body:not(.printing-minute) #view-checklist, body:not(.printing-minute) #view-checklist * { visibility: visible; }
+  body:not(.printing-minute) #view-checklist { position: absolute; left: 0; top: 0; width: 100%; padding: 0; margin: 0; }
   
   .app-header, .app-tabs, .app-actions, .chk-toolbar, .radios, .cal-open, .save-btn, .toast-wrap, .modal-bg, .file-btn { 
     display: none !important; 
@@ -649,6 +683,10 @@ img{max-width:100%;display:block}
         <svg class="ic" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
         <span>چک‌لیست</span>
       </button>
+      <button class="app-tab" data-tab="minutes">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span>صورتجلسات</span>
+      </button>
       <button class="app-tab" data-tab="stakeholders">
         <svg class="ic" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         <span>ذی‌نفعان</span>
@@ -670,6 +708,8 @@ img{max-width:100%;display:block}
 
   <main class="app-main">
     <div class="container">
+      
+      <!-- ============== HOME - MOTION PROPOSAL ============== -->
       <section class="view active" id="view-home">
         <div class="prop-wrap">
           <header class="prop-hero">
@@ -962,6 +1002,72 @@ img{max-width:100%;display:block}
         <div id="checklistContainer"></div>
       </section>
 
+      <!-- ============== MINUTES (NEW TAB) ============== -->
+      <section class="view" id="view-minutes">
+        <div class="min-toolbar">
+          <div class="min-title">مدیریت صورت‌جلسات</div>
+          <div class="min-actions">
+            <div class="search-wrap">
+              <svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="minSearch" placeholder="جستجو در صورت‌جلسات...">
+            </div>
+            <button class="btn-primary" id="newMinuteBtn">
+              <svg class="ic ic-sm" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              صورت‌جلسه جدید
+            </button>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="min-form-card" id="minuteFormCard">
+          <h3 class="min-form-title" id="minuteFormTitle">ثبت صورت‌جلسه جدید</h3>
+          <input type="hidden" id="minuteId">
+          
+          <div class="form-row two-col">
+            <div>
+              <label>تاریخ جلسه <span style="color:var(--danger)">*</span></label>
+              <div class="date-wrap">
+                <input type="text" id="minuteDate" placeholder="۱۴۰۳/۰۹/۱۵" dir="ltr">
+                <button class="cal-open" id="minuteCalBtn" title="تقویم">
+                  <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </button>
+              </div>
+            </div>
+            <div>
+              <label>اعضا / حاضرین <span style="color:var(--danger)">*</span></label>
+              <input type="text" id="minuteAttendees" placeholder="مثلا: احمدی، رضایی، محمدی">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label>شرح جلسه</label>
+            <textarea id="minuteDesc" placeholder="خلاصه‌ای از مباحث مطرح شده..."></textarea>
+          </div>
+
+          <div class="form-row">
+            <label>مصوبات</label>
+            <textarea id="minuteResolutions" placeholder="تصمیمات و اقدامات لازم..."></textarea>
+          </div>
+
+          <div class="form-row personal-notebook-wrap">
+            <label style="color:var(--accent)">دفترچه یادداشت شخصی (این بخش در پرینت نمایش داده نمی‌شود)</label>
+            <textarea id="minuteNotebook" placeholder="یادداشت‌های شخصی شما..."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn-ghost" id="cancelMinuteBtn">انصراف</button>
+            <button class="btn-ghost" id="printMinuteBtn">
+              <svg class="ic ic-sm" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              پرینت
+            </button>
+            <button class="btn-primary" id="saveMinuteBtn">ذخیره صورت‌جلسه</button>
+          </div>
+        </div>
+
+        <!-- History -->
+        <div id="minutesHistoryContainer"></div>
+      </section>
+
       <!-- ============== STAKEHOLDERS ============== -->
       <section class="view" id="view-stakeholders">
         <div class="stk-header">
@@ -1065,6 +1171,9 @@ img{max-width:100%;display:block}
     </div>
   </div>
 </div>
+
+<!-- Hidden printable area for meeting minutes -->
+<div id="printableMinute"></div>
 
 <div class="toast-wrap" id="toastWrap"></div>
 
@@ -1260,6 +1369,7 @@ document.querySelectorAll('.app-tab').forEach(tab=>{
     $('view-'+tab.dataset.tab).classList.add('active');
     if(tab.dataset.tab==='home'){ animateCounters(); }
     if(tab.dataset.tab==='checklist'){ renderDashboard(); renderChecklist(); }
+    if(tab.dataset.tab==='minutes'){ renderMinutes(); }
     if(tab.dataset.tab==='stakeholders'){ renderStakeholders(); }
   });
 });
@@ -1721,7 +1831,6 @@ async function refreshFileList() {
         const fileToDelete = files[idx];
         
         try {
-          // حذف از Storage با REST API (به همراه apikey)
           const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${fileToDelete.path}`, {
             method: 'DELETE',
             headers: { 
@@ -1734,7 +1843,6 @@ async function refreshFileList() {
             console.error('Delete failed:', res.status, await res.text());
           }
           
-          // حذف از دیتابیس (چه فایل در سرور بود یا نه)
           const state = await getCheck();
           state[CURRENT_FILE_KEY].files.splice(idx, 1);
           await saveCheck(state);
@@ -1860,21 +1968,35 @@ async function handleFileUpload(fileList) {
   }
 }
 
-/* ============================== CALENDAR ============================== */
+/* ============================== CALENDAR (Shared) ============================== */
 let calYear,calMonth,calSelected;
 
 async function openCalendar(key){
   CAL_TARGET_KEY=key;
-  const state = await getCheck();
-  const cur=state[key]?.date||'';
-  const en=pToEn(cur);
-  if(en){
-    const [y,m,d]=en.split('/').map(Number);
-    calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d};
+  
+  if(key === 'minute') {
+    const cur = $('minuteDate').value;
+    const en = pToEn(cur);
+    if(en){
+      const [y,m,d]=en.split('/').map(Number);
+      calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d};
+    } else {
+      const p=pDate(new Date());
+      calYear=p.jy; calMonth=p.jm; calSelected=null;
+    }
   } else {
-    const p=pDate(new Date());
-    calYear=p.jy; calMonth=p.jm; calSelected=null;
+    const state = await getCheck();
+    const cur=state[key]?.date||'';
+    const en=pToEn(cur);
+    if(en){
+      const [y,m,d]=en.split('/').map(Number);
+      calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d};
+    } else {
+      const p=pDate(new Date());
+      calYear=p.jy; calMonth=p.jm; calSelected=null;
+    }
   }
+  
   renderCalendar();
   $('calModal').classList.add('open');
 }
@@ -1906,6 +2028,13 @@ function renderCalendar(){
 
 async function pickDate(jy,jm,jd){
   const s=faDigits(`${jy}/${String(jm).padStart(2,'0')}/${String(jd).padStart(2,'0')}`);
+  
+  if(CAL_TARGET_KEY === 'minute') {
+    $('minuteDate').value = s;
+    $('calModal').classList.remove('open');
+    return;
+  }
+  
   const state = await getCheck();
   if(!state[CAL_TARGET_KEY])state[CAL_TARGET_KEY]={};
   state[CAL_TARGET_KEY].date=s;
@@ -1935,7 +2064,7 @@ $('calTodayBtn').addEventListener('click',()=>{
   pickDate(t.jy,t.jm,t.jd);
 });
 
-/* ============================== RESET & PRINT ============================== */
+/* ============================== RESET & PRINT (Checklist) ============================== */
 $('resetChecklistBtn').addEventListener('click',async ()=>{
   if(confirm('تمام وضعیت‌های چک‌لیست بازنشانی شود؟ (فایل‌های آپلود شده در سرور باقی می‌مانند)')){
     await saveCheck({});
@@ -1955,6 +2084,186 @@ updatePrintDate();
 $('printBtn').addEventListener('click',()=>{
   document.querySelectorAll('.chk-group').forEach(g=>g.classList.remove('collapsed'));
   setTimeout(() => { window.print(); }, 100);
+});
+
+/* ============================== MINUTES LOGIC ============================== */
+const getMinutes = async() => await Store.get('meeting_minutes', []);
+const saveMinutes = async(arr) => await Store.set('meeting_minutes', arr);
+let minSearch = '';
+
+$('minuteCalBtn').addEventListener('click', () => openCalendar('minute'));
+
+$('newMinuteBtn').addEventListener('click', () => {
+  $('minuteId').value = '';
+  $('minuteFormTitle').textContent = 'ثبت صورت‌جلسه جدید';
+  $('minuteDate').value = '';
+  $('minuteAttendees').value = '';
+  $('minuteDesc').value = '';
+  $('minuteResolutions').value = '';
+  $('minuteNotebook').value = '';
+  $('minuteFormCard').classList.add('active');
+  $('minuteDate').focus();
+});
+
+$('cancelMinuteBtn').addEventListener('click', () => {
+  $('minuteFormCard').classList.remove('active');
+});
+
+$('saveMinuteBtn').addEventListener('click', async () => {
+  const date = $('minuteDate').value.trim();
+  const attendees = $('minuteAttendees').value.trim();
+  const desc = $('minuteDesc').value.trim();
+  const res = $('minuteResolutions').value.trim();
+  const notebook = $('minuteNotebook').value.trim();
+  
+  if(!date || !pToEn(date)) { toast('تاریخ جلسه را به درستی وارد کنید', 'danger'); $('minuteDate').focus(); return; }
+  if(!attendees) { toast('اعضای جلسه را وارد کنید', 'danger'); $('minuteAttendees').focus(); return; }
+  
+  const id = $('minuteId').value;
+  const list = await getMinutes();
+  
+  const data = {
+    id: id || 'm_' + Date.now(),
+    date: date,
+    attendees: attendees,
+    desc: desc,
+    resolutions: res,
+    notebook: notebook,
+    timestamp: Date.now()
+  };
+  
+  if(id) {
+    const idx = list.findIndex(x => x.id === id);
+    if(idx >= 0) list[idx] = data;
+  } else {
+    list.unshift(data); // Add to beginning
+  }
+  
+  const ok = await saveMinutes(list);
+  if(ok) {
+    toast('صورت‌جلسه با موفقیت ذخیره شد', 'success');
+    $('minuteFormCard').classList.remove('active');
+    await renderMinutes();
+  } else {
+    toast('خطا در ذخیره‌سازی. اتصال به سرور را بررسی کنید.', 'danger');
+  }
+});
+
+$('printMinuteBtn').addEventListener('click', async () => {
+  const date = $('minuteDate').value.trim();
+  const attendees = $('minuteAttendees').value.trim();
+  const desc = $('minuteDesc').value.trim();
+  const res = $('minuteResolutions').value.trim();
+  
+  if(!date && !attendees) {
+    toast('برای پرینت، حداقل تاریخ و اعضا را پر کنید', 'danger');
+    return;
+  }
+  
+  const p = pDate(new Date());
+  const todayStr = `${p.jd} ${p.monthName} ${p.jy}`;
+  
+  $('printableMinute').innerHTML = `
+    <div class="print-header-min">
+      <h1>صورتجلسه</h1>
+      <p>کمیته امداد امام خمینی (ره) - طرح تداوم کسب‌وکار (BCP)</p>
+    </div>
+    <div class="print-meta">
+      <span><strong>تاریخ جلسه:</strong> ${escapeHtml(date || '...................')}</span>
+      <span><strong>تاریخ چاپ:</strong> ${todayStr}</span>
+    </div>
+    <div class="print-section">
+      <h3>اعضا / حاضرین</h3>
+      <p>${escapeHtml(attendees || '...................')}</p>
+    </div>
+    <div class="print-section">
+      <h3>شرح جلسه</h3>
+      <p>${escapeHtml(desc || '...................')}</p>
+    </div>
+    <div class="print-section">
+      <h3>مصوبات</h3>
+      <p>${escapeHtml(res || '...................')}</p>
+    </div>
+  `;
+  
+  document.body.classList.add('printing-minute');
+  window.print();
+  document.body.classList.remove('printing-minute');
+});
+
+async function renderMinutes() {
+  const list = await getMinutes();
+  const filtered = minSearch 
+    ? list.filter(m => [m.date, m.attendees, m.desc, m.resolutions].join(' ').toLowerCase().includes(minSearch.toLowerCase()))
+    : list;
+
+  const container = $('minutesHistoryContainer');
+  
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="min-table-wrap"><div class="min-empty">
+      <svg class="ic" viewBox="0 0 24 24" style="width:48px;height:48px;margin:0 auto 14px;color:var(--border-2)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      <h3>${list.length ? 'صورت‌جلسه‌ای یافت نشد' : 'هنوز صورت‌جلسه‌ای ثبت نشده'}</h3>
+      <p>${list.length ? 'عبارت جستجو را تغییر دهید' : 'برای شروع دکمه «صورت‌جلسه جدید» را بزنید'}</p>
+    </div></div>`;
+    return;
+  }
+
+  let html = `<div class="min-table-wrap"><table class="min-table">
+    <thead><tr>
+      <th>تاریخ</th><th>اعضا</th><th>شرح جلسه</th><th style="text-align:left"></th>
+    </tr></thead><tbody>`;
+    
+  filtered.forEach(m => {
+    html += `<tr>
+      <td data-label="تاریخ"><span class="min-date">${escapeHtml(m.date)}</span></td>
+      <td data-label="اعضا"><span class="min-subject">${escapeHtml(m.attendees)}</span></td>
+      <td data-label="شرح"><div class="min-desc">${escapeHtml(m.desc || '—')}</div></td>
+      <td class="min-actions-cell">
+        <button class="min-act" data-edit-min="${m.id}" title="ویرایش / مشاهده">
+          <svg class="ic" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+        <button class="min-act danger" data-del-min="${m.id}" title="حذف">
+          <svg class="ic" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+        </button>
+      </td>
+    </tr>`;
+  });
+  
+  html += '</tbody></table></div>';
+  container.innerHTML = html;
+  
+  container.querySelectorAll('[data-edit-min]').forEach(b => {
+    b.addEventListener('click', () => {
+      const m = filtered.find(x => x.id === b.dataset.editMin);
+      if(!m) return;
+      $('minuteId').value = m.id;
+      $('minuteFormTitle').textContent = 'ویرایش صورت‌جلسه';
+      $('minuteDate').value = m.date || '';
+      $('minuteAttendees').value = m.attendees || '';
+      $('minuteDesc').value = m.desc || '';
+      $('minuteResolutions').value = m.resolutions || '';
+      $('minuteNotebook').value = m.notebook || '';
+      $('minuteFormCard').classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+  
+  container.querySelectorAll('[data-del-min]').forEach(b => {
+    b.addEventListener('click', async () => {
+      if(confirm('آیا از حذف این صورت‌جلسه اطمینان دارید؟')) {
+        const list = await getMinutes();
+        const newList = list.filter(x => x.id !== b.dataset.delMin);
+        await saveMinutes(newList);
+        await renderMinutes();
+        toast('صورت‌جلسه حذف شد', 'success');
+      }
+    });
+  });
+}
+
+$('minSearch').addEventListener('input', e => {
+  minSearch = e.target.value.trim();
+  renderMinutes();
 });
 
 /* ============================== STAKEHOLDERS ============================== */
@@ -2082,6 +2391,7 @@ $('savePassBtn').addEventListener('click',async ()=>{
 async function renderAll(){
   await renderDashboard();
   await renderChecklist();
+  await renderMinutes();
   await renderStakeholders();
 }
 </script>
