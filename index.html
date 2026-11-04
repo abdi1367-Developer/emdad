@@ -25,7 +25,7 @@
   --shadow-lg:0 20px 60px rgba(26,46,40,.14);
   --radius-sm:8px; --radius:14px; --radius-lg:20px; --radius-xl:28px;
   --transition:.3s cubic-bezier(.4,0,.2,1);
-  --font:'Vazirmatn',system-ui,sans-serif;
+  --font:'Vazirmatn', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --header-h:70px;
 }
 [data-theme="dark"]{
@@ -42,7 +42,18 @@
   --shadow-lg:0 20px 60px rgba(0,0,0,.55);
 }
 html{font-size:15px;-webkit-text-size-adjust:100%}
-body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.75;min-height:100vh;overflow-x:hidden;transition:background var(--transition),color var(--transition)}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.75;
+  min-height:100vh;
+  overflow-x:hidden;
+  transition:background var(--transition),color var(--transition);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 [data-theme="dark"] body::before{opacity:.06;mix-blend-mode:screen}
 ::selection{background:var(--primary);color:#fff}
@@ -331,16 +342,25 @@ img{max-width:100%;display:block}
   .owner-wrap{grid-area:owner}
   .save-btn{grid-area:save;justify-self:end}
 }
+
+/* Mobile Checklist Cards */
 @media (max-width:768px){
-  .chk-row{grid-template-columns:1fr;grid-template-areas:"txt" "radios" "files" "date" "owner" "save";gap:8px}
+  .chk-row{
+    display:flex; flex-direction:column; gap:12px;
+    background:var(--bg-elev); border:1px solid var(--border);
+    border-radius:var(--radius); margin-bottom:12px; padding:16px;
+    box-shadow:var(--shadow-sm);
+  }
+  .chk-body { background: var(--bg-soft); padding: 12px; }
   .chk-idx{display:none}
-  .radios{justify-content:flex-start}
-  .date-wrap,.owner-wrap{width:100%}
-  .save-btn{justify-self:stretch;justify-content:center}
-  .file-btn{justify-self:flex-start}
+  .radios{justify-content:flex-start; width:100%;}
+  .chk-row-actions { display:flex; gap:8px; width:100%; flex-wrap:nowrap; }
+  .date-wrap, .owner-wrap { width:100%; flex: 1;}
+  .save-btn{justify-content:center; width:100%; margin-top:8px;}
+  .file-btn{justify-content:center; width:100%;}
 }
 
-/* ============================== MINUTES (NEW TAB) ============================== */
+/* ============================== MINUTES ============================== */
 .min-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:24px 0;margin-bottom:16px;border-bottom:1px solid var(--border)}
 .min-title{font-size:1.3rem;font-weight:800;color:var(--text)}
 .min-actions{display:flex;gap:10px;align-items:center}
@@ -376,7 +396,7 @@ img{max-width:100%;display:block}
 .min-date { font-family:monospace; font-weight:700; color:var(--primary); direction:ltr; text-align:right; }
 .min-subject { font-weight:700; color:var(--text); }
 .min-desc { font-size:.8rem; color:var(--muted); max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.min-actions-cell { display:flex; gap:6px; justify-content:flex-end; }
+.min-actions-cell { display:flex; gap:6px; justify-content:flex-end; flex-wrap:nowrap; }
 .min-act { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--muted); transition:all .2s; }
 .min-act:hover { background:var(--bg-tint); color:var(--text); }
 .min-act.danger:hover { background:var(--danger-bg); color:var(--danger); }
@@ -420,39 +440,31 @@ img{max-width:100%;display:block}
 .min-upload-area:hover { border-color: var(--primary); background: var(--primary-glow); }
 .min-upload-area p { font-size: .85rem; color: var(--muted); margin-bottom: 10px; }
 
-/* Print specific styles for minutes */
-#printableMinute { display: none; }
-@media print {
-  body.printing-minute * { visibility: hidden; }
-  body.printing-minute #printableMinute, body.printing-minute #printableMinute * { visibility: visible; }
-  body.printing-minute #printableMinute {
-    display: block !important;
-    position: absolute;
-    left: 0; top: 0; width: 100%;
-    padding: 2cm;
-    background: #fff;
-    color: #000;
-    font-size: 12pt;
-    line-height: 1.8;
+/* Mobile Minutes Cards */
+@media (max-width: 900px) {
+  .min-toolbar{flex-direction:column;align-items:stretch; gap:16px}
+  .min-actions{width:100%; flex-wrap:wrap}
+  .search-wrap{flex:1}
+  .min-table thead{display:none}
+  .min-table,.min-table tbody,.min-table tr,.min-table td{display:block;width:100%}
+  .min-table tr{
+    background: var(--bg-elev); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 12px; padding: 16px;
+    box-shadow: var(--shadow-sm);
   }
-  body.printing-minute .personal-notebook-wrap {
-    display: none !important;
+  .min-table td{padding:6px 0;border:none;display:flex;justify-content:space-between;align-items:center;gap:10px; font-size:0.9rem;}
+  .min-table td::before{content:attr(data-label);font-size:.75rem;color:var(--muted);font-weight:600}
+  .min-table td:first-child{padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:8px;display:flex; justify-content:space-between}
+  .min-table td:first-child::before{display:inline-block}
+  
+  .min-actions-cell{
+    display:flex; gap:8px; justify-content:flex-end; flex-wrap:nowrap;
+    margin-top:12px; border-top:1px solid var(--border); padding-top:12px;
   }
-  body.printing-minute .print-header-min {
-    text-align: center;
-    margin-bottom: 30px;
-    border-bottom: 2px solid #000;
-    padding-bottom: 15px;
-  }
-  body.printing-minute .print-header-min h1 { font-size: 20pt; margin-bottom: 5px; color: #000; }
-  body.printing-minute .print-header-min p { font-size: 11pt; color: #333; }
-  body.printing-minute .print-section { margin-bottom: 20px; border: 1px solid #ccc; padding: 15px; border-radius: 6px; }
-  body.printing-minute .print-section h3 { font-size: 13pt; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; color: #111; }
-  body.printing-minute .print-section p { font-size: 11pt; white-space: pre-wrap; margin: 0; color: #222; }
-  body.printing-minute .print-meta { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 11pt; font-weight: bold; }
+  .min-actions-cell::before{display:none !important}
 }
 
-/* ============================== PERSONAL NOTEBOOK (NEW TAB) ============================== */
+/* ============================== PERSONAL NOTEBOOK ============================== */
 .note-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 24px 0; margin-bottom: 16px; border-bottom: 1px solid var(--border); }
 .note-title { font-size: 1.3rem; font-weight: 800; color: var(--text); }
 .note-actions { display: flex; gap: 10px; align-items: center; }
@@ -471,6 +483,15 @@ img{max-width:100%;display:block}
 .note-empty { padding: 60px 20px; text-align: center; color: var(--muted); grid-column: 1 / -1; }
 .note-empty h3 { color: var(--text-2); font-size: 1rem; margin-bottom: 6px; }
 .note-empty p { font-size: .85rem; }
+
+/* Mobile Note Cards */
+@media (max-width: 768px) {
+  .note-toolbar { flex-direction: column; align-items: stretch; gap: 16px; }
+  .note-actions { width: 100%; justify-content: flex-end; }
+  .note-grid { grid-template-columns: 1fr; }
+  .note-card { padding-bottom: 60px; } /* Make room for absolute actions */
+  .note-card .note-actions { position: static; margin-top: 12px; justify-content: flex-end; border-top: 1px solid var(--border); padding-top: 12px; }
+}
 
 /* ============================== STAKEHOLDERS ============================== */
 .stk-header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:24px 0;margin-bottom:16px;border-bottom:1px solid var(--border)}
@@ -497,7 +518,7 @@ img{max-width:100%;display:block}
 .stk-role{font-size:.75rem;color:var(--muted);margin-top:1px}
 .stk-phone,.stk-email{font-size:.82rem;color:var(--text-2);direction:ltr;text-align:right;font-family:monospace}
 .stk-email{color:var(--primary);text-decoration:underline}
-.stk-actions-cell{display:flex;gap:6px;justify-content:flex-end}
+.stk-actions-cell{display:flex;gap:6px;justify-content:flex-end; flex-wrap:nowrap;}
 .stk-act{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all var(--transition)}
 .stk-act:hover{background:var(--bg-tint);color:var(--text)}
 .stk-act.danger:hover{background:var(--danger-bg);color:var(--danger)}
@@ -505,6 +526,26 @@ img{max-width:100%;display:block}
 .stk-empty{padding:60px 20px;text-align:center;color:var(--muted)}
 .stk-empty h3{color:var(--text-2);font-size:1rem;margin-bottom:6px}
 .stk-empty p{font-size:.85rem}
+
+/* Mobile Stakeholders Cards */
+@media (max-width: 900px) {
+  .stk-table thead{display:none}
+  .stk-table,.stk-table tbody,.stk-table tr,.stk-table td{display:block;width:100%}
+  .stk-table tr{
+    background: var(--bg-elev); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 12px; padding: 16px;
+    box-shadow: var(--shadow-sm);
+  }
+  .stk-table td{padding:6px 0;border:none;display:flex;justify-content:space-between;align-items:center;gap:10px; font-size:0.9rem;}
+  .stk-table td::before{content:attr(data-label);font-size:.75rem;color:var(--muted);font-weight:600}
+  .stk-table td:first-child{padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:8px;display:flex; justify-content:space-between}
+  .stk-table td:first-child::before{display:inline-block}
+  .stk-actions-cell{ margin-top:12px; border-top:1px solid var(--border); padding-top:12px; justify-content:flex-end;}
+  .stk-actions-cell::before{display:none !important}
+  .search-wrap input{width:100%}
+  .stk-actions{width:100%}
+  .stk-actions .search-wrap{flex:1}
+}
 
 /* ============================== MODALS / TOAST ============================== */
 .modal-bg{position:fixed;inset:0;z-index:200;background:rgba(10,20,16,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px}
@@ -592,31 +633,6 @@ img{max-width:100%;display:block}
   .dash-row{grid-template-columns:repeat(2,1fr);gap:10px}
   .chk-toolbar{flex-direction:column;align-items:stretch}
   .chk-toolbar-right{justify-content:flex-end;flex-wrap:wrap}
-  .min-toolbar{flex-direction:column;align-items:stretch; gap:16px}
-  .min-actions{width:100%; flex-wrap:wrap}
-  .search-wrap{flex:1}
-  .min-table thead{display:none}
-  .min-table,.min-table tbody,.min-table tr,.min-table td{display:block;width:100%}
-  .min-table tr{padding:14px 16px;border-bottom:1px solid var(--border);position:relative}
-  .min-table td{padding:3px 0;border:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
-  .min-table td::before{content:attr(data-label);font-size:.75rem;color:var(--muted);font-weight:600}
-  .min-table td:first-child{padding:0 0 8px;border-bottom:1px solid var(--border);margin-bottom:8px;display:block}
-  .min-table td:first-child::before{display:none}
-  .min-actions-cell{position:absolute;top:14px;left:14px;padding:0 !important}
-  .min-actions-cell::before{display:none !important}
-  
-  .stk-table thead{display:none}
-  .stk-table,.stk-table tbody,.stk-table tr,.stk-table td{display:block;width:100%}
-  .stk-table tr{padding:14px 16px;border-bottom:1px solid var(--border);position:relative}
-  .stk-table td{padding:3px 0;border:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
-  .stk-table td::before{content:attr(data-label);font-size:.75rem;color:var(--muted);font-weight:600}
-  .stk-table td:first-child{padding:0 0 8px;border-bottom:1px solid var(--border);margin-bottom:8px;display:block}
-  .stk-table td:first-child::before{display:none}
-  .stk-actions-cell{position:absolute;top:14px;left:14px;padding:0 !important}
-  .stk-actions-cell::before{display:none !important}
-  .search-wrap input{width:100%}
-  .stk-actions{width:100%}
-  .stk-actions .search-wrap{flex:1}
 }
 @media (max-width:520px){
   .stats-row{grid-template-columns:1fr 1fr;gap:10px}
@@ -628,13 +644,47 @@ img{max-width:100%;display:block}
   .tl-bar{height:36px;font-size:.62rem}
   .tl-week{min-width:32px}
   .form-row.two-col{grid-template-columns:1fr}
+  .form-actions { flex-direction: column; }
+  .form-actions button { width: 100%; }
+  .min-actions { flex-direction: column; }
+  .min-actions .search-wrap { width: 100%; }
 }
 
-/* ============================== PRINT (Checklist) ============================== */
+/* Print specific styles for minutes */
+#printableMinute { display: none; }
 @media print {
   @page { margin: 1cm; size: A4 portrait; }
-  body { background: #fff !important; color: #000 !important; font-size: 10pt !important; }
-  body::before { display: none !important; }
+  body.printing-minute * { visibility: hidden; }
+  body.printing-minute #printableMinute, body.printing-minute #printableMinute * { visibility: visible; }
+  body.printing-minute #printableMinute {
+    display: block !important;
+    position: absolute;
+    left: 0; top: 0; width: 100%;
+    padding: 2cm;
+    background: #fff;
+    color: #000;
+    font-size: 12pt;
+    line-height: 1.8;
+  }
+  body.printing-minute .personal-notebook-wrap {
+    display: none !important;
+  }
+  body.printing-minute .print-header-min {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 15px;
+  }
+  body.printing-minute .print-header-min h1 { font-size: 20pt; margin-bottom: 5px; color: #000; }
+  body.printing-minute .print-header-min p { font-size: 11pt; color: #333; }
+  body.printing-minute .print-section { margin-bottom: 20px; border: 1px solid #ccc; padding: 15px; border-radius: 6px; }
+  body.printing-minute .print-section h3 { font-size: 13pt; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; color: #111; }
+  body.printing-minute .print-section p { font-size: 11pt; white-space: pre-wrap; margin: 0; color: #222; }
+  body.printing-minute .print-meta { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 11pt; font-weight: bold; }
+
+  /* Checklist Print */
+  body:not(.printing-minute) { background: #fff !important; color: #000 !important; font-size: 10pt !important; }
+  body:not(.printing-minute)::before { display: none !important; }
   
   body:not(.printing-minute) * { visibility: hidden; }
   body:not(.printing-minute) #view-checklist, body:not(.printing-minute) #view-checklist * { visibility: visible; }
@@ -1081,7 +1131,7 @@ img{max-width:100%;display:block}
         <div id="checklistContainer"></div>
       </section>
 
-      <!-- ============== MINUTES (NEW TAB) ============== -->
+      <!-- ============== MINUTES ============== -->
       <section class="view" id="view-minutes">
         <div class="min-toolbar">
           <div class="min-title">مدیریت صورت‌جلسات</div>
@@ -1101,6 +1151,7 @@ img{max-width:100%;display:block}
         <div class="min-form-card" id="minuteFormCard">
           <h3 class="min-form-title" id="minuteFormTitle">ثبت صورت‌جلسه جدید</h3>
           <input type="hidden" id="minuteId">
+          <input type="hidden" id="minuteMode" value="edit">
           
           <div class="form-row two-col">
             <div>
@@ -1159,7 +1210,7 @@ img{max-width:100%;display:block}
         <div id="minutesHistoryContainer"></div>
       </section>
 
-      <!-- ============== PERSONAL NOTEBOOK (NEW TAB) ============== -->
+      <!-- ============== PERSONAL NOTEBOOK ============== -->
       <section class="view" id="view-notebook">
         <div class="note-toolbar">
           <div class="note-title">دفترچه یادداشت شخصی</div>
@@ -1175,6 +1226,7 @@ img{max-width:100%;display:block}
         <div class="min-form-card" id="noteFormCard">
           <h3 class="min-form-title" id="noteFormTitle">ثبت یادداشت جدید</h3>
           <input type="hidden" id="noteId">
+          <input type="hidden" id="noteMode" value="edit">
           
           <div class="form-row two-col">
             <div>
@@ -1359,7 +1411,7 @@ function jMonthDays(jy,jm){if(jm<=6)return 31;if(jm<=11)return 30;const [gy,gm,g
 function jFirstWeekday(jy,jm){const [gy,gm,gd]=j2g(jy,jm,1);const d=new Date(gy,gm-1,gd);return (d.getDay()+1)%7;}
 function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
-/* ============================== STORAGE (DIRECT FETCH) ============================== */
+/* ============================== STORAGE ============================== */
 const Store = {
   async get(k, fallback) {
     try {
@@ -1796,20 +1848,23 @@ async function renderChecklist(){
           </label>
         </div>
         
-        <button class="file-btn" data-file-btn="${key}">
-          <svg class="ic" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
-          <span>${faDigits(filesCount)}</span>
-        </button>
-
-        <div class="date-wrap">
-          <input type="text" class="chk-in-date" placeholder="تاریخ" value="${escapeHtml(e.date||'')}" data-date="${key}" dir="ltr">
-          <button class="cal-open" data-cal="${key}" title="تقویم">
-            <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <div class="chk-row-actions">
+          <button class="file-btn" data-file-btn="${key}">
+            <svg class="ic" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+            <span>${faDigits(filesCount)} فایل</span>
           </button>
+
+          <div class="date-wrap">
+            <input type="text" class="chk-in-date" placeholder="تاریخ" value="${escapeHtml(e.date||'')}" data-date="${key}" dir="ltr">
+            <button class="cal-open" data-cal="${key}" title="تقویم">
+              <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </button>
+          </div>
+          <div class="owner-wrap">
+            <input type="text" class="chk-in-owner" placeholder="متولی" value="${escapeHtml(e.owner||'')}" data-owner="${key}">
+          </div>
         </div>
-        <div class="owner-wrap">
-          <input type="text" class="chk-in-owner" placeholder="متولی" value="${escapeHtml(e.owner||'')}" data-owner="${key}">
-        </div>
+        
         <button class="save-btn" data-save="${key}">
           <svg class="ic" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
           ثبت
@@ -1982,61 +2037,32 @@ async function refreshFileList() {
         const fileToDelete = files[idx];
         
         try {
-          const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${fileToDelete.path}`, {
+          await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${fileToDelete.path}`, {
             method: 'DELETE',
             headers: { 
               'apikey': SUPABASE_ANON_KEY,
               'Authorization': `Bearer ${SUPABASE_ANON_KEY}` 
             }
           });
+        } catch (err) { console.error('Delete failed:', err); }
           
-          if(!res.ok && res.status !== 404) {
-            console.error('Delete failed:', res.status, await res.text());
-          }
-          
-          const state = await getCheck();
-          state[CURRENT_FILE_KEY].files.splice(idx, 1);
-          await saveCheck(state);
-          
-          await refreshFileList();
-          await renderChecklist();
-          toast('فایل حذف شد', 'success');
-        } catch (err) {
-          console.error(err);
-          toast('خطا در حذف فایل از سرور', 'danger');
-        }
+        const state = await getCheck();
+        state[CURRENT_FILE_KEY].files.splice(idx, 1);
+        await saveCheck(state);
+        
+        await refreshFileList();
+        await renderChecklist();
+        toast('فایل حذف شد', 'success');
       });
     });
   }
 }
 
 $('uploadArea').addEventListener('click', () => $('fileInput').click());
-
-$('uploadArea').addEventListener('dragover', (e) => {
-  e.preventDefault();
-  $('uploadArea').style.borderColor = 'var(--primary)';
-  $('uploadArea').style.background = 'var(--primary-glow)';
-});
-$('uploadArea').addEventListener('dragleave', (e) => {
-  e.preventDefault();
-  $('uploadArea').style.borderColor = 'var(--border-2)';
-  $('uploadArea').style.background = '';
-});
-$('uploadArea').addEventListener('drop', async (e) => {
-  e.preventDefault();
-  $('uploadArea').style.borderColor = 'var(--border-2)';
-  $('uploadArea').style.background = '';
-  if (e.dataTransfer.files.length > 0) {
-    await handleFileUpload(e.dataTransfer.files);
-  }
-});
-
-$('fileInput').addEventListener('change', async (e) => {
-  if (e.target.files.length > 0) {
-    await handleFileUpload(e.target.files);
-    e.target.value = '';
-  }
-});
+$('uploadArea').addEventListener('dragover', (e) => { e.preventDefault(); $('uploadArea').style.borderColor = 'var(--primary)'; $('uploadArea').style.background = 'var(--primary-glow)'; });
+$('uploadArea').addEventListener('dragleave', (e) => { e.preventDefault(); $('uploadArea').style.borderColor = 'var(--border-2)'; $('uploadArea').style.background = ''; });
+$('uploadArea').addEventListener('drop', async (e) => { e.preventDefault(); $('uploadArea').style.borderColor = 'var(--border-2)'; $('uploadArea').style.background = ''; if (e.dataTransfer.files.length > 0) await handleFileUpload(e.dataTransfer.files); });
+$('fileInput').addEventListener('change', async (e) => { if (e.target.files.length > 0) { await handleFileUpload(e.target.files); e.target.value = ''; } });
 
 async function handleFileUpload(fileList) {
   const errEl = $('fileErr');
@@ -2052,11 +2078,7 @@ async function handleFileUpload(fileList) {
   
   for (let i = 0; i < fileList.length; i++) {
     const file = fileList[i];
-    
-    if(file.size > 50 * 1024 * 1024) {
-      lastError = `فایل «${file.name}» بزرگتر از ۵۰ مگابایت است.`;
-      continue;
-    }
+    if(file.size > 50 * 1024 * 1024) { lastError = `فایل «${file.name}» بزرگتر از ۵۰ مگابایت است.`; continue; }
     
     const cleanName = file.name.replace(/[^\w.\-]/g, '_');
     const filePath = `${CURRENT_FILE_KEY}/${Date.now()}_${cleanName}`;
@@ -2074,36 +2096,18 @@ async function handleFileUpload(fileList) {
       });
       
       if(!res.ok) {
-        const errorBody = await res.text();
-        console.error('Upload failed:', res.status, errorBody);
-        
-        if(res.status === 401) {
-          lastError = 'خطای احراز هویت (401). کلید API را چک کنید.';
-        } else if(res.status === 403) {
-          lastError = 'دسترسی رد شد (403). Policy آپلود را در Supabase اجرا کنید.';
-        } else if(res.status === 404) {
-          lastError = `باکت «${STORAGE_BUCKET}» یافت نشد. نام باکت را چک کنید.`;
-        } else if(res.status === 413) {
-          lastError = 'فایل خیلی بزرگ است (413).';
-        } else {
-          lastError = `خطا ${res.status}: ${errorBody.substring(0, 100)}`;
-        }
+        if(res.status === 401) lastError = 'خطای احراز هویت (401). کلید API را چک کنید.';
+        else if(res.status === 403) lastError = 'دسترسی رد شد (403). Policy آپلود را در Supabase اجرا کنید.';
+        else if(res.status === 404) lastError = `باکت «${STORAGE_BUCKET}» یافت نشد. نام باکت را چک کنید.`;
+        else if(res.status === 413) lastError = 'فایل خیلی بزرگ است (413).';
+        else lastError = `خطا ${res.status}`;
         continue;
       }
       
       const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${filePath}`;
-      
-      state[CURRENT_FILE_KEY].files.push({
-        name: file.name,
-        url: publicUrl,
-        path: filePath
-      });
+      state[CURRENT_FILE_KEY].files.push({ name: file.name, url: publicUrl, path: filePath });
       successCount++;
-      
-    } catch (error) {
-      console.error('Upload error:', error);
-      lastError = `خطای شبکه: ${error.message}`;
-    }
+    } catch (error) { lastError = `خطای شبکه: ${error.message}`; }
   }
   
   if(successCount > 0) {
@@ -2120,12 +2124,14 @@ async function handleFileUpload(fileList) {
 }
 
 /* ============================== FILE MANAGEMENT (Minutes) ============================== */
-let MINUTE_FILES = []; // Temp storage for minute files being edited
+let MINUTE_FILES = [];
 
 function renderMinuteFiles() {
   const listEl = $('minFileList');
+  const isView = $('minuteMode').value === 'view';
+  
   if (MINUTE_FILES.length === 0) {
-    listEl.innerHTML = '';
+    listEl.innerHTML = `<li style="text-align:center; color:var(--muted); font-size:0.85rem; padding:10px;">فایلی پیوست نشده است.</li>`;
     return;
   }
   listEl.innerHTML = MINUTE_FILES.map((f, idx) => `
@@ -2134,61 +2140,43 @@ function renderMinuteFiles() {
         <svg class="ic" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
         ${escapeHtml(f.name)}
       </a>
+      ${!isView ? `
       <button class="del-file" data-del-min-file="${idx}" title="حذف فایل">
         <svg class="ic" viewBox="0 0 24 24" style="width:16px;height:16px;"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
-      </button>
+      </button>` : ''}
     </li>
   `).join('');
 
-  listEl.querySelectorAll('[data-del-min-file]').forEach(btn => {
-    btn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      if(!confirm('آیا از حذف این فایل اطمینان دارید؟')) return;
-      const idx = parseInt(btn.dataset.delMinFile);
-      const fileToDelete = MINUTE_FILES[idx];
-      
-      try {
-        await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${fileToDelete.path}`, {
-          method: 'DELETE',
-          headers: { 
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}` 
-          }
-        });
-      } catch (err) {
-        console.error('Delete from storage failed:', err);
-      }
-      
-      MINUTE_FILES.splice(idx, 1);
-      renderMinuteFiles();
-      toast('فایل حذف شد', 'success');
+  if (!isView) {
+    listEl.querySelectorAll('[data-del-min-file]').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        if(!confirm('آیا از حذف این فایل اطمینان دارید؟')) return;
+        const idx = parseInt(btn.dataset.delMinFile);
+        const fileToDelete = MINUTE_FILES[idx];
+        
+        try {
+          await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${fileToDelete.path}`, {
+            method: 'DELETE',
+            headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+          });
+        } catch (err) {}
+        
+        MINUTE_FILES.splice(idx, 1);
+        renderMinuteFiles();
+        toast('فایل حذف شد', 'success');
+      });
     });
-  });
+  }
 }
 
-$('minUploadArea').addEventListener('click', () => $('minFileInput').click());
-$('minUploadArea').addEventListener('dragover', (e) => {
-  e.preventDefault();
-  $('minUploadArea').style.borderColor = 'var(--primary)';
-  $('minUploadArea').style.background = 'var(--primary-glow)';
+$('minUploadArea').addEventListener('click', () => {
+  if ($('minuteMode').value !== 'view') $('minFileInput').click();
 });
-$('minUploadArea').addEventListener('dragleave', (e) => {
-  e.preventDefault();
-  $('minUploadArea').style.borderColor = 'var(--border-2)';
-  $('minUploadArea').style.background = '';
-});
-$('minUploadArea').addEventListener('drop', async (e) => {
-  e.preventDefault();
-  $('minUploadArea').style.borderColor = 'var(--border-2)';
-  $('minUploadArea').style.background = '';
-  if (e.dataTransfer.files.length > 0) await handleMinuteFileUpload(e.dataTransfer.files);
-});
-$('minFileInput').addEventListener('change', async (e) => {
-  if (e.target.files.length > 0) {
-    await handleMinuteFileUpload(e.target.files);
-    e.target.value = '';
-  }
-});
+$('minUploadArea').addEventListener('dragover', (e) => { e.preventDefault(); if($('minuteMode').value !== 'view'){ $('minUploadArea').style.borderColor = 'var(--primary)'; $('minUploadArea').style.background = 'var(--primary-glow)'; } });
+$('minUploadArea').addEventListener('dragleave', (e) => { e.preventDefault(); $('minUploadArea').style.borderColor = 'var(--border-2)'; $('minUploadArea').style.background = ''; });
+$('minUploadArea').addEventListener('drop', async (e) => { e.preventDefault(); $('minUploadArea').style.borderColor = 'var(--border-2)'; $('minUploadArea').style.background = ''; if (e.dataTransfer.files.length > 0 && $('minuteMode').value !== 'view') await handleMinuteFileUpload(e.dataTransfer.files); });
+$('minFileInput').addEventListener('change', async (e) => { if (e.target.files.length > 0) { await handleMinuteFileUpload(e.target.files); e.target.value = ''; } });
 
 async function handleMinuteFileUpload(fileList) {
   const errEl = $('minFileErr');
@@ -2200,10 +2188,7 @@ async function handleMinuteFileUpload(fileList) {
   
   for (let i = 0; i < fileList.length; i++) {
     const file = fileList[i];
-    if(file.size > 50 * 1024 * 1024) {
-      lastError = `فایل «${file.name}» بزرگتر از ۵۰ مگابایت است.`;
-      continue;
-    }
+    if(file.size > 50 * 1024 * 1024) { lastError = `فایل «${file.name}» بزرگتر از ۵۰ مگابایت است.`; continue; }
     
     const cleanName = file.name.replace(/[^\w.\-]/g, '_');
     const filePath = `minutes/${Date.now()}_${cleanName}`;
@@ -2211,30 +2196,16 @@ async function handleMinuteFileUpload(fileList) {
     try {
       const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${filePath}`, {
         method: 'POST',
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Content-Type': file.type || 'application/octet-stream',
-          'x-upsert': 'true'
-        },
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': file.type || 'application/octet-stream', 'x-upsert': 'true' },
         body: file
       });
       
-      if(!res.ok) {
-        lastError = `خطا ${res.status} در آپلود ${file.name}`;
-        continue;
-      }
+      if(!res.ok) { lastError = `خطا ${res.status} در آپلود ${file.name}`; continue; }
       
       const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${filePath}`;
-      MINUTE_FILES.push({
-        name: file.name,
-        url: publicUrl,
-        path: filePath
-      });
+      MINUTE_FILES.push({ name: file.name, url: publicUrl, path: filePath });
       successCount++;
-    } catch (error) {
-      lastError = `خطای شبکه: ${error.message}`;
-    }
+    } catch (error) { lastError = `خطای شبکه: ${error.message}`; }
   }
   
   if(successCount > 0) {
@@ -2256,34 +2227,19 @@ async function openCalendar(key){
   if(key === 'minute') {
     const cur = $('minuteDate').value;
     const en = pToEn(cur);
-    if(en){
-      const [y,m,d]=en.split('/').map(Number);
-      calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d};
-    } else {
-      const p=pDate(new Date());
-      calYear=p.jy; calMonth=p.jm; calSelected=null;
-    }
+    if(en){ const [y,m,d]=en.split('/').map(Number); calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d}; }
+    else { const p=pDate(new Date()); calYear=p.jy; calMonth=p.jm; calSelected=null; }
   } else if(key === 'note') {
     const cur = $('noteDate').value;
     const en = pToEn(cur);
-    if(en){
-      const [y,m,d]=en.split('/').map(Number);
-      calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d};
-    } else {
-      const p=pDate(new Date());
-      calYear=p.jy; calMonth=p.jm; calSelected=null;
-    }
+    if(en){ const [y,m,d]=en.split('/').map(Number); calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d}; }
+    else { const p=pDate(new Date()); calYear=p.jy; calMonth=p.jm; calSelected=null; }
   } else {
     const state = await getCheck();
     const cur=state[key]?.date||'';
     const en=pToEn(cur);
-    if(en){
-      const [y,m,d]=en.split('/').map(Number);
-      calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d};
-    } else {
-      const p=pDate(new Date());
-      calYear=p.jy; calMonth=p.jm; calSelected=null;
-    }
+    if(en){ const [y,m,d]=en.split('/').map(Number); calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d}; }
+    else { const p=pDate(new Date()); calYear=p.jy; calMonth=p.jm; calSelected=null; }
   }
   
   renderCalendar();
@@ -2385,22 +2341,48 @@ const getMinutes = async() => await Store.get('meeting_minutes', []);
 const saveMinutes = async(arr) => await Store.set('meeting_minutes', arr);
 let minSearch = '';
 
-$('minuteCalBtn').addEventListener('click', () => openCalendar('minute'));
-
-$('newMinuteBtn').addEventListener('click', () => {
-  $('minuteId').value = '';
-  $('minuteFormTitle').textContent = 'ثبت صورت‌جلسه جدید';
-  $('minuteDate').value = '';
-  $('minuteAttendees').value = '';
-  $('minuteDesc').value = '';
-  $('minuteResolutions').value = '';
-  $('minuteNotebook').value = '';
-  MINUTE_FILES = [];
+function setMinuteMode(mode, data = null) {
+  $('minuteMode').value = mode;
+  const isView = mode === 'view';
+  const inputs = ['minuteDate', 'minuteAttendees', 'minuteDesc', 'minuteResolutions', 'minuteNotebook'];
+  
+  inputs.forEach(id => {
+    $(id).readOnly = isView;
+    $(id).style.backgroundColor = isView ? 'var(--bg-tint)' : 'var(--bg-soft)';
+  });
+  
+  $('saveMinuteBtn').style.display = isView ? 'none' : 'flex';
+  $('minUploadArea').style.display = isView ? 'none' : 'block';
+  $('minuteCalBtn').style.display = isView ? 'none' : 'flex';
+  
+  $('cancelMinuteBtn').textContent = isView ? 'بستن' : 'انصراف';
+  $('minuteFormTitle').textContent = isView ? 'مشاهده صورت‌جلسه' : (mode === 'edit' ? 'ویرایش صورت‌جلسه' : 'ثبت صورت‌جلسه جدید');
+  
+  if(data) {
+    $('minuteId').value = data.id;
+    $('minuteDate').value = data.date || '';
+    $('minuteAttendees').value = data.attendees || '';
+    $('minuteDesc').value = data.desc || '';
+    $('minuteResolutions').value = data.resolutions || '';
+    $('minuteNotebook').value = data.notebook || '';
+    MINUTE_FILES = data.files ? [...data.files] : [];
+  } else {
+    $('minuteId').value = '';
+    $('minuteDate').value = '';
+    $('minuteAttendees').value = '';
+    $('minuteDesc').value = '';
+    $('minuteResolutions').value = '';
+    $('minuteNotebook').value = '';
+    MINUTE_FILES = [];
+  }
   renderMinuteFiles();
   $('minuteFormCard').classList.add('active');
-  $('minuteDate').focus();
-});
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
+$('minuteCalBtn').addEventListener('click', () => openCalendar('minute'));
+
+$('newMinuteBtn').addEventListener('click', () => setMinuteMode('new'));
 $('cancelMinuteBtn').addEventListener('click', () => {
   $('minuteFormCard').classList.remove('active');
   MINUTE_FILES = [];
@@ -2434,7 +2416,7 @@ $('saveMinuteBtn').addEventListener('click', async () => {
     const idx = list.findIndex(x => x.id === id);
     if(idx >= 0) list[idx] = data;
   } else {
-    list.unshift(data); // Add to beginning
+    list.unshift(data);
   }
   
   const ok = await saveMinutes(list);
@@ -2454,10 +2436,7 @@ $('printMinuteBtn').addEventListener('click', async () => {
   const desc = $('minuteDesc').value.trim();
   const res = $('minuteResolutions').value.trim();
   
-  if(!date && !attendees) {
-    toast('برای پرینت، حداقل تاریخ و اعضا را پر کنید', 'danger');
-    return;
-  }
+  if(!date && !attendees) { toast('برای پرینت، حداقل تاریخ و اعضا را پر کنید', 'danger'); return; }
   
   const p = pDate(new Date());
   const todayStr = `${p.jd} ${p.monthName} ${p.jy}`;
@@ -2525,7 +2504,10 @@ async function renderMinutes() {
         </button>
       </td>
       <td class="min-actions-cell">
-        <button class="min-act" data-edit-min="${m.id}" title="ویرایش / مشاهده">
+        <button class="min-act" data-view-min="${m.id}" title="مشاهده">
+          <svg class="ic" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+        <button class="min-act" data-edit-min="${m.id}" title="ویرایش">
           <svg class="ic" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
         </button>
         <button class="min-act danger" data-del-min="${m.id}" title="حذف">
@@ -2538,21 +2520,17 @@ async function renderMinutes() {
   html += '</tbody></table></div>';
   container.innerHTML = html;
   
+  container.querySelectorAll('[data-view-min]').forEach(b => {
+    b.addEventListener('click', () => {
+      const m = filtered.find(x => x.id === b.dataset.viewMin);
+      if(m) setMinuteMode('view', m);
+    });
+  });
+
   container.querySelectorAll('[data-edit-min]').forEach(b => {
     b.addEventListener('click', () => {
       const m = filtered.find(x => x.id === b.dataset.editMin);
-      if(!m) return;
-      $('minuteId').value = m.id;
-      $('minuteFormTitle').textContent = 'ویرایش صورت‌جلسه';
-      $('minuteDate').value = m.date || '';
-      $('minuteAttendees').value = m.attendees || '';
-      $('minuteDesc').value = m.desc || '';
-      $('minuteResolutions').value = m.resolutions || '';
-      $('minuteNotebook').value = m.notebook || '';
-      MINUTE_FILES = m.files ? [...m.files] : [];
-      renderMinuteFiles();
-      $('minuteFormCard').classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if(m) setMinuteMode('edit', m);
     });
   });
   
@@ -2572,11 +2550,6 @@ async function renderMinutes() {
     b.addEventListener('click', () => {
       const m = filtered.find(x => x.id === b.dataset.minFilesBtn);
       if(m && m.files && m.files.length > 0) {
-        // We can just reuse the main file modal or show a simple alert with links
-        // For simplicity, let's open a basic modal. Actually, the checklist has a nice file modal. Let's just show them in a new window or simple prompt? 
-        // Let's use the existing filesModal but adapt it. 
-        // Actually, let's just make a simple alert or use the printable area.
-        // Better: Use a simple custom modal for viewing. Or just redirect to the first file.
         const win = window.open(m.files[0].url, '_blank');
         if(!win) alert('لطفا به مرورگر اجازه باز کردن پنجره جدید را بدهید.');
       } else {
@@ -2595,18 +2568,40 @@ $('minSearch').addEventListener('input', e => {
 const getNotes = async() => await Store.get('personal_notebook', []);
 const saveNotes = async(arr) => await Store.set('personal_notebook', arr);
 
+function setNoteMode(mode, data = null) {
+  $('noteMode').value = mode;
+  const isView = mode === 'view';
+  const inputs = ['noteDate', 'noteTitle', 'noteContent'];
+  
+  inputs.forEach(id => {
+    $(id).readOnly = isView;
+    $(id).style.backgroundColor = isView ? 'var(--bg-tint)' : 'var(--bg-soft)';
+  });
+  
+  $('saveNoteBtn').style.display = isView ? 'none' : 'flex';
+  $('noteCalBtn').style.display = isView ? 'none' : 'flex';
+  
+  $('cancelNoteBtn').textContent = isView ? 'بستن' : 'انصراف';
+  $('noteFormTitle').textContent = isView ? 'مشاهده یادداشت' : (mode === 'edit' ? 'ویرایش یادداشت' : 'ثبت یادداشت جدید');
+  
+  if(data) {
+    $('noteId').value = data.id;
+    $('noteDate').value = data.date || '';
+    $('noteTitle').value = data.title || '';
+    $('noteContent').value = data.content || '';
+  } else {
+    $('noteId').value = '';
+    $('noteDate').value = '';
+    $('noteTitle').value = '';
+    $('noteContent').value = '';
+  }
+  $('noteFormCard').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 $('noteCalBtn').addEventListener('click', () => openCalendar('note'));
 
-$('newNoteBtn').addEventListener('click', () => {
-  $('noteId').value = '';
-  $('noteFormTitle').textContent = 'ثبت یادداشت جدید';
-  $('noteDate').value = '';
-  $('noteTitle').value = '';
-  $('noteContent').value = '';
-  $('noteFormCard').classList.add('active');
-  $('noteDate').focus();
-});
-
+$('newNoteBtn').addEventListener('click', () => setNoteMode('new'));
 $('cancelNoteBtn').addEventListener('click', () => {
   $('noteFormCard').classList.remove('active');
 });
@@ -2649,7 +2644,6 @@ $('saveNoteBtn').addEventListener('click', async () => {
 
 async function renderNotebook() {
   const list = await getNotes();
-  // Sort by date descending (newest first)
   list.sort((a, b) => {
     const aEn = pToEn(a.date) || '';
     const bEn = pToEn(b.date) || '';
@@ -2674,6 +2668,9 @@ async function renderNotebook() {
       <div class="note-title">${escapeHtml(n.title || 'بدون عنوان')}</div>
       <div class="note-content">${escapeHtml(n.content)}</div>
       <div class="note-actions">
+        <button class="note-act" data-view-note="${n.id}" title="مشاهده">
+          <svg class="ic" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
         <button class="note-act" data-edit-note="${n.id}" title="ویرایش">
           <svg class="ic" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
         </button>
@@ -2686,17 +2683,17 @@ async function renderNotebook() {
   
   container.innerHTML = html;
 
+  container.querySelectorAll('[data-view-note]').forEach(b => {
+    b.addEventListener('click', () => {
+      const n = list.find(x => x.id === b.dataset.viewNote);
+      if(n) setNoteMode('view', n);
+    });
+  });
+
   container.querySelectorAll('[data-edit-note]').forEach(b => {
     b.addEventListener('click', () => {
       const n = list.find(x => x.id === b.dataset.editNote);
-      if(!n) return;
-      $('noteId').value = n.id;
-      $('noteFormTitle').textContent = 'ویرایش یادداشت';
-      $('noteDate').value = n.date || '';
-      $('noteTitle').value = n.title || '';
-      $('noteContent').value = n.content || '';
-      $('noteFormCard').classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if(n) setNoteMode('edit', n);
     });
   });
 
