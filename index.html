@@ -310,6 +310,7 @@ img{max-width:100%;display:block}
 
 /* Wrapper for the 4 buttons/inputs - transparent on desktop */
 .chk-buttons{display:contents}
+.print-status{display:none;}
 
 .radios{display:flex;gap:6px}
 .radio-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:7px;font-size:.78rem;font-weight:700;border:1.5px solid var(--border);background:var(--bg-soft);color:var(--text-2);cursor:pointer;transition:all .2s;user-select:none}
@@ -685,15 +686,8 @@ img{max-width:100%;display:block}
     font-size: 12pt;
     line-height: 1.8;
   }
-  body.printing-minute .personal-notebook-wrap {
-    display: none !important;
-  }
-  body.printing-minute .print-header-min {
-    text-align: center;
-    margin-bottom: 30px;
-    border-bottom: 2px solid #000;
-    padding-bottom: 15px;
-  }
+  body.printing-minute .personal-notebook-wrap { display: none !important; }
+  body.printing-minute .print-header-min { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #000; padding-bottom: 15px; }
   body.printing-minute .print-header-min h1 { font-size: 20pt; margin-bottom: 5px; color: #000; }
   body.printing-minute .print-header-min p { font-size: 11pt; color: #333; }
   body.printing-minute .print-section { margin-bottom: 20px; border: 1px solid #ccc; padding: 15px; border-radius: 6px; }
@@ -705,14 +699,13 @@ img{max-width:100%;display:block}
   body:not(.printing-minute) { background: #fff !important; color: #000 !important; font-size: 10pt !important; }
   body:not(.printing-minute)::before { display: none !important; }
   
-  /* Hide UI elements */
+  /* Hide UI */
   .app-header, .app-tabs, .app-actions, .chk-toolbar-right, .radios, .cal-open, 
-  .save-btn, .toast-wrap, .modal-bg, .file-btn, .chk-chevron,
-  .chk-head-meta { 
+  .save-btn, .toast-wrap, .modal-bg, .chk-chevron, .chk-head-meta { 
     display: none !important; 
   }
   
-  /* Reset layouts */
+  /* Layout */
   .app-main { padding: 0 !important; margin: 0 !important; }
   .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
   .view { display: none !important; }
@@ -734,93 +727,42 @@ img{max-width:100%;display:block}
     text-align: center !important;
     background: #fff !important;
   }
-  .dash-card .dc-label {
-    font-size: 10pt !important;
-    color: #333 !important;
-    font-weight: bold !important;
-    margin-bottom: 6px !important;
-  }
-  .dash-card .dc-value {
-    font-size: 20pt !important;
-    color: #000 !important;
-    font-weight: 900 !important;
-  }
+  .dash-card .dc-label { font-size: 10pt !important; color: #333 !important; font-weight: bold !important; margin-bottom: 6px !important; }
+  .dash-card .dc-value { font-size: 20pt !important; color: #000 !important; font-weight: 900 !important; }
   .dash-card.has .dc-value { color: #0a6b3a !important; }
   .dash-card.no .dc-value { color: #a02020 !important; }
   .dash-card.pending .dc-value { color: #b87b10 !important; }
   .dash-chart { display: none !important; }
   
   /* Print Header */
-  .print-header { 
-    display: block !important; text-align: center; 
-    margin-bottom: 20px; border-bottom: 2px solid #000; 
-    padding-bottom: 10px; visibility: visible !important; 
-  }
+  .print-header { display: block !important; text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 10px; visibility: visible !important; }
   .print-header h1 { font-size: 16pt !important; margin-bottom: 5px; color: #000 !important; }
   .print-header p { font-size: 9pt !important; color: #555 !important; }
   
-  /* Group Container */
-  .chk-group { 
-    border: 1.5px solid #666 !important; 
-    border-radius: 8px !important; 
-    margin-bottom: 15px !important; 
-    break-inside: avoid; 
-    background: #fff !important; 
-    display: block !important; 
-  }
+  /* Group */
+  .chk-group { border: 1.5px solid #666 !important; border-radius: 8px !important; margin-bottom: 15px !important; break-inside: avoid; background: #fff !important; display: block !important; }
   .chk-body { display: block !important; padding: 10px !important; border-top: none !important; background: #fff !important; }
-  
-  .chk-head { 
-    background: #e8e8e8 !important; 
-    padding: 8px 14px !important; 
-    border-bottom: 1.5px solid #666 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    border-radius: 6px 6px 0 0 !important;
-  }
+  .chk-head { background: #e8e8e8 !important; padding: 8px 14px !important; border-bottom: 1.5px solid #666 !important; display: flex !important; align-items: center !important; justify-content: flex-start !important; border-radius: 6px 6px 0 0 !important; }
   .chk-head-left { display: flex !important; align-items: center !important; gap: 10px !important; }
-  .chk-head-left h3 { 
-    font-size: 11pt !important; 
-    color: #000 !important; 
-    font-weight: bold !important; 
-    margin: 0 !important;
-  }
-  .chk-num { 
-    width: 26px !important; height: 26px !important; 
-    font-size: 9pt !important; 
-    background: #fff !important; 
-    color: #000 !important; 
-    border: 1px solid #666 !important;
-    border-radius: 4px !important;
-  }
+  .chk-head-left h3 { font-size: 11pt !important; color: #000 !important; font-weight: bold !important; margin: 0 !important; }
+  .chk-num { width: 26px !important; height: 26px !important; font-size: 9pt !important; background: #fff !important; color: #000 !important; border: 1px solid #666 !important; border-radius: 4px !important; display: flex !important; align-items: center !important; justify-content: center !important; }
   
-  /* Card Style for Each Row */
+  /* Card Style Row */
   .chk-row { 
     display: flex !important; 
-    flex-direction: row !important; /* Text right, date/owner left */
+    flex-direction: row !important;
     justify-content: space-between !important;
     align-items: center !important;
     padding: 10px 14px !important;
-    border: 1px solid #ccc !important;
+    border: 1px solid #bbb !important;
     border-radius: 6px !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 8px !important;
     background: #fff !important;
-    box-shadow: none !important;
+    page-break-inside: avoid !important;
   }
-  .chk-row:last-child { margin-bottom: 0 !important; }
+  .chk-idx { display: none !important; }
   
-  /* Left Side: Date & Owner */
-  .chk-buttons { 
-    display: flex !important; 
-    flex-direction: column !important; 
-    gap: 4px !important; 
-    width: 130px !important; 
-    margin-right: auto !important; 
-    flex-shrink: 0 !important;
-  }
-  
-  /* Right Side: Text */
+  /* Text on the Right */
   .chk-txt { 
     flex: 1 !important; 
     font-size: 10pt !important; 
@@ -830,28 +772,50 @@ img{max-width:100%;display:block}
     padding-left: 15px !important;
   }
   
-  /* Status Icons */
-  .chk-row[data-status="has"] .chk-txt::before { 
-    content: "✓ " !important; 
-    color: #0a6b3a !important; 
-    font-weight: 900 !important; 
-    font-size: 12pt !important; 
-  }
-  .chk-row[data-status="no"] .chk-txt::before { 
-    content: "✕ " !important; 
-    color: #a02020 !important; 
-    font-weight: 900 !important; 
-    font-size: 12pt !important; 
+  /* Details on the Left */
+  .chk-buttons { 
+    display: flex !important; 
+    flex-direction: row !important; 
+    align-items: center !important;
+    gap: 12px !important; 
+    margin-left: 0 !important;
+    flex-shrink: 0 !important;
   }
   
-  /* Inputs in Print */
-  .date-wrap input, 
-  .owner-wrap input { 
+  /* Status */
+  .print-status {
+    display: block !important;
+    font-weight: bold !important;
+    font-size: 9.5pt !important;
+    width: 55px !important;
+    text-align: center !important;
+  }
+  .chk-row[data-status="has"] .print-status { color: #0a6b3a !important; }
+  .chk-row[data-status="has"] .print-status::before { content: "✓ دارد"; }
+  .chk-row[data-status="no"] .print-status { color: #a02020 !important; }
+  .chk-row[data-status="no"] .print-status::before { content: "✕ ندارد"; }
+
+  /* File Count */
+  .file-btn {
+    display: flex !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    color: #000 !important;
+    font-size: 9pt !important;
+    gap: 4px !important;
+  }
+  .file-btn .ic { display: none !important; }
+  .file-btn span::before { content: "پیوست: "; font-weight: bold; }
+
+  /* Inputs */
+  .date-wrap, .owner-wrap { width: 90px !important; }
+  .date-wrap input, .owner-wrap input { 
     border: 1px solid #999 !important; 
     background: #fafafa !important; 
     color: #000 !important; 
-    font-size: 8pt !important; 
-    padding: 3px 6px !important; 
+    font-size: 8.5pt !important; 
+    padding: 2px 4px !important; 
     border-radius: 3px !important;
     width: 100% !important;
     text-align: center !important;
@@ -859,17 +823,8 @@ img{max-width:100%;display:block}
     font-family: monospace !important;
     box-sizing: border-box !important;
   }
-  .owner-wrap input { 
-    text-align: right !important; 
-    font-family: 'Vazirmatn', sans-serif !important;
-    padding-right: 8px !important;
-  }
-  
-  .date-wrap input::placeholder, 
-  .owner-wrap input::placeholder { 
-    color: #999 !important; 
-    opacity: 1 !important;
-  }
+  .owner-wrap input { text-align: right !important; font-family: 'Vazirmatn', sans-serif !important; }
+  .date-wrap input::placeholder, .owner-wrap input::placeholder { color: #999 !important; opacity: 1 !important; }
 }
 .print-header { display: none; }
 </style>
@@ -1964,6 +1919,7 @@ async function renderChecklist(){
         </div>
         
         <div class="chk-buttons">
+          <span class="print-status"></span>
           <button class="file-btn" data-file-btn="${key}">
             <svg class="ic" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
             <span>${faDigits(filesCount)}</span>
