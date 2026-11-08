@@ -284,7 +284,6 @@ img{max-width:100%;display:block}
 .chk-group.collapsed .chk-body{display:none}
 .chk-body{padding:0;border-top:1px solid var(--border)}
 
-/* Desktop: single line - 7 columns total */
 .chk-row{
   display:grid;
   grid-template-columns:32px minmax(200px,1fr) auto auto 135px 115px auto;
@@ -302,7 +301,6 @@ img{max-width:100%;display:block}
 .chk-row[data-status="has"] .chk-txt{color:var(--success);font-weight:600}
 .chk-row[data-status="no"] .chk-txt{color:var(--danger);font-weight:600}
 
-/* Priority tag */
 .priority-tag{
   display: inline-flex;
   align-items: center;
@@ -324,7 +322,6 @@ img{max-width:100%;display:block}
   50% { opacity: 0.5; transform: scale(0.9); }
 }
 
-/* Wrapper for the 4 buttons/inputs - transparent on desktop (children become grid items) */
 .chk-buttons{display:contents}
 .print-status{display:none;}
 
@@ -358,7 +355,6 @@ img{max-width:100%;display:block}
 .save-btn.saved{background:var(--success);color:#fff;border-color:var(--success)}
 .save-btn .ic{width:13px;height:13px}
 
-/* Tablet: keep single row */
 @media (max-width:1400px) and (min-width:901px){
   .chk-row{
     grid-template-columns:28px minmax(150px,1fr) auto auto 110px 90px auto;
@@ -374,7 +370,6 @@ img{max-width:100%;display:block}
   .radio-pill{padding:5px 8px;font-size:.72rem}
 }
 
-/* Mobile: card layout */
 @media (max-width:900px){
   .chk-body{background:var(--bg-soft);padding:12px;}
   .chk-row{
@@ -572,7 +567,7 @@ img{max-width:100%;display:block}
 .btn-lg.primary{background:var(--primary);color:#fff}
 .btn-lg.primary:hover{background:var(--primary-2)}
 .btn-lg.ghost{background:var(--bg-soft);color:var(--text-2);border:1px solid var(--border)}
-.form-err{color:var(--danger);font-size:.78rem;min-height:16px;margin-top:4px}
+.form-err{color:var(--danger);font-size:.78rem;min-height:16px;margin-top:4px;word-break:break-word;line-height:1.5}
 
 .file-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:16px;max-height:300px;overflow-y:auto;}
 .file-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--bg-soft);border:1px solid var(--border);border-radius:8px;font-size:.85rem;}
@@ -609,7 +604,6 @@ img{max-width:100%;display:block}
 .cal-today-btn{flex:1;padding:10px;border-radius:8px;background:var(--bg-soft);color:var(--text-2);font-weight:600;font-size:.85rem;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:6px}
 .cal-today-btn:hover{background:var(--bg-tint);color:var(--text)}
 
-/* Mobile global */
 @media (max-width:1024px){
   .hero-inner{grid-template-columns:1fr;gap:24px}
   .hero-side{align-items:flex-start}
@@ -661,7 +655,6 @@ img{max-width:100%;display:block}
 @media print {
   @page { margin: 1cm; size: A4 portrait; }
 
-  /* ============ PRINT MINUTES ============ */
   body.printing-minute * { visibility: hidden; }
   body.printing-minute #printableMinute, body.printing-minute #printableMinute * { visibility: visible; }
   body.printing-minute #printableMinute {
@@ -679,28 +672,23 @@ img{max-width:100%;display:block}
   body.printing-minute .print-section p { font-size: 11pt; white-space: pre-wrap; margin: 0; color: #222; }
   body.printing-minute .print-meta { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 11pt; font-weight: bold; }
 
-  /* ============ PRINT CHECKLIST ============ */
   body:not(.printing-minute) { background: #fff !important; color: #000 !important; font-size: 9.5pt !important; }
   body:not(.printing-minute)::before { display: none !important; }
 
-  /* Hide all UI */
   .app-header, .app-tabs, .app-actions, .chk-toolbar, .chk-toolbar-right, .radios, .cal-open,
   .save-btn, .toast-wrap, .modal-bg, .chk-chevron, .chk-head-meta, .dash-row,
   #dashboardContainer {
     display: none !important;
   }
 
-  /* Show only checklist */
   body:not(.printing-minute) * { visibility: hidden; }
   body:not(.printing-minute) #view-checklist, body:not(.printing-minute) #view-checklist * { visibility: visible; }
   body:not(.printing-minute) #view-checklist { position: absolute; left: 0; top: 0; width: 100%; padding: 0; margin: 0; }
 
-  /* Print Header */
   .print-header { display: block !important; text-align: center; margin-bottom: 15px; border-bottom: 2px solid #000; padding-bottom: 10px; visibility: visible !important; }
   .print-header h1 { font-size: 15pt !important; margin-bottom: 5px; color: #000 !important; }
   .print-header p { font-size: 9pt !important; color: #555 !important; }
 
-  /* Groups */
   .chk-group {
     border: 1.5px solid #666 !important;
     border-radius: 6px !important;
@@ -725,7 +713,6 @@ img{max-width:100%;display:block}
     border-radius: 4px !important; display: flex !important; align-items: center !important; justify-content: center !important;
   }
 
-  /* Row layout - horizontal flex */
   .chk-row {
     display: flex !important;
     flex-direction: row !important;
@@ -741,7 +728,6 @@ img{max-width:100%;display:block}
   }
   .chk-idx { display: none !important; }
 
-  /* Text - right side (largest) */
   .chk-txt {
     flex: 1 !important;
     min-width: 0 !important;
@@ -755,12 +741,10 @@ img{max-width:100%;display:block}
     display: none !important;
   }
 
-  /* Buttons wrapper - flatten */
   .chk-buttons {
     display: contents !important;
   }
 
-  /* Priority tag (in buttons area) */
   .chk-buttons .priority-tag,
   .chk-row .priority-tag {
     display: inline-flex !important;
@@ -773,7 +757,6 @@ img{max-width:100%;display:block}
     print-color-adjust: exact !important;
   }
 
-  /* Status (دارد/ندارد) */
   .print-status {
     display: block !important;
     width: 55px !important;
@@ -788,7 +771,6 @@ img{max-width:100%;display:block}
   .chk-row[data-status="no"] .print-status::before { content: "✕ ندارد"; }
   .chk-row[data-status=""] .print-status::before { content: "—"; color: #999 !important; }
 
-  /* File count */
   .file-btn {
     display: flex !important;
     width: 40px !important;
@@ -804,7 +786,6 @@ img{max-width:100%;display:block}
   .file-btn .ic { display: none !important; }
   .file-btn span::before { content: "📎 "; font-weight: bold; }
 
-  /* Date and owner inputs */
   .date-wrap {
     width: 75px !important;
     flex-shrink: 0 !important;
@@ -870,7 +851,7 @@ img{max-width:100%;display:block}
       </div>
       <button class="login-btn" id="loginBtn">ورود به سامانه</button>
       <div class="login-err" id="loginError"></div>
-      <a class="reset-pass-link" id="resetPassBtn">فراموشی رمز عبور؟ (با مدیر سیستم تماس بگیرید)</a>
+      <a class="reset-pass-link" id="resetPassBtn">فراموشی رمز عبور؟ (با مدیر سامانه تماس بگیرید)</a>
     </div>
   </div>
 </div>
@@ -1367,7 +1348,7 @@ img{max-width:100%;display:block}
         <div id="stkTableWrap"></div>
       </section>
 
-      <!-- ============== USER MANAGEMENT (NEW) ============== -->
+      <!-- ============== USER MANAGEMENT ============== -->
       <section class="view" id="view-users">
         <div class="stk-header">
           <div class="stk-title-wrap">
@@ -1471,7 +1452,6 @@ img{max-width:100%;display:block}
   </div>
 </div>
 
-<!-- ============== USER MODAL (NEW) ============== -->
 <div class="modal-bg" id="userModal">
   <div class="modal">
     <div class="modal-head">
@@ -1600,7 +1580,7 @@ const setPass=async(p)=>await Store.set('pass', p);
 const isAuth=()=>sessionStorage.getItem('bcp_auth')==='1';
 const setAuth=v=>v?sessionStorage.setItem('bcp_auth','1'):sessionStorage.removeItem('bcp_auth');
 
-/* ============================== CURRENT USER SESSION (NEW) ============================== */
+/* ============================== CURRENT USER SESSION ============================== */
 function getCurrentUser() {
   try {
     const s = sessionStorage.getItem('bcp_user');
@@ -1611,20 +1591,26 @@ function setCurrentUser(u) {
   sessionStorage.setItem('bcp_user', JSON.stringify(u));
 }
 
-/* ============================== USERS API (NEW) ============================== */
+/* ============================== USERS API ============================== */
 const Users = {
   async list() {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_users?select=*&order=created_at.asc`, {
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
     });
-    if(!res.ok) throw new Error('LIST ' + res.status);
+    if (!res.ok) {
+      const t = await res.text();
+      throw new Error(`GET [${res.status}] ${t.substring(0, 300)}`);
+    }
     return await res.json();
   },
   async find(mobile) {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_users?mobile=eq.${encodeURIComponent(mobile)}&select=*`, {
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
     });
-    if(!res.ok) throw new Error('FIND ' + res.status);
+    if (!res.ok) {
+      const t = await res.text();
+      throw new Error(`FIND [${res.status}] ${t.substring(0, 300)}`);
+    }
     const data = await res.json();
     return data[0] || null;
   },
@@ -1639,7 +1625,11 @@ const Users = {
       },
       body: JSON.stringify(u)
     });
-    return res.ok;
+    if (!res.ok) {
+      const t = await res.text();
+      throw new Error(`POST [${res.status}] ${t.substring(0, 300)}`);
+    }
+    return true;
   },
   async update(id, updates) {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_users?id=eq.${id}`, {
@@ -1652,14 +1642,22 @@ const Users = {
       },
       body: JSON.stringify(updates)
     });
-    return res.ok;
+    if (!res.ok) {
+      const t = await res.text();
+      throw new Error(`PATCH [${res.status}] ${t.substring(0, 300)}`);
+    }
+    return true;
   },
   async remove(id) {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_users?id=eq.${id}`, {
       method: 'DELETE',
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
     });
-    return res.ok;
+    if (!res.ok) {
+      const t = await res.text();
+      throw new Error(`DELETE [${res.status}] ${t.substring(0, 300)}`);
+    }
+    return true;
   }
 };
 
@@ -1720,7 +1718,6 @@ async function showApp(){
   $('loginScreen').classList.add('hidden');
   $('appScreen').classList.add('visible');
 
-  // نمایش تب مدیریت کاربران فقط برای ادمین
   const cur = getCurrentUser();
   if(cur && cur.role === 'admin') $('usersTabBtn').style.display = '';
   else $('usersTabBtn').style.display = 'none';
@@ -1741,15 +1738,16 @@ async function attemptLogin(){
   $('loginError').textContent='در حال بررسی...';
 
   let user = null;
-  try { user = await Users.find(m); } catch(e) { console.warn('Users table not ready:', e); }
+  try { user = await Users.find(m); } catch(e) {
+    console.warn('Users table error, using fallback:', e.message);
+  }
 
-  // Fallback: کاربر پیش‌فرض در صورت اجرا نشدن SQL
   if(!user && m === DEFAULT_USER){
     let oldPass = DEFAULT_USER;
     try { oldPass = await getPass(); } catch(e) {}
     if(p === oldPass || p === DEFAULT_USER){
       user = { id:'default', mobile:DEFAULT_USER, password:oldPass,
-               full_name:'مدیر سیستم', role:'admin', is_active:true };
+               full_name:'مدیر سامانه', role:'admin', is_active:true };
     }
   }
 
@@ -1765,7 +1763,7 @@ $('loginMobile').value=DEFAULT_USER;
 $('loginBtn').addEventListener('click',attemptLogin);
 $('loginPassword').addEventListener('keydown',e=>{if(e.key==='Enter')attemptLogin();});
 $('resetPassBtn').addEventListener('click', ()=>{
-  alert('برای بازنشانی رمز عبور، لطفاً با مدیر سیستم تماس بگیرید.');
+  alert('برای بازنشانی رمز عبور، لطفاً با مدیر سامانه تماس بگیرید.');
 });
 $('logoutBtn').addEventListener('click',()=>{
   setAuth(false);
@@ -1780,7 +1778,7 @@ $('logoutBtn').addEventListener('click',()=>{
       try { pass = await getPass(); } catch(e) {}
       setCurrentUser({
         id:'default', mobile:DEFAULT_USER, password:pass,
-        full_name:'مدیر سیستم', role:'admin', is_active:true
+        full_name:'مدیر سامانه', role:'admin', is_active:true
       });
     }
     showApp();
@@ -1973,34 +1971,18 @@ const CHECKLIST=[
   ]}
 ];
 
-/* ============================== PRIORITY MAP (STRICT BCP) ============================== */
-/* 1 = Critical for BCP core (must be first)
-   2 = Important, needed for quality
-   3 = Secondary, can wait */
 const PRIORITY = [
-  // Group 0: ساختار راهبری (14)
   [1,1,1,1,2,2,2,2,1,2,1,1,2,3],
-  // Group 1: فهرست خدمات و سامانه‌ها (8)
   [1,1,1,2,1,2,2,1],
-  // Group 2: معماری و زیرساخت (11)
   [2,1,2,1,2,2,2,1,1,2,1],
-  // Group 3: پشتیبان‌گیری و بازیابی (10)
   [1,1,1,1,1,2,1,1,2,1],
-  // Group 4: برنامه‌های مدیریت بحران (9)
   [1,1,1,2,1,2,1,1,2],
-  // Group 5: اطلاعات کسب‌وکاری (12)
   [1,1,1,2,2,1,2,2,1,1,2,2],
-  // Group 6: اطلاعات فنی تکمیلی (15)
   [1,1,2,2,2,2,2,2,2,2,2,2,2,3,2],
-  // Group 7: سوابق رخدادها (8)
   [2,2,2,2,3,2,2,3],
-  // Group 8: منابع و ظرفیت‌ها (9)
   [1,1,2,2,2,2,2,2,2],
-  // Group 9: مستندات امنیتی (8)
   [3,3,3,3,2,3,3,2],
-  // Group 10: قراردادی (7)
   [2,3,2,2,2,3,3],
-  // Group 11: مانور و آموزش (6)
   [2,1,3,3,3,2]
 ];
 
@@ -2029,9 +2011,9 @@ async function renderDashboard(){
   const pctPend=total?Math.round(pending/total*100):0;
 
   const C=2*Math.PI*42;
-  const dHas=(has/total)*C;
-  const dNo=(no/total)*C;
-  const dPend=(pending/total)*C;
+  const dHas=total?(has/total)*C:0;
+  const dNo=total?(no/total)*C:0;
+  const dPend=total?(pending/total)*C:0;
   const chartSvg=`
     <svg class="chart-svg" viewBox="0 0 100 100">
       <circle cx="50" cy="50" r="42" fill="none" stroke="var(--border)" stroke-width="11"/>
@@ -2083,8 +2065,6 @@ async function renderChecklist(){
       if(e?.status==='has')has++;
       else if(e?.status==='no')no++;
     });
-    const done=has+no;
-    const pct=total?Math.round((done/total)*100):0;
     html+=`<div class="chk-group collapsed" data-g="${gi}">
       <div class="chk-head" data-toggle="${gi}">
         <div class="chk-head-left">
@@ -2259,7 +2239,7 @@ function attachChecklistListeners(){
 async function updateGroupCounts(){
   const state = await getCheck();
   CHECKLIST.forEach((group,gi)=>{
-    let has=0,no=0,total=group.items.length;
+    let has=0,no=0;
     group.items.forEach((_,ii)=>{
       const e=state[gi+'_'+ii];
       if(e?.status==='has')has++;
@@ -2307,21 +2287,17 @@ async function refreshFileList() {
       btn.addEventListener('click', async (e) => {
         e.preventDefault();
         if(!confirm('آیا از حذف این فایل اطمینان دارید؟')) return;
-
         const idx = parseInt(btn.dataset.delFile);
         const fileToDelete = files[idx];
-
         try {
           await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${fileToDelete.path}`, {
             method: 'DELETE',
             headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
           });
         } catch (err) { console.error('Delete failed:', err); }
-
         const state = await getCheck();
         state[CURRENT_FILE_KEY].files.splice(idx, 1);
         await saveCheck(state);
-
         await refreshFileList();
         await renderChecklist();
         toast('فایل حذف شد', 'success');
@@ -2351,10 +2327,8 @@ async function handleFileUpload(fileList) {
   for (let i = 0; i < fileList.length; i++) {
     const file = fileList[i];
     if(file.size > 50 * 1024 * 1024) { lastError = `فایل «${file.name}» بزرگتر از ۵۰ مگابایت است.`; continue; }
-
     const cleanName = file.name.replace(/[^\w.\-]/g, '_');
     const filePath = `${CURRENT_FILE_KEY}/${Date.now()}_${cleanName}`;
-
     try {
       const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${filePath}`, {
         method: 'POST',
@@ -2366,7 +2340,6 @@ async function handleFileUpload(fileList) {
         },
         body: file
       });
-
       if(!res.ok) {
         if(res.status === 401) lastError = 'خطای احراز هویت (401).';
         else if(res.status === 403) lastError = 'دسترسی رد شد (403).';
@@ -2375,7 +2348,6 @@ async function handleFileUpload(fileList) {
         else lastError = `خطا ${res.status}`;
         continue;
       }
-
       const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${filePath}`;
       state[CURRENT_FILE_KEY].files.push({ name: file.name, url: publicUrl, path: filePath });
       successCount++;
@@ -2426,14 +2398,12 @@ function renderMinuteFiles() {
         if(!confirm('آیا از حذف این فایل اطمینان دارید؟')) return;
         const idx = parseInt(btn.dataset.delMinFile);
         const fileToDelete = MINUTE_FILES[idx];
-
         try {
           await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${fileToDelete.path}`, {
             method: 'DELETE',
             headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
           });
         } catch (err) {}
-
         MINUTE_FILES.splice(idx, 1);
         renderMinuteFiles();
         toast('فایل حذف شد', 'success');
@@ -2461,19 +2431,15 @@ async function handleMinuteFileUpload(fileList) {
   for (let i = 0; i < fileList.length; i++) {
     const file = fileList[i];
     if(file.size > 50 * 1024 * 1024) { lastError = `فایل «${file.name}» بزرگتر از ۵۰ مگابایت است.`; continue; }
-
     const cleanName = file.name.replace(/[^\w.\-]/g, '_');
     const filePath = `minutes/${Date.now()}_${cleanName}`;
-
     try {
       const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${filePath}`, {
         method: 'POST',
         headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': file.type || 'application/octet-stream', 'x-upsert': 'true' },
         body: file
       });
-
       if(!res.ok) { lastError = `خطا ${res.status} در آپلود ${file.name}`; continue; }
-
       const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${filePath}`;
       MINUTE_FILES.push({ name: file.name, url: publicUrl, path: filePath });
       successCount++;
@@ -2972,7 +2938,7 @@ $('saveStkBtn').addEventListener('click',async ()=>{
   toast('ذخیره شد','success');
 });
 
-/* ============================== USER MANAGEMENT (NEW) ============================== */
+/* ============================== USER MANAGEMENT ============================== */
 let userSearch = '';
 
 async function getUsersSafe() {
@@ -2986,7 +2952,7 @@ async function renderUsers() {
   if (list === null) {
     wrap.innerHTML = `<div class="stk-table-wrap"><div class="stk-empty">
       <h3>خطا در بارگذاری کاربران</h3>
-      <p>لطفاً مطمئن شوید جدول <code>bcp_users</code> در Supabase ساخته شده است (SQL را اجرا کنید).</p>
+      <p>لطفاً مطمئن شوید جدول <code>bcp_users</code> و دسترسی‌های GRANT در Supabase اعمال شده‌اند.</p>
     </div></div>`;
     return;
   }
@@ -3047,15 +3013,19 @@ async function renderUsers() {
         toast('کاربر پیش‌فرض قابل حذف نیست','danger'); return;
       }
       if (!confirm('این کاربر حذف شود؟')) return;
-      const ok = await Users.remove(u.id);
-      if (ok) { toast('کاربر حذف شد','success'); await renderUsers(); }
-      else toast('خطا در حذف','danger');
+      try {
+        await Users.remove(u.id);
+        toast('کاربر حذف شد','success');
+        await renderUsers();
+      } catch(e) {
+        toast('خطا در حذف: ' + e.message, 'danger');
+      }
     }));
 }
 
 async function openUserModal(id) {
   $('userId').value = id || '';
-  const list = await getUsersSafe() || [];
+  const list = (await getUsersSafe()) || [];
   const u = id ? list.find(x => x.id === id) : null;
   $('userModalTitle').textContent = id ? 'ویرایش کاربر' : 'افزودن کاربر';
   $('userMobile').value    = u?.mobile || '';
@@ -3071,9 +3041,12 @@ async function resetUserPassword(id) {
   const newPass = prompt('رمز عبور جدید را وارد کنید (حداقل ۴ کاراکتر):');
   if (newPass === null) return;
   if (newPass.length < 4) { toast('رمز باید حداقل ۴ کاراکتر باشد','danger'); return; }
-  const ok = await Users.update(id, { password: newPass });
-  if (ok) toast('رمز عبور بازنشانی شد','success');
-  else toast('خطا در بازنشانی','danger');
+  try {
+    await Users.update(id, { password: newPass });
+    toast('رمز عبور بازنشانی شد','success');
+  } catch(e) {
+    toast('خطا در بازنشانی: ' + e.message, 'danger');
+  }
 }
 
 $('userSearch').addEventListener('input', e => {
@@ -3095,7 +3068,7 @@ $('saveUserBtn').addEventListener('click', async () => {
   if (!password || password.length < 4) { $('userErr').textContent='رمز عبور حداقل ۴ کاراکتر.'; return; }
 
   const id = $('userId').value;
-  const list = await getUsersSafe() || [];
+  const list = (await getUsersSafe()) || [];
   const dup = list.find(u => u.mobile === mobile && u.id !== id);
   if (dup) { $('userErr').textContent='این شماره موبایل قبلاً ثبت شده.'; return; }
 
@@ -3111,11 +3084,14 @@ $('saveUserBtn').addEventListener('click', async () => {
     }
   }
 
-  let ok;
-  if (id) ok = await Users.update(id, { mobile, full_name: fullName, role, password, is_active });
-  else    ok = await Users.create({ mobile, full_name: fullName, role, password, is_active });
-
-  if (!ok) { $('userErr').textContent='خطا در ذخیره‌سازی. اتصال را بررسی کنید.'; return; }
+  try {
+    if (id) await Users.update(id, { mobile, full_name: fullName, role, password, is_active });
+    else    await Users.create({ mobile, full_name: fullName, role, password, is_active });
+  } catch(e) {
+    console.error('Save user error:', e);
+    $('userErr').textContent = 'خطا: ' + e.message;
+    return;
+  }
 
   $('userModal').classList.remove('open');
   toast('کاربر ذخیره شد','success');
@@ -3149,20 +3125,34 @@ $('savePassBtn').addEventListener('click', async ()=>{
     $('passErr').textContent='رمز جدید و تکرار یکسان نیستند.'; return;
   }
 
-  let ok = false;
-  if(cur.id === 'default'){
-    ok = await setPass($('newPass').value);
-  } else {
-    ok = await Users.update(cur.id, { password: $('newPass').value });
+  try {
+    if(cur.id === 'default'){
+      await setPass($('newPass').value);
+    } else {
+      await Users.update(cur.id, { password: $('newPass').value });
+    }
+  } catch(e) {
+    $('passErr').textContent='خطا: ' + e.message;
+    return;
   }
-
-  if(!ok){ $('passErr').textContent='خطا در ذخیره‌سازی. اتصال را بررسی کنید.'; return; }
 
   cur.password = $('newPass').value;
   setCurrentUser(cur);
   $('passModal').classList.remove('open');
   toast('رمز عبور تغییر کرد','success');
 });
+
+/* ============================== DEBUG ============================== */
+window.debugBCP = async function() {
+  console.log('=== BCP Debug ===');
+  const url = `${SUPABASE_URL}/rest/v1/bcp_users`;
+  const H = { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` };
+  try {
+    const r = await fetch(url + '?select=*&limit=1', { headers: H });
+    console.log('GET status:', r.status);
+    console.log('GET body:', await r.text());
+  } catch(e) { console.error('GET err:', e); }
+};
 
 /* ============================== RENDER ALL ============================== */
 async function renderAll(){
