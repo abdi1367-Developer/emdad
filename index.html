@@ -700,30 +700,6 @@ img{max-width:100%;display:block}
   .print-header h1 { font-size: 15pt !important; margin-bottom: 5px; color: #000 !important; }
   .print-header p { font-size: 9pt !important; color: #555 !important; }
 
-  /* Column Header Row - shown once */
-  .print-columns-header {
-    display: flex !important;
-    align-items: center;
-    justify-content: flex-end;
-    background: #e0e0e0 !important;
-    border: 1px solid #666 !important;
-    border-radius: 4px 4px 0 0;
-    padding: 6px 10px !important;
-    gap: 8px !important;
-    font-size: 8.5pt !important;
-    font-weight: 800 !important;
-    color: #000 !important;
-    visibility: visible !important;
-    margin-bottom: 0;
-    margin-top: 10px;
-  }
-  .print-columns-header .pch-priority { width: 22px; text-align: center; }
-  .print-columns-header .pch-file { width: 40px; text-align: center; }
-  .print-columns-header .pch-status { width: 60px; text-align: center; }
-  .print-columns-header .pch-date { width: 75px; text-align: center; }
-  .print-columns-header .pch-owner { width: 80px; text-align: center; }
-  .print-columns-header .pch-text { flex: 1; text-align: right; padding-left: 10px; }
-
   /* Groups */
   .chk-group { 
     border: 1.5px solid #666 !important; 
@@ -1240,17 +1216,6 @@ img{max-width:100%;display:block}
           </div>
         </div>
         <div id="dashboardContainer"></div>
-
-        <!-- Print column header (only visible in print) -->
-        <div class="print-columns-header">
-          <div class="pch-priority">اولویت</div>
-          <div class="pch-file">پیوست</div>
-          <div class="pch-status">وضعیت</div>
-          <div class="pch-date">تاریخ</div>
-          <div class="pch-owner">متولی</div>
-          <div class="pch-text">شرح</div>
-        </div>
-
         <div id="checklistContainer"></div>
       </section>
 
