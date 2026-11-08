@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl" data-theme="light">
 <head>
@@ -126,11 +127,8 @@ img{max-width:100%;display:block}
 .app-brand img{height:36px;width:auto;object-fit:contain}
 .app-brand-text{display:flex;flex-direction:column;line-height:1.2}
 .app-brand-text .t1{font-weight:800;font-size:.82rem;color:var(--text)}
-
-/* Mobile Menu Button */
 .mobile-menu-btn{display:none; width:36px;height:36px;border-radius:10px;align-items:center;justify-content:center;color:var(--text-2);}
 .mobile-menu-btn:hover{background:var(--bg-soft);color:var(--text);}
-
 .app-tabs{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none}
 .app-tabs::-webkit-scrollbar{display:none}
 .app-tab{padding:8px 16px;border-radius:10px;font-size:.82rem;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:7px;white-space:nowrap;transition:all var(--transition)}
@@ -293,7 +291,16 @@ img{max-width:100%;display:block}
 .chk-group.collapsed .chk-body{display:none}
 .chk-body{padding:0;border-top:1px solid var(--border)}
 
-.chk-row{display:grid;grid-template-columns:40px 1fr auto auto 160px 140px auto;gap:16px;align-items:center;padding:12px 24px;border-top:1px solid var(--border);transition:background .2s}
+/* Desktop: single line */
+.chk-row{
+  display:grid;
+  grid-template-columns:32px 1fr auto auto 145px 125px auto;
+  gap:12px;
+  align-items:center;
+  padding:12px 20px;
+  border-top:1px solid var(--border);
+  transition:background .2s;
+}
 .chk-row:first-child{border-top:none}
 .chk-row:hover{background:var(--bg-soft)}
 .chk-row.dirty{background:rgba(201,138,62,.05)}
@@ -301,6 +308,9 @@ img{max-width:100%;display:block}
 .chk-txt{font-size:.9rem;color:var(--text);line-height:1.55}
 .chk-row[data-status="has"] .chk-txt{color:var(--success);font-weight:600}
 .chk-row[data-status="no"] .chk-txt{color:var(--danger);font-weight:600}
+
+/* Wrapper for the 4 buttons/inputs - transparent on desktop */
+.chk-buttons{display:contents}
 
 .radios{display:flex;gap:6px}
 .radio-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:7px;font-size:.78rem;font-weight:700;border:1.5px solid var(--border);background:var(--bg-soft);color:var(--text-2);cursor:pointer;transition:all .2s;user-select:none}
@@ -327,37 +337,61 @@ img{max-width:100%;display:block}
 .owner-wrap input:focus{border-color:var(--primary);background:var(--bg-elev);box-shadow:0 0 0 3px var(--primary-glow)}
 .owner-wrap input.invalid{border-color:var(--danger);background:rgba(184,84,80,.06)}
 
-.save-btn{padding:8px 16px;border-radius:8px;font-size:.8rem;font-weight:700;background:var(--bg-soft);color:var(--text-2);border:1.5px solid var(--border);transition:all .2s;display:flex;align-items:center;gap:6px}
+.save-btn{padding:8px 16px;border-radius:8px;font-size:.8rem;font-weight:700;background:var(--bg-soft);color:var(--text-2);border:1.5px solid var(--border);transition:all .2s;display:flex;align-items:center;gap:6px;white-space:nowrap}
 .save-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
 .save-btn.saved{background:var(--success);color:#fff;border-color:var(--success)}
 .save-btn .ic{width:14px;height:14px}
 
-@media (max-width:1400px){
-  .chk-row{grid-template-columns:30px 1fr auto auto;grid-template-areas:"idx txt radios files" "idx date owner save";gap:10px;padding:14px 20px}
-  .chk-idx{grid-area:idx;align-self:start;padding-top:6px}
-  .chk-txt{grid-area:txt}
-  .radios{grid-area:radios}
-  .file-btn{grid-area:files}
-  .date-wrap{grid-area:date}
-  .owner-wrap{grid-area:owner}
-  .save-btn{grid-area:save;justify-self:end}
-}
-
-/* Mobile Checklist Cards */
-@media (max-width:768px){
+/* Tablet & Mobile: card layout with buttons in a row */
+@media (max-width:1200px){
+  .chk-body{
+    background:var(--bg-soft);
+    padding:12px;
+  }
   .chk-row{
-    display:flex; flex-direction:column; gap:12px;
-    background:var(--bg-elev); border:1px solid var(--border);
-    border-radius:var(--radius); margin-bottom:12px; padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    padding:16px;
+    background:var(--bg-elev);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    margin-bottom:12px;
     box-shadow:var(--shadow-sm);
   }
-  .chk-body { background: var(--bg-soft); padding: 12px; }
+  .chk-row:first-child{border-top:1px solid var(--border)}
   .chk-idx{display:none}
-  .radios{justify-content:flex-start; width:100%;}
-  .chk-row-actions { display:flex; gap:8px; width:100%; flex-wrap:nowrap; }
-  .date-wrap, .owner-wrap { width:100%; flex: 1;}
-  .save-btn{justify-content:center; width:100%; margin-top:8px;}
-  .file-btn{justify-content:center; width:100%;}
+  .chk-txt{font-size:.92rem;width:100%}
+  .radios{width:100%}
+  .chk-buttons{
+    display:flex;
+    flex-direction:row;
+    gap:8px;
+    width:100%;
+    flex-wrap:wrap;
+  }
+  .chk-buttons > *{
+    flex:1 1 auto;
+    min-width:70px;
+  }
+  .chk-buttons .file-btn{flex:0 0 auto}
+  .chk-buttons .save-btn{flex:0 0 auto; justify-content:center}
+}
+
+@media (max-width:520px){
+  .chk-buttons{
+    flex-direction:row;
+    flex-wrap:wrap;
+  }
+  .chk-buttons > *{
+    flex:1 1 calc(50% - 4px);
+    min-width:120px;
+  }
+  .chk-buttons .file-btn,
+  .chk-buttons .save-btn{
+    flex:1 1 calc(50% - 4px);
+    justify-content:center;
+  }
 }
 
 /* ============================== MINUTES ============================== */
@@ -440,7 +474,6 @@ img{max-width:100%;display:block}
 .min-upload-area:hover { border-color: var(--primary); background: var(--primary-glow); }
 .min-upload-area p { font-size: .85rem; color: var(--muted); margin-bottom: 10px; }
 
-/* Mobile Minutes Cards */
 @media (max-width: 900px) {
   .min-toolbar{flex-direction:column;align-items:stretch; gap:16px}
   .min-actions{width:100%; flex-wrap:wrap}
@@ -484,12 +517,11 @@ img{max-width:100%;display:block}
 .note-empty h3 { color: var(--text-2); font-size: 1rem; margin-bottom: 6px; }
 .note-empty p { font-size: .85rem; }
 
-/* Mobile Note Cards */
 @media (max-width: 768px) {
   .note-toolbar { flex-direction: column; align-items: stretch; gap: 16px; }
   .note-actions { width: 100%; justify-content: flex-end; }
   .note-grid { grid-template-columns: 1fr; }
-  .note-card { padding-bottom: 60px; } /* Make room for absolute actions */
+  .note-card { padding-bottom: 60px; }
   .note-card .note-actions { position: static; margin-top: 12px; justify-content: flex-end; border-top: 1px solid var(--border); padding-top: 12px; }
 }
 
@@ -527,7 +559,6 @@ img{max-width:100%;display:block}
 .stk-empty h3{color:var(--text-2);font-size:1rem;margin-bottom:6px}
 .stk-empty p{font-size:.85rem}
 
-/* Mobile Stakeholders Cards */
 @media (max-width: 900px) {
   .stk-table thead{display:none}
   .stk-table,.stk-table tbody,.stk-table tr,.stk-table td{display:block;width:100%}
@@ -612,7 +643,6 @@ img{max-width:100%;display:block}
   .app-header{padding:0 12px;gap:8px}
   .app-brand-text{display:none}
   
-  /* Mobile Menu */
   .mobile-menu-btn { display: flex; }
   .app-tabs { 
     position: absolute; top: var(--header-h); left: 0; right: 0; 
@@ -650,10 +680,12 @@ img{max-width:100%;display:block}
   .min-actions .search-wrap { width: 100%; }
 }
 
-/* Print specific styles for minutes */
+/* ============================== PRINT ============================== */
 #printableMinute { display: none; }
 @media print {
   @page { margin: 1cm; size: A4 portrait; }
+  
+  /* ============ PRINT MINUTES ============ */
   body.printing-minute * { visibility: hidden; }
   body.printing-minute #printableMinute, body.printing-minute #printableMinute * { visibility: visible; }
   body.printing-minute #printableMinute {
@@ -682,40 +714,47 @@ img{max-width:100%;display:block}
   body.printing-minute .print-section p { font-size: 11pt; white-space: pre-wrap; margin: 0; color: #222; }
   body.printing-minute .print-meta { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 11pt; font-weight: bold; }
 
-  /* Checklist Print */
+  /* ============ PRINT CHECKLIST ============ */
   body:not(.printing-minute) { background: #fff !important; color: #000 !important; font-size: 10pt !important; }
   body:not(.printing-minute)::before { display: none !important; }
   
   body:not(.printing-minute) * { visibility: hidden; }
-  body:not(.printing-minute) #view-checklist, body:not(.printing-minute) #view-checklist * { visibility: visible; }
-  body:not(.printing-minute) #view-checklist { position: absolute; left: 0; top: 0; width: 100%; padding: 0; margin: 0; }
+  body:not(.printing-minute) #view-checklist, 
+  body:not(.printing-minute) #view-checklist * { visibility: visible; }
+  body:not(.printing-minute) #view-checklist { 
+    position: absolute; left: 0; top: 0; width: 100%; padding: 0; margin: 0; 
+  }
   
-  .app-header, .app-tabs, .app-actions, .chk-toolbar, .radios, .cal-open, .save-btn, .toast-wrap, .modal-bg, .file-btn, .min-file-list, .min-upload-area { 
+  /* Hide UI */
+  .app-header, .app-tabs, .app-actions, .chk-toolbar, .radios, .cal-open, 
+  .save-btn, .toast-wrap, .modal-bg, .file-btn, .chk-chevron,
+  .chk-head-meta { 
     display: none !important; 
   }
   
+  /* Dashboard */
   .dash-row {
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
-    gap: 15px !important;
-    margin-bottom: 30px !important;
+    gap: 12px !important;
+    margin-bottom: 24px !important;
     width: 100% !important;
   }
   .dash-card {
-    border: 2px solid #333 !important;
-    border-radius: 8px !important;
-    padding: 24px 20px !important;
+    border: 1.5px solid #333 !important;
+    border-radius: 6px !important;
+    padding: 16px 12px !important;
     text-align: center !important;
     background: #fff !important;
   }
   .dash-card .dc-label {
-    font-size: 12pt !important;
+    font-size: 11pt !important;
     color: #333 !important;
     font-weight: bold !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 8px !important;
   }
   .dash-card .dc-value {
-    font-size: 32pt !important;
+    font-size: 24pt !important;
     color: #000 !important;
     font-weight: 900 !important;
   }
@@ -724,30 +763,131 @@ img{max-width:100%;display:block}
   .dash-card.pending .dc-value { color: #b87b10 !important; }
   .dash-chart { display: none !important; }
   
-  .chk-group { border: 1px solid #999 !important; border-radius: 4px !important; margin-bottom: 12px !important; break-inside: avoid; background: #fff !important; display: block !important; }
-  .chk-body { display: block !important; padding: 0 !important; border-top: 1px solid #999 !important; }
-  .chk-head { background: #f0f0f0 !important; padding: 6px 12px !important; border-bottom: none !important; }
-  .chk-head-left h3 { font-size: 10pt !important; color: #000 !important; font-weight: bold !important; }
-  .chk-head-meta { display: none !important; }
-  
-  .chk-row { display: flex !important; flex-direction: row-reverse !important; align-items: center !important; justify-content: flex-start !important; gap: 12px !important; padding: 8px 10px !important; border-top: 1px solid #eee !important; }
-  .chk-row:first-child { border-top: none !important; }
-  .chk-idx { width: 20px !important; font-size: 8pt !important; color: #555 !important; font-weight: bold !important; text-align: center !important; }
-  .chk-txt { flex: 1 !important; font-size: 9.5pt !important; color: #000 !important; line-height: 1.3 !important; margin: 0 !important; }
-  .date-wrap { width: 85px !important; margin: 0 !important; }
-  .owner-wrap { width: 95px !important; margin: 0 !important; }
-  
-  .chk-row[data-status="has"] .chk-txt::before { content: "✓ " !important; color: #0a6b3a !important; font-weight: 900 !important; font-size: 11pt !important; }
-  .chk-row[data-status="no"] .chk-txt::before { content: "✕ " !important; color: #a02020 !important; font-weight: 900 !important; font-size: 11pt !important; }
-  
-  .date-wrap input, .owner-wrap input { border: 1px solid #ccc !important; background: #fafafa !important; color: #000 !important; font-size: 8pt !important; padding: 3px 4px !important; border-radius: 2px !important; width: 100% !important; text-align: center !important; visibility: visible !important; }
-  .owner-wrap input { text-align: right !important; }
-  
-  .date-wrap input::placeholder, .owner-wrap input::placeholder { color: transparent !important; }
-  
-  .print-header { display: block !important; text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 10px; visibility: visible !important; }
+  /* Print Header */
+  .print-header { 
+    display: block !important; text-align: center; 
+    margin-bottom: 20px; border-bottom: 2px solid #000; 
+    padding-bottom: 10px; visibility: visible !important; 
+  }
   .print-header h1 { font-size: 16pt !important; margin-bottom: 5px; color: #000 !important; }
   .print-header p { font-size: 9pt !important; color: #555 !important; }
+  
+  /* Group */
+  .chk-group { 
+    border: 1px solid #666 !important; 
+    border-radius: 4px !important; 
+    margin-bottom: 12px !important; 
+    break-inside: avoid; 
+    background: #fff !important; 
+    display: block !important; 
+  }
+  .chk-body { display: block !important; padding: 0 !important; border-top: none !important; background: #fff !important; }
+  
+  .chk-head { 
+    background: #e8e8e8 !important; 
+    padding: 8px 14px !important; 
+    border-bottom: 1px solid #666 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+  .chk-head-left { display: flex !important; align-items: center !important; gap: 10px !important; }
+  .chk-head-left h3 { 
+    font-size: 11pt !important; 
+    color: #000 !important; 
+    font-weight: bold !important; 
+    margin: 0 !important;
+  }
+  .chk-num { 
+    width: 26px !important; height: 26px !important; 
+    font-size: 9pt !important; 
+    background: #fff !important; 
+    color: #000 !important; 
+    border: 1px solid #666 !important;
+    border-radius: 4px !important;
+  }
+  
+  /* Row: clean 4-column grid */
+  .chk-row { 
+    display: grid !important; 
+    grid-template-columns: 30px 1fr 90px 105px !important;
+    gap: 8px !important;
+    align-items: center !important;
+    padding: 8px 12px !important;
+    border-top: 1px solid #ddd !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    flex-direction: row !important;
+  }
+  .chk-row:first-child { border-top: none !important; }
+  
+  .chk-buttons { display: contents !important; }
+  
+  .chk-idx { 
+    font-size: 8pt !important; 
+    color: #555 !important; 
+    font-weight: bold !important; 
+    text-align: center !important; 
+    font-family: monospace !important;
+  }
+  
+  .chk-txt { 
+    font-size: 9.5pt !important; 
+    color: #000 !important; 
+    line-height: 1.4 !important; 
+    text-align: right !important;
+  }
+  
+  .chk-row[data-status="has"] .chk-txt::before { 
+    content: "✓ " !important; 
+    color: #0a6b3a !important; 
+    font-weight: 900 !important; 
+    font-size: 11pt !important; 
+  }
+  .chk-row[data-status="no"] .chk-txt::before { 
+    content: "✕ " !important; 
+    color: #a02020 !important; 
+    font-weight: 900 !important; 
+    font-size: 11pt !important; 
+  }
+  
+  .date-wrap { 
+    width: 100% !important; 
+    margin: 0 !important;
+  }
+  .owner-wrap { 
+    width: 100% !important; 
+    margin: 0 !important;
+  }
+  
+  .date-wrap input, 
+  .owner-wrap input { 
+    border: 1px solid #888 !important; 
+    background: #fafafa !important; 
+    color: #000 !important; 
+    font-size: 8pt !important; 
+    padding: 4px 6px !important; 
+    border-radius: 3px !important;
+    width: 100% !important;
+    text-align: center !important;
+    visibility: visible !important;
+    height: 22px !important;
+    font-family: monospace !important;
+    box-sizing: border-box !important;
+  }
+  .owner-wrap input { 
+    text-align: right !important; 
+    font-family: 'Vazirmatn', sans-serif !important;
+    padding-right: 8px !important;
+  }
+  
+  .date-wrap input::placeholder, 
+  .owner-wrap input::placeholder { 
+    color: #999 !important; 
+    opacity: 1 !important;
+  }
 }
 .print-header { display: none; }
 </style>
@@ -1147,7 +1287,6 @@ img{max-width:100%;display:block}
           </div>
         </div>
 
-        <!-- Form -->
         <div class="min-form-card" id="minuteFormCard">
           <h3 class="min-form-title" id="minuteFormTitle">ثبت صورت‌جلسه جدید</h3>
           <input type="hidden" id="minuteId">
@@ -1184,7 +1323,6 @@ img{max-width:100%;display:block}
             <textarea id="minuteNotebook" placeholder="یادداشت‌های شخصی شما..."></textarea>
           </div>
 
-          <!-- File Upload for Minutes -->
           <div class="form-row">
             <label>پیوست‌ها (اسکن صورت‌جلسه و...)</label>
             <ul class="min-file-list" id="minFileList"></ul>
@@ -1206,7 +1344,6 @@ img{max-width:100%;display:block}
           </div>
         </div>
 
-        <!-- History -->
         <div id="minutesHistoryContainer"></div>
       </section>
 
@@ -1222,7 +1359,6 @@ img{max-width:100%;display:block}
           </div>
         </div>
 
-        <!-- Form -->
         <div class="min-form-card" id="noteFormCard">
           <h3 class="min-form-title" id="noteFormTitle">ثبت یادداشت جدید</h3>
           <input type="hidden" id="noteId">
@@ -1255,7 +1391,6 @@ img{max-width:100%;display:block}
           </div>
         </div>
 
-        <!-- Notes Grid -->
         <div class="note-grid" id="notesContainer"></div>
       </section>
 
@@ -1363,7 +1498,6 @@ img{max-width:100%;display:block}
   </div>
 </div>
 
-<!-- Hidden printable area for meeting minutes -->
 <div id="printableMinute"></div>
 
 <div class="toast-wrap" id="toastWrap"></div>
@@ -1564,7 +1698,6 @@ document.querySelectorAll('.app-tab').forEach(tab=>{
     document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
     $('view-'+tab.dataset.tab).classList.add('active');
     
-    // Close mobile menu if open
     if(window.innerWidth <= 900) {
       $('appTabs').classList.remove('active');
     }
@@ -1848,10 +1981,10 @@ async function renderChecklist(){
           </label>
         </div>
         
-        <div class="chk-row-actions">
+        <div class="chk-buttons">
           <button class="file-btn" data-file-btn="${key}">
             <svg class="ic" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
-            <span>${faDigits(filesCount)} فایل</span>
+            <span>${faDigits(filesCount)}</span>
           </button>
 
           <div class="date-wrap">
@@ -1863,12 +1996,11 @@ async function renderChecklist(){
           <div class="owner-wrap">
             <input type="text" class="chk-in-owner" placeholder="متولی" value="${escapeHtml(e.owner||'')}" data-owner="${key}">
           </div>
+          <button class="save-btn" data-save="${key}">
+            <svg class="ic" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            ثبت
+          </button>
         </div>
-        
-        <button class="save-btn" data-save="${key}">
-          <svg class="ic" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-          ثبت
-        </button>
       </div>`;
     });
     html+='</div></div>';
@@ -2039,10 +2171,7 @@ async function refreshFileList() {
         try {
           await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${fileToDelete.path}`, {
             method: 'DELETE',
-            headers: { 
-              'apikey': SUPABASE_ANON_KEY,
-              'Authorization': `Bearer ${SUPABASE_ANON_KEY}` 
-            }
+            headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
           });
         } catch (err) { console.error('Delete failed:', err); }
           
@@ -2096,9 +2225,9 @@ async function handleFileUpload(fileList) {
       });
       
       if(!res.ok) {
-        if(res.status === 401) lastError = 'خطای احراز هویت (401). کلید API را چک کنید.';
-        else if(res.status === 403) lastError = 'دسترسی رد شد (403). Policy آپلود را در Supabase اجرا کنید.';
-        else if(res.status === 404) lastError = `باکت «${STORAGE_BUCKET}» یافت نشد. نام باکت را چک کنید.`;
+        if(res.status === 401) lastError = 'خطای احراز هویت (401).';
+        else if(res.status === 403) lastError = 'دسترسی رد شد (403).';
+        else if(res.status === 404) lastError = `باکت «${STORAGE_BUCKET}» یافت نشد.`;
         else if(res.status === 413) lastError = 'فایل خیلی بزرگ است (413).';
         else lastError = `خطا ${res.status}`;
         continue;
@@ -2218,7 +2347,7 @@ async function handleMinuteFileUpload(fileList) {
   }
 }
 
-/* ============================== CALENDAR (Shared) ============================== */
+/* ============================== CALENDAR ============================== */
 let calYear,calMonth,calSelected;
 
 async function openCalendar(key){
@@ -2841,3 +2970,4 @@ async function renderAll(){
 </script>
 </body>
 </html>
+```
