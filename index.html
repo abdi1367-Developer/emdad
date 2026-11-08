@@ -284,6 +284,7 @@ img{max-width:100%;display:block}
 .chk-group.collapsed .chk-body{display:none}
 .chk-body{padding:0;border-top:1px solid var(--border)}
 
+/* Desktop: single line - 7 columns total */
 .chk-row{
   display:grid;
   grid-template-columns:32px minmax(200px,1fr) auto auto 135px 115px auto;
@@ -301,6 +302,7 @@ img{max-width:100%;display:block}
 .chk-row[data-status="has"] .chk-txt{color:var(--success);font-weight:600}
 .chk-row[data-status="no"] .chk-txt{color:var(--danger);font-weight:600}
 
+/* Priority tag */
 .priority-tag{
   display: inline-flex;
   align-items: center;
@@ -322,6 +324,7 @@ img{max-width:100%;display:block}
   50% { opacity: 0.5; transform: scale(0.9); }
 }
 
+/* Wrapper for the 4 buttons/inputs - transparent on desktop (children become grid items) */
 .chk-buttons{display:contents}
 .print-status{display:none;}
 
@@ -355,6 +358,7 @@ img{max-width:100%;display:block}
 .save-btn.saved{background:var(--success);color:#fff;border-color:var(--success)}
 .save-btn .ic{width:13px;height:13px}
 
+/* Tablet: keep single row */
 @media (max-width:1400px) and (min-width:901px){
   .chk-row{
     grid-template-columns:28px minmax(150px,1fr) auto auto 110px 90px auto;
@@ -370,6 +374,7 @@ img{max-width:100%;display:block}
   .radio-pill{padding:5px 8px;font-size:.72rem}
 }
 
+/* Mobile: card layout */
 @media (max-width:900px){
   .chk-body{background:var(--bg-soft);padding:12px;}
   .chk-row{
@@ -567,7 +572,7 @@ img{max-width:100%;display:block}
 .btn-lg.primary{background:var(--primary);color:#fff}
 .btn-lg.primary:hover{background:var(--primary-2)}
 .btn-lg.ghost{background:var(--bg-soft);color:var(--text-2);border:1px solid var(--border)}
-.form-err{color:var(--danger);font-size:.78rem;min-height:16px;margin-top:4px;word-break:break-word;line-height:1.5}
+.form-err{color:var(--danger);font-size:.78rem;min-height:16px;margin-top:4px}
 
 .file-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:16px;max-height:300px;overflow-y:auto;}
 .file-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--bg-soft);border:1px solid var(--border);border-radius:8px;font-size:.85rem;}
@@ -604,6 +609,7 @@ img{max-width:100%;display:block}
 .cal-today-btn{flex:1;padding:10px;border-radius:8px;background:var(--bg-soft);color:var(--text-2);font-weight:600;font-size:.85rem;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:6px}
 .cal-today-btn:hover{background:var(--bg-tint);color:var(--text)}
 
+/* Mobile global */
 @media (max-width:1024px){
   .hero-inner{grid-template-columns:1fr;gap:24px}
   .hero-side{align-items:flex-start}
@@ -654,7 +660,8 @@ img{max-width:100%;display:block}
 
 @media print {
   @page { margin: 1cm; size: A4 portrait; }
-
+  
+  /* ============ PRINT MINUTES ============ */
   body.printing-minute * { visibility: hidden; }
   body.printing-minute #printableMinute, body.printing-minute #printableMinute * { visibility: visible; }
   body.printing-minute #printableMinute {
@@ -672,49 +679,55 @@ img{max-width:100%;display:block}
   body.printing-minute .print-section p { font-size: 11pt; white-space: pre-wrap; margin: 0; color: #222; }
   body.printing-minute .print-meta { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 11pt; font-weight: bold; }
 
+  /* ============ PRINT CHECKLIST ============ */
   body:not(.printing-minute) { background: #fff !important; color: #000 !important; font-size: 9.5pt !important; }
   body:not(.printing-minute)::before { display: none !important; }
-
-  .app-header, .app-tabs, .app-actions, .chk-toolbar, .chk-toolbar-right, .radios, .cal-open,
+  
+  /* Hide all UI */
+  .app-header, .app-tabs, .app-actions, .chk-toolbar, .chk-toolbar-right, .radios, .cal-open, 
   .save-btn, .toast-wrap, .modal-bg, .chk-chevron, .chk-head-meta, .dash-row,
-  #dashboardContainer {
-    display: none !important;
+  #dashboardContainer { 
+    display: none !important; 
   }
-
+  
+  /* Show only checklist */
   body:not(.printing-minute) * { visibility: hidden; }
   body:not(.printing-minute) #view-checklist, body:not(.printing-minute) #view-checklist * { visibility: visible; }
   body:not(.printing-minute) #view-checklist { position: absolute; left: 0; top: 0; width: 100%; padding: 0; margin: 0; }
-
+  
+  /* Print Header */
   .print-header { display: block !important; text-align: center; margin-bottom: 15px; border-bottom: 2px solid #000; padding-bottom: 10px; visibility: visible !important; }
   .print-header h1 { font-size: 15pt !important; margin-bottom: 5px; color: #000 !important; }
   .print-header p { font-size: 9pt !important; color: #555 !important; }
 
-  .chk-group {
-    border: 1.5px solid #666 !important;
-    border-radius: 6px !important;
-    margin-bottom: 12px !important;
-    break-inside: avoid;
-    background: #fff !important;
-    display: block !important;
+  /* Groups */
+  .chk-group { 
+    border: 1.5px solid #666 !important; 
+    border-radius: 6px !important; 
+    margin-bottom: 12px !important; 
+    break-inside: avoid; 
+    background: #fff !important; 
+    display: block !important; 
   }
   .chk-body { display: block !important; padding: 8px !important; border-top: none !important; background: #fff !important; }
-  .chk-head {
-    background: #e8e8e8 !important;
-    padding: 7px 12px !important;
+  .chk-head { 
+    background: #e8e8e8 !important; 
+    padding: 7px 12px !important; 
     border-bottom: 1.5px solid #666 !important;
     display: flex !important; align-items: center !important; justify-content: flex-start !important;
     border-radius: 6px 6px 0 0 !important;
   }
   .chk-head-left { display: flex !important; align-items: center !important; gap: 10px !important; }
   .chk-head-left h3 { font-size: 10.5pt !important; color: #000 !important; font-weight: bold !important; margin: 0 !important; }
-  .chk-num {
-    width: 24px !important; height: 24px !important; font-size: 8.5pt !important;
+  .chk-num { 
+    width: 24px !important; height: 24px !important; font-size: 8.5pt !important; 
     background: #fff !important; color: #000 !important; border: 1px solid #666 !important;
     border-radius: 4px !important; display: flex !important; align-items: center !important; justify-content: center !important;
   }
-
-  .chk-row {
-    display: flex !important;
+  
+  /* Row layout - horizontal flex */
+  .chk-row { 
+    display: flex !important; 
     flex-direction: row !important;
     align-items: center !important;
     justify-content: flex-end !important;
@@ -727,26 +740,29 @@ img{max-width:100%;display:block}
     gap: 8px !important;
   }
   .chk-idx { display: none !important; }
-
-  .chk-txt {
-    flex: 1 !important;
+  
+  /* Text - right side (largest) */
+  .chk-txt { 
+    flex: 1 !important; 
     min-width: 0 !important;
-    font-size: 9pt !important;
-    color: #000 !important;
-    line-height: 1.45 !important;
+    font-size: 9pt !important; 
+    color: #000 !important; 
+    line-height: 1.45 !important; 
     text-align: right !important;
     padding-left: 10px !important;
   }
   .chk-txt .priority-tag {
     display: none !important;
   }
-
-  .chk-buttons {
-    display: contents !important;
+  
+  /* Buttons wrapper - flatten */
+  .chk-buttons { 
+    display: contents !important; 
   }
-
+  
+  /* Priority tag (in buttons area) */
   .chk-buttons .priority-tag,
-  .chk-row .priority-tag {
+  .chk-row .priority-tag { 
     display: inline-flex !important;
     width: 18px !important;
     height: 18px !important;
@@ -756,7 +772,8 @@ img{max-width:100%;display:block}
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
-
+  
+  /* Status (دارد/ندارد) */
   .print-status {
     display: block !important;
     width: 55px !important;
@@ -771,6 +788,7 @@ img{max-width:100%;display:block}
   .chk-row[data-status="no"] .print-status::before { content: "✕ ندارد"; }
   .chk-row[data-status=""] .print-status::before { content: "—"; color: #999 !important; }
 
+  /* File count */
   .file-btn {
     display: flex !important;
     width: 40px !important;
@@ -785,21 +803,22 @@ img{max-width:100%;display:block}
   }
   .file-btn .ic { display: none !important; }
   .file-btn span::before { content: "📎 "; font-weight: bold; }
-
-  .date-wrap {
-    width: 75px !important;
+  
+  /* Date and owner inputs */
+  .date-wrap { 
+    width: 75px !important; 
     flex-shrink: 0 !important;
   }
-  .owner-wrap {
-    width: 80px !important;
+  .owner-wrap { 
+    width: 80px !important; 
     flex-shrink: 0 !important;
   }
-  .date-wrap input, .owner-wrap input {
-    border: 1px solid #999 !important;
-    background: #fafafa !important;
-    color: #000 !important;
-    font-size: 8pt !important;
-    padding: 2px 3px !important;
+  .date-wrap input, .owner-wrap input { 
+    border: 1px solid #999 !important; 
+    background: #fafafa !important; 
+    color: #000 !important; 
+    font-size: 8pt !important; 
+    padding: 2px 3px !important; 
     border-radius: 2px !important;
     width: 100% !important;
     text-align: center !important;
@@ -807,14 +826,14 @@ img{max-width:100%;display:block}
     font-family: monospace !important;
     box-sizing: border-box !important;
   }
-  .owner-wrap input {
-    text-align: right !important;
+  .owner-wrap input { 
+    text-align: right !important; 
     font-family: 'Vazirmatn', sans-serif !important;
     padding-right: 4px !important;
     font-size: 8pt !important;
   }
-  .date-wrap input::placeholder, .owner-wrap input::placeholder {
-    color: #999 !important;
+  .date-wrap input::placeholder, .owner-wrap input::placeholder { 
+    color: #999 !important; 
     opacity: 1 !important;
     font-size: 7pt !important;
   }
@@ -851,7 +870,7 @@ img{max-width:100%;display:block}
       </div>
       <button class="login-btn" id="loginBtn">ورود به سامانه</button>
       <div class="login-err" id="loginError"></div>
-      <a class="reset-pass-link" id="resetPassBtn">فراموشی رمز عبور؟ (با مدیر سامانه تماس بگیرید)</a>
+      <a class="reset-pass-link" id="resetPassBtn">فراموشی رمز عبور؟ (بازنشانی به شماره موبایل)</a>
     </div>
   </div>
 </div>
@@ -889,10 +908,6 @@ img{max-width:100%;display:block}
         <svg class="ic" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         <span>ذی‌نفعان</span>
       </button>
-      <button class="app-tab" data-tab="users" id="usersTabBtn" style="display:none;">
-        <svg class="ic" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-        <span>مدیریت کاربران</span>
-      </button>
     </nav>
     <div class="app-actions">
       <img src="me.jpg" alt="مدیر پروژه" class="user-avatar" title="مدیر پروژه" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23e2e8f0%22/%3E%3Ccircle cx=%2250%22 cy=%2240%22 r=%2220%22 fill=%22%2394a3b8%22/%3E%3Cpath d=%22M20 90 Q50 60 80 90%22 fill=%22%2394a3b8%22/%3E%3C/svg%3E'">
@@ -910,7 +925,7 @@ img{max-width:100%;display:block}
 
   <main class="app-main">
     <div class="container">
-
+      
       <!-- ============== HOME - MOTION PROPOSAL ============== -->
       <section class="view active" id="view-home">
         <div class="prop-wrap">
@@ -1146,7 +1161,7 @@ img{max-width:100%;display:block}
                 <p class="sec-sub">انتقال دانش به تیم داخلی و مدل پرداخت مرحله‌ای</p>
               </div>
             </div>
-
+            
             <h3 style="font-size:1rem;font-weight:800;color:var(--text);margin-bottom:14px">سرفصل‌های آموزشی</h3>
             <div class="train-grid">
               <div class="train-mod"><h5>مفاهیم پایه و استانداردها <span class="hrs">۵ ساعت</span></h5><p>ISO 22301، ISO 31000، NIST و ساختار حاکمیت</p></div>
@@ -1224,7 +1239,7 @@ img{max-width:100%;display:block}
           <h3 class="min-form-title" id="minuteFormTitle">ثبت صورت‌جلسه جدید</h3>
           <input type="hidden" id="minuteId">
           <input type="hidden" id="minuteMode" value="edit">
-
+          
           <div class="form-row two-col">
             <div>
               <label>تاریخ جلسه <span style="color:var(--danger)">*</span></label>
@@ -1296,7 +1311,7 @@ img{max-width:100%;display:block}
           <h3 class="min-form-title" id="noteFormTitle">ثبت یادداشت جدید</h3>
           <input type="hidden" id="noteId">
           <input type="hidden" id="noteMode" value="edit">
-
+          
           <div class="form-row two-col">
             <div>
               <label>تاریخ <span style="color:var(--danger)">*</span></label>
@@ -1346,27 +1361,6 @@ img{max-width:100%;display:block}
           </div>
         </div>
         <div id="stkTableWrap"></div>
-      </section>
-
-      <!-- ============== USER MANAGEMENT ============== -->
-      <section class="view" id="view-users">
-        <div class="stk-header">
-          <div class="stk-title-wrap">
-            <h2>مدیریت کاربران</h2>
-            <p>ایجاد، ویرایش، فعال/غیرفعال و بازنشانی رمز عبور کاربران</p>
-          </div>
-          <div class="stk-actions">
-            <div class="search-wrap">
-              <svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" id="userSearch" placeholder="جستجو...">
-            </div>
-            <button class="btn-primary" id="addUserBtn">
-              <svg class="ic ic-sm" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              کاربر جدید
-            </button>
-          </div>
-        </div>
-        <div id="usersTableWrap"></div>
       </section>
 
     </div>
@@ -1452,40 +1446,6 @@ img{max-width:100%;display:block}
   </div>
 </div>
 
-<div class="modal-bg" id="userModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h3 id="userModalTitle">افزودن کاربر</h3>
-      <button class="modal-close" data-close="userModal"><svg class="ic" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    </div>
-    <div class="modal-body">
-      <input type="hidden" id="userId">
-      <div class="form-row"><label>شماره موبایل <span style="color:var(--danger)">*</span></label><input type="tel" id="userMobile" dir="ltr" placeholder="۰۹۱۲..."></div>
-      <div class="form-row"><label>نام و نام خانوادگی</label><input type="text" id="userFullName"></div>
-      <div class="form-row two-col">
-        <div><label>نقش</label>
-          <select id="userRole" style="width:100%;padding:12px 14px;background:var(--bg-soft);border:1.5px solid var(--border);border-radius:10px;font-size:.9rem;color:var(--text);outline:none;cursor:pointer;">
-            <option value="user">کاربر عادی</option>
-            <option value="admin">مدیر</option>
-          </select>
-        </div>
-        <div><label>وضعیت</label>
-          <select id="userActive" style="width:100%;padding:12px 14px;background:var(--bg-soft);border:1.5px solid var(--border);border-radius:10px;font-size:.9rem;color:var(--text);outline:none;cursor:pointer;">
-            <option value="true">فعال</option>
-            <option value="false">غیرفعال</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row"><label>رمز عبور <span style="color:var(--danger)">*</span></label><input type="text" id="userPassword" dir="ltr" placeholder="حداقل ۴ کاراکتر"></div>
-      <div class="form-err" id="userErr"></div>
-    </div>
-    <div class="modal-foot">
-      <button class="btn-lg ghost" data-close="userModal">انصراف</button>
-      <button class="btn-lg primary" id="saveUserBtn">ذخیره</button>
-    </div>
-  </div>
-</div>
-
 <div id="printableMinute"></div>
 
 <div class="toast-wrap" id="toastWrap"></div>
@@ -1549,8 +1509,8 @@ const Store = {
     try {
       const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_storage`, {
         method: 'POST',
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
+        headers: { 
+          'apikey': SUPABASE_ANON_KEY, 
           'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
           'Content-Type': 'application/json',
           'Prefer': 'resolution=merge-duplicates,return=minimal'
@@ -1579,87 +1539,6 @@ const getPass=async()=>await Store.get('pass', DEFAULT_USER);
 const setPass=async(p)=>await Store.set('pass', p);
 const isAuth=()=>sessionStorage.getItem('bcp_auth')==='1';
 const setAuth=v=>v?sessionStorage.setItem('bcp_auth','1'):sessionStorage.removeItem('bcp_auth');
-
-/* ============================== CURRENT USER SESSION ============================== */
-function getCurrentUser() {
-  try {
-    const s = sessionStorage.getItem('bcp_user');
-    return s ? JSON.parse(s) : null;
-  } catch(e) { return null; }
-}
-function setCurrentUser(u) {
-  sessionStorage.setItem('bcp_user', JSON.stringify(u));
-}
-
-/* ============================== USERS API ============================== */
-const Users = {
-  async list() {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_users?select=*&order=created_at.asc`, {
-      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
-    });
-    if (!res.ok) {
-      const t = await res.text();
-      throw new Error(`GET [${res.status}] ${t.substring(0, 300)}`);
-    }
-    return await res.json();
-  },
-  async find(mobile) {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_users?mobile=eq.${encodeURIComponent(mobile)}&select=*`, {
-      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
-    });
-    if (!res.ok) {
-      const t = await res.text();
-      throw new Error(`FIND [${res.status}] ${t.substring(0, 300)}`);
-    }
-    const data = await res.json();
-    return data[0] || null;
-  },
-  async create(u) {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_users`, {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify(u)
-    });
-    if (!res.ok) {
-      const t = await res.text();
-      throw new Error(`POST [${res.status}] ${t.substring(0, 300)}`);
-    }
-    return true;
-  },
-  async update(id, updates) {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_users?id=eq.${id}`, {
-      method: 'PATCH',
-      headers: {
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify(updates)
-    });
-    if (!res.ok) {
-      const t = await res.text();
-      throw new Error(`PATCH [${res.status}] ${t.substring(0, 300)}`);
-    }
-    return true;
-  },
-  async remove(id) {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_users?id=eq.${id}`, {
-      method: 'DELETE',
-      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
-    });
-    if (!res.ok) {
-      const t = await res.text();
-      throw new Error(`DELETE [${res.status}] ${t.substring(0, 300)}`);
-    }
-    return true;
-  }
-};
 
 /* ============================== THEME ============================== */
 function applyTheme(t){
@@ -1717,11 +1596,6 @@ requestAnimationFrame(tickDust);
 async function showApp(){
   $('loginScreen').classList.add('hidden');
   $('appScreen').classList.add('visible');
-
-  const cur = getCurrentUser();
-  if(cur && cur.role === 'admin') $('usersTabBtn').style.display = '';
-  else $('usersTabBtn').style.display = 'none';
-
   await renderAll();
   animateCounters();
 }
@@ -1733,57 +1607,31 @@ function showLogin(){
 async function attemptLogin(){
   const m=$('loginMobile').value.trim();
   const p=$('loginPassword').value;
-  if(!m || !p){ $('loginError').textContent='شماره موبایل و رمز عبور را وارد کنید.'; return; }
-
+  if(m!==DEFAULT_USER){$('loginError').textContent='شماره موبایل مجاز نیست.';return;}
   $('loginError').textContent='در حال بررسی...';
-
-  let user = null;
-  try { user = await Users.find(m); } catch(e) {
-    console.warn('Users table error, using fallback:', e.message);
+  
+  let savedPass = DEFAULT_USER;
+  try { savedPass = await getPass(); } catch(e) {}
+  
+  if(p === DEFAULT_USER || p === savedPass){
+    $('loginError').textContent='';
+    setAuth(true); showApp();
+  } else {
+    $('loginError').textContent='رمز عبور نادرست است.';
   }
-
-  if(!user && m === DEFAULT_USER){
-    let oldPass = DEFAULT_USER;
-    try { oldPass = await getPass(); } catch(e) {}
-    if(p === oldPass || p === DEFAULT_USER){
-      user = { id:'default', mobile:DEFAULT_USER, password:oldPass,
-               full_name:'مدیر سامانه', role:'admin', is_active:true };
-    }
-  }
-
-  if(!user){ $('loginError').textContent='کاربری با این شماره یافت نشد.'; return; }
-  if(user.is_active === false){ $('loginError').textContent='حساب کاربری غیرفعال است.'; return; }
-  if(p !== user.password){ $('loginError').textContent='رمز عبور نادرست است.'; return; }
-
-  setCurrentUser(user);
-  setAuth(true);
-  showApp();
 }
 $('loginMobile').value=DEFAULT_USER;
 $('loginBtn').addEventListener('click',attemptLogin);
 $('loginPassword').addEventListener('keydown',e=>{if(e.key==='Enter')attemptLogin();});
-$('resetPassBtn').addEventListener('click', ()=>{
-  alert('برای بازنشانی رمز عبور، لطفاً با مدیر سامانه تماس بگیرید.');
+$('resetPassBtn').addEventListener('click',async ()=>{
+  if(confirm('آیا رمز عبور به شماره موبایل (پیش‌فرض) بازنشانی شود؟')) {
+    await setPass(DEFAULT_USER);
+    toast('رمز عبور بازنشانی شد. اکنون می‌توانید وارد شوید.', 'success');
+  }
 });
-$('logoutBtn').addEventListener('click',()=>{
-  setAuth(false);
-  sessionStorage.removeItem('bcp_user');
-  showLogin();
-});
+$('logoutBtn').addEventListener('click',()=>{setAuth(false);showLogin();});
 
-(async () => {
-  if(isAuth()){
-    if(!getCurrentUser()){
-      let pass = DEFAULT_USER;
-      try { pass = await getPass(); } catch(e) {}
-      setCurrentUser({
-        id:'default', mobile:DEFAULT_USER, password:pass,
-        full_name:'مدیر سامانه', role:'admin', is_active:true
-      });
-    }
-    showApp();
-  } else { showLogin(); }
-})();
+if(isAuth()){ showApp(); } else { showLogin(); }
 
 /* ============================== MOBILE MENU ============================== */
 $('mobileMenuBtn').addEventListener('click', () => {
@@ -1797,7 +1645,7 @@ document.querySelectorAll('.app-tab').forEach(tab=>{
     tab.classList.add('active');
     document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
     $('view-'+tab.dataset.tab).classList.add('active');
-
+    
     if(window.innerWidth <= 900) {
       $('appTabs').classList.remove('active');
     }
@@ -1807,7 +1655,6 @@ document.querySelectorAll('.app-tab').forEach(tab=>{
     if(tab.dataset.tab==='minutes'){ renderMinutes(); }
     if(tab.dataset.tab==='notebook'){ renderNotebook(); }
     if(tab.dataset.tab==='stakeholders'){ renderStakeholders(); }
-    if(tab.dataset.tab==='users'){ renderUsers(); }
   });
 });
 
@@ -1971,18 +1818,34 @@ const CHECKLIST=[
   ]}
 ];
 
+/* ============================== PRIORITY MAP (STRICT BCP) ============================== */
+/* 1 = Critical for BCP core (must be first)
+   2 = Important, needed for quality
+   3 = Secondary, can wait */
 const PRIORITY = [
+  // Group 0: ساختار راهبری (14)
   [1,1,1,1,2,2,2,2,1,2,1,1,2,3],
+  // Group 1: فهرست خدمات و سامانه‌ها (8)
   [1,1,1,2,1,2,2,1],
+  // Group 2: معماری و زیرساخت (11)
   [2,1,2,1,2,2,2,1,1,2,1],
+  // Group 3: پشتیبان‌گیری و بازیابی (10)
   [1,1,1,1,1,2,1,1,2,1],
+  // Group 4: برنامه‌های مدیریت بحران (9)
   [1,1,1,2,1,2,1,1,2],
+  // Group 5: اطلاعات کسب‌وکاری (12)
   [1,1,1,2,2,1,2,2,1,1,2,2],
+  // Group 6: اطلاعات فنی تکمیلی (15)
   [1,1,2,2,2,2,2,2,2,2,2,2,2,3,2],
+  // Group 7: سوابق رخدادها (8)
   [2,2,2,2,3,2,2,3],
+  // Group 8: منابع و ظرفیت‌ها (9)
   [1,1,2,2,2,2,2,2,2],
+  // Group 9: مستندات امنیتی (8)
   [3,3,3,3,2,3,3,2],
+  // Group 10: قراردادی (7)
   [2,3,2,2,2,3,3],
+  // Group 11: مانور و آموزش (6)
   [2,1,3,3,3,2]
 ];
 
@@ -2011,9 +1874,9 @@ async function renderDashboard(){
   const pctPend=total?Math.round(pending/total*100):0;
 
   const C=2*Math.PI*42;
-  const dHas=total?(has/total)*C:0;
-  const dNo=total?(no/total)*C:0;
-  const dPend=total?(pending/total)*C:0;
+  const dHas=(has/total)*C;
+  const dNo=(no/total)*C;
+  const dPend=(pending/total)*C;
   const chartSvg=`
     <svg class="chart-svg" viewBox="0 0 100 100">
       <circle cx="50" cy="50" r="42" fill="none" stroke="var(--border)" stroke-width="11"/>
@@ -2065,6 +1928,8 @@ async function renderChecklist(){
       if(e?.status==='has')has++;
       else if(e?.status==='no')no++;
     });
+    const done=has+no;
+    const pct=total?Math.round((done/total)*100):0;
     html+=`<div class="chk-group collapsed" data-g="${gi}">
       <div class="chk-head" data-toggle="${gi}">
         <div class="chk-head-left">
@@ -2085,7 +1950,7 @@ async function renderChecklist(){
       const status=e.status||'';
       const filesCount = e.files ? e.files.length : 0;
       const priority = getPriority(gi, ii);
-
+      
       html+=`<div class="chk-row" data-key="${key}" data-status="${status}">
         <div class="chk-idx">${faDigits(ii+1).padStart(2,'0')}</div>
         <div class="chk-txt">
@@ -2102,7 +1967,7 @@ async function renderChecklist(){
             <span class="rp-dot"></span>ندارد
           </label>
         </div>
-
+        
         <div class="chk-buttons">
           <span class="print-status"></span>
           <button class="file-btn" data-file-btn="${key}">
@@ -2195,7 +2060,7 @@ function attachChecklistListeners(){
       const key=btn.dataset.save;
       const state=await getCheck();
       const cur=state[key]||{};
-
+      
       if(!cur.status || !cur.date || !pToEn(cur.date) || !cur.owner || !cur.owner.trim()){
         toast('لطفا وضعیت، تاریخ و متولی را پر کنید','danger');
         if(!cur.status){
@@ -2212,7 +2077,7 @@ function attachChecklistListeners(){
         }
         return;
       }
-
+      
       const ok = await saveCheck(state);
       row.classList.remove('dirty');
       btn.classList.add('saved');
@@ -2239,7 +2104,7 @@ function attachChecklistListeners(){
 async function updateGroupCounts(){
   const state = await getCheck();
   CHECKLIST.forEach((group,gi)=>{
-    let has=0,no=0;
+    let has=0,no=0,total=group.items.length;
     group.items.forEach((_,ii)=>{
       const e=state[gi+'_'+ii];
       if(e?.status==='has')has++;
@@ -2267,7 +2132,7 @@ async function refreshFileList() {
   const state = await getCheck();
   const files = state[CURRENT_FILE_KEY]?.files || [];
   const listEl = $('fileList');
-
+  
   if (files.length === 0) {
     listEl.innerHTML = `<li style="text-align:center; color:var(--muted); font-size:0.85rem; padding:10px;">هیچ فایلی پیوست نشده است.</li>`;
   } else {
@@ -2282,22 +2147,26 @@ async function refreshFileList() {
         </button>
       </li>
     `).join('');
-
+    
     listEl.querySelectorAll('[data-del-file]').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         e.preventDefault();
         if(!confirm('آیا از حذف این فایل اطمینان دارید؟')) return;
+        
         const idx = parseInt(btn.dataset.delFile);
         const fileToDelete = files[idx];
+        
         try {
           await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${fileToDelete.path}`, {
             method: 'DELETE',
             headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
           });
         } catch (err) { console.error('Delete failed:', err); }
+          
         const state = await getCheck();
         state[CURRENT_FILE_KEY].files.splice(idx, 1);
         await saveCheck(state);
+        
         await refreshFileList();
         await renderChecklist();
         toast('فایل حذف شد', 'success');
@@ -2316,19 +2185,21 @@ async function handleFileUpload(fileList) {
   const errEl = $('fileErr');
   errEl.style.color = 'var(--muted)';
   errEl.textContent = 'در حال آپلود...';
-
+  
   const state = await getCheck();
   if(!state[CURRENT_FILE_KEY]) state[CURRENT_FILE_KEY] = {};
   if(!state[CURRENT_FILE_KEY].files) state[CURRENT_FILE_KEY].files = [];
-
+  
   let successCount = 0;
   let lastError = '';
-
+  
   for (let i = 0; i < fileList.length; i++) {
     const file = fileList[i];
     if(file.size > 50 * 1024 * 1024) { lastError = `فایل «${file.name}» بزرگتر از ۵۰ مگابایت است.`; continue; }
+    
     const cleanName = file.name.replace(/[^\w.\-]/g, '_');
     const filePath = `${CURRENT_FILE_KEY}/${Date.now()}_${cleanName}`;
+    
     try {
       const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${filePath}`, {
         method: 'POST',
@@ -2340,6 +2211,7 @@ async function handleFileUpload(fileList) {
         },
         body: file
       });
+      
       if(!res.ok) {
         if(res.status === 401) lastError = 'خطای احراز هویت (401).';
         else if(res.status === 403) lastError = 'دسترسی رد شد (403).';
@@ -2348,12 +2220,13 @@ async function handleFileUpload(fileList) {
         else lastError = `خطا ${res.status}`;
         continue;
       }
+      
       const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${filePath}`;
       state[CURRENT_FILE_KEY].files.push({ name: file.name, url: publicUrl, path: filePath });
       successCount++;
     } catch (error) { lastError = `خطای شبکه: ${error.message}`; }
   }
-
+  
   if(successCount > 0) {
     await saveCheck(state);
     errEl.textContent = '';
@@ -2373,7 +2246,7 @@ let MINUTE_FILES = [];
 function renderMinuteFiles() {
   const listEl = $('minFileList');
   const isView = $('minuteMode').value === 'view';
-
+  
   if (MINUTE_FILES.length === 0) {
     listEl.innerHTML = `<li style="text-align:center; color:var(--muted); font-size:0.85rem; padding:10px;">فایلی پیوست نشده است.</li>`;
     return;
@@ -2398,12 +2271,14 @@ function renderMinuteFiles() {
         if(!confirm('آیا از حذف این فایل اطمینان دارید؟')) return;
         const idx = parseInt(btn.dataset.delMinFile);
         const fileToDelete = MINUTE_FILES[idx];
+        
         try {
           await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${fileToDelete.path}`, {
             method: 'DELETE',
             headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
           });
         } catch (err) {}
+        
         MINUTE_FILES.splice(idx, 1);
         renderMinuteFiles();
         toast('فایل حذف شد', 'success');
@@ -2424,28 +2299,32 @@ async function handleMinuteFileUpload(fileList) {
   const errEl = $('minFileErr');
   errEl.style.color = 'var(--muted)';
   errEl.textContent = 'در حال آپلود...';
-
+  
   let successCount = 0;
   let lastError = '';
-
+  
   for (let i = 0; i < fileList.length; i++) {
     const file = fileList[i];
     if(file.size > 50 * 1024 * 1024) { lastError = `فایل «${file.name}» بزرگتر از ۵۰ مگابایت است.`; continue; }
+    
     const cleanName = file.name.replace(/[^\w.\-]/g, '_');
     const filePath = `minutes/${Date.now()}_${cleanName}`;
+    
     try {
       const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${filePath}`, {
         method: 'POST',
         headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': file.type || 'application/octet-stream', 'x-upsert': 'true' },
         body: file
       });
+      
       if(!res.ok) { lastError = `خطا ${res.status} در آپلود ${file.name}`; continue; }
+      
       const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${filePath}`;
       MINUTE_FILES.push({ name: file.name, url: publicUrl, path: filePath });
       successCount++;
     } catch (error) { lastError = `خطای شبکه: ${error.message}`; }
   }
-
+  
   if(successCount > 0) {
     errEl.textContent = '';
     renderMinuteFiles();
@@ -2461,7 +2340,7 @@ let calYear,calMonth,calSelected;
 
 async function openCalendar(key){
   CAL_TARGET_KEY=key;
-
+  
   if(key === 'minute') {
     const cur = $('minuteDate').value;
     const en = pToEn(cur);
@@ -2479,7 +2358,7 @@ async function openCalendar(key){
     if(en){ const [y,m,d]=en.split('/').map(Number); calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d}; }
     else { const p=pDate(new Date()); calYear=p.jy; calMonth=p.jm; calSelected=null; }
   }
-
+  
   renderCalendar();
   $('calModal').classList.add('open');
 }
@@ -2511,7 +2390,7 @@ function renderCalendar(){
 
 async function pickDate(jy,jm,jd){
   const s=faDigits(`${jy}/${String(jm).padStart(2,'0')}/${String(jd).padStart(2,'0')}`);
-
+  
   if(CAL_TARGET_KEY === 'minute') {
     $('minuteDate').value = s;
     $('calModal').classList.remove('open');
@@ -2522,7 +2401,7 @@ async function pickDate(jy,jm,jd){
     $('calModal').classList.remove('open');
     return;
   }
-
+  
   const state = await getCheck();
   if(!state[CAL_TARGET_KEY])state[CAL_TARGET_KEY]={};
   state[CAL_TARGET_KEY].date=s;
@@ -2583,19 +2462,19 @@ function setMinuteMode(mode, data = null) {
   $('minuteMode').value = mode;
   const isView = mode === 'view';
   const inputs = ['minuteDate', 'minuteAttendees', 'minuteDesc', 'minuteResolutions', 'minuteNotebook'];
-
+  
   inputs.forEach(id => {
     $(id).readOnly = isView;
     $(id).style.backgroundColor = isView ? 'var(--bg-tint)' : 'var(--bg-soft)';
   });
-
+  
   $('saveMinuteBtn').style.display = isView ? 'none' : 'flex';
   $('minUploadArea').style.display = isView ? 'none' : 'block';
   $('minuteCalBtn').style.display = isView ? 'none' : 'flex';
-
+  
   $('cancelMinuteBtn').textContent = isView ? 'بستن' : 'انصراف';
   $('minuteFormTitle').textContent = isView ? 'مشاهده صورت‌جلسه' : (mode === 'edit' ? 'ویرایش صورت‌جلسه' : 'ثبت صورت‌جلسه جدید');
-
+  
   if(data) {
     $('minuteId').value = data.id;
     $('minuteDate').value = data.date || '';
@@ -2631,25 +2510,25 @@ $('saveMinuteBtn').addEventListener('click', async () => {
   const desc = $('minuteDesc').value.trim();
   const res = $('minuteResolutions').value.trim();
   const notebook = $('minuteNotebook').value.trim();
-
+  
   if(!date || !pToEn(date)) { toast('تاریخ جلسه را به درستی وارد کنید', 'danger'); $('minuteDate').focus(); return; }
   if(!attendees) { toast('اعضای جلسه را وارد کنید', 'danger'); $('minuteAttendees').focus(); return; }
-
+  
   const id = $('minuteId').value;
   const list = await getMinutes();
-
+  
   const data = {
     id: id || 'm_' + Date.now(),
     date: date, attendees: attendees, desc: desc,
     resolutions: res, notebook: notebook,
     files: MINUTE_FILES, timestamp: Date.now()
   };
-
+  
   if(id) {
     const idx = list.findIndex(x => x.id === id);
     if(idx >= 0) list[idx] = data;
   } else { list.unshift(data); }
-
+  
   const ok = await saveMinutes(list);
   if(ok) {
     toast('صورت‌جلسه با موفقیت ذخیره شد', 'success');
@@ -2666,12 +2545,12 @@ $('printMinuteBtn').addEventListener('click', async () => {
   const attendees = $('minuteAttendees').value.trim();
   const desc = $('minuteDesc').value.trim();
   const res = $('minuteResolutions').value.trim();
-
+  
   if(!date && !attendees) { toast('برای پرینت، حداقل تاریخ و اعضا را پر کنید', 'danger'); return; }
-
+  
   const p = pDate(new Date());
   const todayStr = `${p.jd} ${p.monthName} ${p.jy}`;
-
+  
   $('printableMinute').innerHTML = `
     <div class="print-header-min">
       <h1>صورتجلسه</h1>
@@ -2685,7 +2564,7 @@ $('printMinuteBtn').addEventListener('click', async () => {
     <div class="print-section"><h3>شرح جلسه</h3><p>${escapeHtml(desc || '...................')}</p></div>
     <div class="print-section"><h3>مصوبات</h3><p>${escapeHtml(res || '...................')}</p></div>
   `;
-
+  
   document.body.classList.add('printing-minute');
   window.print();
   document.body.classList.remove('printing-minute');
@@ -2693,12 +2572,12 @@ $('printMinuteBtn').addEventListener('click', async () => {
 
 async function renderMinutes() {
   const list = await getMinutes();
-  const filtered = minSearch
+  const filtered = minSearch 
     ? list.filter(m => [m.date, m.attendees, m.desc, m.resolutions].join(' ').toLowerCase().includes(minSearch.toLowerCase()))
     : list;
 
   const container = $('minutesHistoryContainer');
-
+  
   if (filtered.length === 0) {
     container.innerHTML = `<div class="min-table-wrap"><div class="min-empty">
       <svg class="ic" viewBox="0 0 24 24" style="width:48px;height:48px;margin:0 auto 14px;color:var(--border-2)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -2726,7 +2605,7 @@ async function renderMinutes() {
   });
   html += '</tbody></table></div>';
   container.innerHTML = html;
-
+  
   container.querySelectorAll('[data-view-min]').forEach(b => b.addEventListener('click', () => {
     const m = filtered.find(x => x.id === b.dataset.viewMin);
     if(m) setMinuteMode('view', m);
@@ -2938,166 +2817,6 @@ $('saveStkBtn').addEventListener('click',async ()=>{
   toast('ذخیره شد','success');
 });
 
-/* ============================== USER MANAGEMENT ============================== */
-let userSearch = '';
-
-async function getUsersSafe() {
-  try { return await Users.list(); } catch(e) { return null; }
-}
-
-async function renderUsers() {
-  const wrap = $('usersTableWrap');
-  const list = await getUsersSafe();
-
-  if (list === null) {
-    wrap.innerHTML = `<div class="stk-table-wrap"><div class="stk-empty">
-      <h3>خطا در بارگذاری کاربران</h3>
-      <p>لطفاً مطمئن شوید جدول <code>bcp_users</code> و دسترسی‌های GRANT در Supabase اعمال شده‌اند.</p>
-    </div></div>`;
-    return;
-  }
-
-  const filtered = userSearch
-    ? list.filter(u => [u.mobile, u.full_name, u.role].join(' ').toLowerCase().includes(userSearch.toLowerCase()))
-    : list;
-
-  if (!filtered.length) {
-    wrap.innerHTML = `<div class="stk-table-wrap"><div class="stk-empty">
-      <h3>${list.length ? 'کاربری یافت نشد' : 'هنوز کاربری ثبت نشده'}</h3>
-      <p>${list.length ? 'عبارت جستجو را تغییر دهید' : 'برای شروع روی دکمه «کاربر جدید» کلیک کنید'}</p>
-    </div></div>`;
-    return;
-  }
-
-  let html = `<div class="stk-table-wrap"><table class="stk-table">
-    <thead><tr><th>کاربر</th><th>موبایل</th><th>نقش</th><th>وضعیت</th><th style="text-align:left"></th></tr></thead><tbody>`;
-
-  filtered.forEach(u => {
-    const initials = (u.full_name || u.mobile || '؟').trim().slice(0, 2);
-    const isDefault = u.mobile === DEFAULT_USER;
-    const roleBadge = u.role === 'admin'
-      ? '<span style="background:var(--danger-bg);color:var(--danger);padding:2px 8px;border-radius:6px;font-size:.72rem;font-weight:700">مدیر</span>'
-      : '<span style="background:var(--primary-glow);color:var(--primary);padding:2px 8px;border-radius:6px;font-size:.72rem;font-weight:700">کاربر</span>';
-    const activeBadge = u.is_active
-      ? '<span style="color:var(--success);font-weight:700;font-size:.8rem">● فعال</span>'
-      : '<span style="color:var(--danger);font-weight:700;font-size:.8rem">● غیرفعال</span>';
-    const defaultBadge = isDefault
-      ? '<span style="background:var(--accent);color:#fff;padding:1px 6px;border-radius:4px;font-size:.62rem;margin-right:6px;font-weight:700">پیش‌فرض</span>'
-      : '';
-
-    html += `<tr data-id="${u.id}">
-      <td data-label="کاربر"><div class="stk-user"><div class="stk-avatar">${escapeHtml(initials)}</div><div><div class="stk-name">${escapeHtml(u.full_name || 'بدون نام')}${defaultBadge}</div></div></div></td>
-      <td data-label="موبایل"><span class="stk-phone">${escapeHtml(u.mobile)}</span></td>
-      <td data-label="نقش">${roleBadge}</td>
-      <td data-label="وضعیت">${activeBadge}</td>
-      <td class="stk-actions-cell">
-        <button class="stk-act" data-edit-user="${u.id}" title="ویرایش"><svg class="ic" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-        <button class="stk-act" data-reset-user="${u.id}" title="بازنشانی رمز"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></button>
-        <button class="stk-act danger" data-del-user="${u.id}" title="حذف"><svg class="ic" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>
-      </td>
-    </tr>`;
-  });
-
-  html += '</tbody></table></div>';
-  wrap.innerHTML = html;
-
-  wrap.querySelectorAll('[data-edit-user]').forEach(b =>
-    b.addEventListener('click', () => openUserModal(b.dataset.editUser)));
-  wrap.querySelectorAll('[data-reset-user]').forEach(b =>
-    b.addEventListener('click', () => resetUserPassword(b.dataset.resetUser)));
-  wrap.querySelectorAll('[data-del-user]').forEach(b =>
-    b.addEventListener('click', async () => {
-      const u = list.find(x => x.id === b.dataset.delUser);
-      if (!u) return;
-      if (u.mobile === DEFAULT_USER) {
-        toast('کاربر پیش‌فرض قابل حذف نیست','danger'); return;
-      }
-      if (!confirm('این کاربر حذف شود؟')) return;
-      try {
-        await Users.remove(u.id);
-        toast('کاربر حذف شد','success');
-        await renderUsers();
-      } catch(e) {
-        toast('خطا در حذف: ' + e.message, 'danger');
-      }
-    }));
-}
-
-async function openUserModal(id) {
-  $('userId').value = id || '';
-  const list = (await getUsersSafe()) || [];
-  const u = id ? list.find(x => x.id === id) : null;
-  $('userModalTitle').textContent = id ? 'ویرایش کاربر' : 'افزودن کاربر';
-  $('userMobile').value    = u?.mobile || '';
-  $('userFullName').value  = u?.full_name || '';
-  $('userRole').value      = u?.role || 'user';
-  $('userPassword').value  = u?.password || '';
-  $('userActive').value    = u ? String(u.is_active) : 'true';
-  $('userErr').textContent = '';
-  $('userModal').classList.add('open');
-}
-
-async function resetUserPassword(id) {
-  const newPass = prompt('رمز عبور جدید را وارد کنید (حداقل ۴ کاراکتر):');
-  if (newPass === null) return;
-  if (newPass.length < 4) { toast('رمز باید حداقل ۴ کاراکتر باشد','danger'); return; }
-  try {
-    await Users.update(id, { password: newPass });
-    toast('رمز عبور بازنشانی شد','success');
-  } catch(e) {
-    toast('خطا در بازنشانی: ' + e.message, 'danger');
-  }
-}
-
-$('userSearch').addEventListener('input', e => {
-  userSearch = e.target.value.trim();
-  renderUsers();
-});
-
-$('addUserBtn').addEventListener('click', () => openUserModal());
-
-$('saveUserBtn').addEventListener('click', async () => {
-  const mobile    = $('userMobile').value.trim();
-  const fullName  = $('userFullName').value.trim();
-  const role      = $('userRole').value;
-  const password  = $('userPassword').value;
-  const is_active = $('userActive').value === 'true';
-
-  if (!mobile) { $('userErr').textContent='شماره موبایل الزامی است.'; return; }
-  if (!/^[\d۰-۹+\-\s]{6,}$/.test(mobile)) { $('userErr').textContent='شماره موبایل معتبر نیست.'; return; }
-  if (!password || password.length < 4) { $('userErr').textContent='رمز عبور حداقل ۴ کاراکتر.'; return; }
-
-  const id = $('userId').value;
-  const list = (await getUsersSafe()) || [];
-  const dup = list.find(u => u.mobile === mobile && u.id !== id);
-  if (dup) { $('userErr').textContent='این شماره موبایل قبلاً ثبت شده.'; return; }
-
-  if (id) {
-    const existing = list.find(u => u.id === id);
-    if (existing?.mobile === DEFAULT_USER) {
-      if (mobile !== DEFAULT_USER) {
-        $('userErr').textContent='شماره موبایل کاربر پیش‌فرض قابل تغییر نیست.'; return;
-      }
-      if (role !== 'admin' || !is_active) {
-        $('userErr').textContent='کاربر پیش‌فرض باید مدیر و فعال بماند.'; return;
-      }
-    }
-  }
-
-  try {
-    if (id) await Users.update(id, { mobile, full_name: fullName, role, password, is_active });
-    else    await Users.create({ mobile, full_name: fullName, role, password, is_active });
-  } catch(e) {
-    console.error('Save user error:', e);
-    $('userErr').textContent = 'خطا: ' + e.message;
-    return;
-  }
-
-  $('userModal').classList.remove('open');
-  toast('کاربر ذخیره شد','success');
-  await renderUsers();
-});
-
 /* ============================== MODAL HELPERS ============================== */
 document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>{
   $(b.dataset.close).classList.remove('open');
@@ -3111,48 +2830,15 @@ $('changePassBtn').addEventListener('click',()=>{
   $('curPass').value='';$('newPass').value='';$('confPass').value='';$('passErr').textContent='';
   $('passModal').classList.add('open');
 });
-$('savePassBtn').addEventListener('click', async ()=>{
-  const cur = getCurrentUser();
-  if(!cur){ $('passErr').textContent='ابتدا وارد شوید.'; return; }
-
-  if($('curPass').value !== cur.password && $('curPass').value !== DEFAULT_USER){
-    $('passErr').textContent='رمز فعلی نادرست است.'; return;
-  }
-  if($('newPass').value.length < 4){
-    $('passErr').textContent='رمز جدید حداقل ۴ کاراکتر باشد.'; return;
-  }
-  if($('newPass').value !== $('confPass').value){
-    $('passErr').textContent='رمز جدید و تکرار یکسان نیستند.'; return;
-  }
-
-  try {
-    if(cur.id === 'default'){
-      await setPass($('newPass').value);
-    } else {
-      await Users.update(cur.id, { password: $('newPass').value });
-    }
-  } catch(e) {
-    $('passErr').textContent='خطا: ' + e.message;
-    return;
-  }
-
-  cur.password = $('newPass').value;
-  setCurrentUser(cur);
+$('savePassBtn').addEventListener('click',async ()=>{
+  const currentPass = await getPass();
+  if($('curPass').value!==currentPass && $('curPass').value!==DEFAULT_USER){$('passErr').textContent='رمز فعلی نادرست است.';return;}
+  if($('newPass').value.length<4){$('passErr').textContent='رمز جدید حداقل ۴ کاراکتر باشد.';return;}
+  if($('newPass').value!==$('confPass').value){$('passErr').textContent='رمز جدید و تکرار یکسان نیستند.';return;}
+  await setPass($('newPass').value);
   $('passModal').classList.remove('open');
   toast('رمز عبور تغییر کرد','success');
 });
-
-/* ============================== DEBUG ============================== */
-window.debugBCP = async function() {
-  console.log('=== BCP Debug ===');
-  const url = `${SUPABASE_URL}/rest/v1/bcp_users`;
-  const H = { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` };
-  try {
-    const r = await fetch(url + '?select=*&limit=1', { headers: H });
-    console.log('GET status:', r.status);
-    console.log('GET body:', await r.text());
-  } catch(e) { console.error('GET err:', e); }
-};
 
 /* ============================== RENDER ALL ============================== */
 async function renderAll(){
@@ -3161,7 +2847,6 @@ async function renderAll(){
   await renderMinutes();
   await renderNotebook();
   await renderStakeholders();
-  await renderUsers();
 }
 </script>
 </body>
