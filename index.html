@@ -1,21 +1,4 @@
 <!DOCTYPE html>
-<!--
-======================================================================
-SETUP SQL (اجرا در Supabase SQL Editor — یک بار):
-----------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS public.bcp_forms (
-  id BIGSERIAL PRIMARY KEY,
-  category TEXT NOT NULL,
-  data JSONB NOT NULL DEFAULT '{}'::jsonb,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-CREATE INDEX IF NOT EXISTS idx_bcp_forms_category ON public.bcp_forms(category);
-ALTER TABLE public.bcp_forms ENABLE ROW LEVEL SECURITY;
-DROP POLICY IF EXISTS "allow_all_forms" ON public.bcp_forms;
-CREATE POLICY "allow_all_forms" ON public.bcp_forms FOR ALL USING (true) WITH CHECK (true);
-======================================================================
--->
 <html lang="fa" dir="rtl" data-theme="light">
 <head>
 <meta charset="UTF-8">
@@ -318,26 +301,11 @@ img{max-width:100%;display:block}
 .chk-row[data-status="has"] .chk-txt{color:var(--success);font-weight:600}
 .chk-row[data-status="no"] .chk-txt{color:var(--danger);font-weight:600}
 
-.priority-tag{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  font-size: 11px;
-  font-weight: 800;
-  color: #fff;
-  flex-shrink: 0;
-  animation: blink-priority 1.8s infinite;
-}
-.priority-tag.p1 { background: #c0392b; }
-.priority-tag.p2 { background: #e67e22; }
-.priority-tag.p3 { background: #27ae60; }
-@keyframes blink-priority {
-  0%,100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.9); }
-}
+.priority-tag{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;animation:blink-priority 1.8s infinite;}
+.priority-tag.p1{background:#c0392b;}
+.priority-tag.p2{background:#e67e22;}
+.priority-tag.p3{background:#27ae60;}
+@keyframes blink-priority{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.9);}}
 
 .chk-buttons{display:contents}
 .print-status{display:none;}
@@ -373,11 +341,7 @@ img{max-width:100%;display:block}
 .save-btn .ic{width:13px;height:13px}
 
 @media (max-width:1400px) and (min-width:901px){
-  .chk-row{
-    grid-template-columns:28px minmax(150px,1fr) auto auto 110px 90px auto;
-    gap:8px;
-    padding:10px 14px;
-  }
+  .chk-row{grid-template-columns:28px minmax(150px,1fr) auto auto 110px 90px auto;gap:8px;padding:10px 14px;}
   .chk-txt{font-size:.82rem}
   .file-btn{padding:5px 8px;font-size:.7rem}
   .date-wrap input{padding:6px 24px 6px 6px;font-size:.72rem}
@@ -386,36 +350,17 @@ img{max-width:100%;display:block}
   .radios{gap:4px}
   .radio-pill{padding:5px 8px;font-size:.72rem}
 }
-
 @media (max-width:900px){
   .chk-body{background:var(--bg-soft);padding:12px;}
-  .chk-row{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    padding:16px;
-    background:var(--bg-elev);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    margin-bottom:12px;
-    box-shadow:var(--shadow-sm);
-  }
+  .chk-row{display:flex;flex-direction:column;gap:10px;padding:16px;background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;box-shadow:var(--shadow-sm);}
   .chk-row:first-child{border-top:1px solid var(--border)}
   .chk-idx{display:none}
   .chk-txt{font-size:.92rem;width:100%}
   .radios{width:100%}
-  .chk-buttons{
-    display:grid;
-    grid-template-columns: auto 1fr 1fr auto;
-    gap:8px;
-    width:100%;
-  }
+  .chk-buttons{display:grid;grid-template-columns: auto 1fr 1fr auto;gap:8px;width:100%;}
 }
 @media (max-width:520px){
-  .chk-buttons{
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "date owner" "file save";
-  }
+  .chk-buttons{grid-template-columns: 1fr 1fr;grid-template-areas: "date owner" "file save";}
   .chk-buttons .file-btn{grid-area: file; justify-content:center}
   .chk-buttons .date-wrap{grid-area: date}
   .chk-buttons .owner-wrap{grid-area: owner}
@@ -426,100 +371,82 @@ img{max-width:100%;display:block}
 .min-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:24px 0;margin-bottom:16px;border-bottom:1px solid var(--border)}
 .min-title{font-size:1.3rem;font-weight:800;color:var(--text)}
 .min-actions{display:flex;gap:10px;align-items:center}
-
-.min-form-card{
-  background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius-lg);
-  padding:24px; margin-bottom:24px; display:none;
-  box-shadow:var(--shadow-md);
-  animation: viewIn .3s ease;
-}
-.min-form-card.active { display:block; }
-.min-form-title { font-size:1.1rem; font-weight:800; margin-bottom:20px; color:var(--text); border-bottom:2px solid var(--primary-glow); padding-bottom:10px; }
-
-.form-row { margin-bottom:16px; }
-.form-row label { display:block; font-size:.82rem; font-weight:700; color:var(--text-2); margin-bottom:8px; }
-.form-row input[type="text"], .form-row textarea, .form-row input[type="date"] {
-  width:100%; padding:12px 14px; background:var(--bg-soft); border:1.5px solid var(--border);
-  border-radius:10px; font-size:.9rem; color:var(--text); outline:none; transition:all .2s;
-  font-family:inherit;
-}
-.form-row input:focus, .form-row textarea:focus { border-color:var(--primary); background:var(--bg-elev); box-shadow:0 0 0 3px var(--primary-glow); }
-.form-row textarea { resize:vertical; min-height:90px; }
-.form-row.two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.form-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:24px; padding-top:20px; border-top:1px solid var(--border); }
-
-.min-table-wrap { background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; }
-.min-table { width:100%; border-collapse:collapse; }
-.min-table thead { background:var(--bg-soft); }
-.min-table th { padding:14px 20px; text-align:right; font-size:.78rem; font-weight:700; color:var(--muted); border-bottom:1px solid var(--border); }
-.min-table td { padding:14px 20px; border-bottom:1px solid var(--border); font-size:.88rem; vertical-align:middle; }
-.min-table tbody tr:hover { background:var(--bg-soft); }
-.min-table tbody tr:last-child td { border-bottom:none; }
-.min-date { font-family:monospace; font-weight:700; color:var(--primary); direction:ltr; text-align:right; }
-.min-subject { font-weight:700; color:var(--text); }
-.min-desc { font-size:.8rem; color:var(--muted); max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.min-actions-cell { display:flex; gap:6px; justify-content:flex-end; flex-wrap:nowrap; }
-.min-act { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--muted); transition:all .2s; }
-.min-act:hover { background:var(--bg-tint); color:var(--text); }
-.min-act.danger:hover { background:var(--danger-bg); color:var(--danger); }
-.min-act .ic { width:15px; height:15px; }
-.min-empty { padding:60px 20px; text-align:center; color:var(--muted); }
-.min-empty h3 { color:var(--text-2); font-size:1rem; margin-bottom:6px; }
-.min-empty p { font-size:.85rem; }
-
-.min-file-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
-.min-file-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 8px; font-size: 0.85rem; }
-.min-file-item a { color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.min-file-item a:hover { text-decoration: underline; }
-.min-file-item .del-file { color: var(--danger); background: none; border: none; cursor: pointer; padding: 4px; display: flex; align-items: center; }
-.min-file-item .del-file:hover { background: var(--danger-bg); border-radius: 4px; }
-.min-upload-area { border: 2px dashed var(--border-2); border-radius: 10px; padding: 20px; text-align: center; cursor: pointer; transition: all .2s; }
-.min-upload-area:hover { border-color: var(--primary); background: var(--primary-glow); }
-.min-upload-area p { font-size: .85rem; color: var(--muted); margin-bottom: 10px; }
-
+.min-form-card{background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px; margin-bottom:24px; display:none; box-shadow:var(--shadow-md); animation: viewIn .3s ease;}
+.min-form-card.active{display:block;}
+.min-form-title{font-size:1.1rem; font-weight:800; margin-bottom:20px; color:var(--text); border-bottom:2px solid var(--primary-glow); padding-bottom:10px;}
+.form-row{margin-bottom:16px;}
+.form-row label{display:block; font-size:.82rem; font-weight:700; color:var(--text-2); margin-bottom:8px;}
+.form-row input[type="text"], .form-row textarea, .form-row input[type="date"]{width:100%; padding:12px 14px; background:var(--bg-soft); border:1.5px solid var(--border); border-radius:10px; font-size:.9rem; color:var(--text); outline:none; transition:all .2s; font-family:inherit;}
+.form-row input:focus, .form-row textarea:focus{border-color:var(--primary); background:var(--bg-elev); box-shadow:0 0 0 3px var(--primary-glow);}
+.form-row textarea{resize:vertical; min-height:90px;}
+.form-row.two-col{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.form-actions{display:flex; gap:10px; justify-content:flex-end; margin-top:24px; padding-top:20px; border-top:1px solid var(--border);}
+.min-table-wrap{background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden;}
+.min-table{width:100%; border-collapse:collapse;}
+.min-table thead{background:var(--bg-soft);}
+.min-table th{padding:14px 20px; text-align:right; font-size:.78rem; font-weight:700; color:var(--muted); border-bottom:1px solid var(--border);}
+.min-table td{padding:14px 20px; border-bottom:1px solid var(--border); font-size:.88rem; vertical-align:middle;}
+.min-table tbody tr:hover{background:var(--bg-soft);}
+.min-table tbody tr:last-child td{border-bottom:none;}
+.min-date{font-family:monospace; font-weight:700; color:var(--primary); direction:ltr; text-align:right;}
+.min-subject{font-weight:700; color:var(--text);}
+.min-desc{font-size:.8rem; color:var(--muted); max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.min-actions-cell{display:flex; gap:6px; justify-content:flex-end; flex-wrap:nowrap;}
+.min-act{width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--muted); transition:all .2s;}
+.min-act:hover{background:var(--bg-tint); color:var(--text);}
+.min-act.danger:hover{background:var(--danger-bg); color:var(--danger);}
+.min-act .ic{width:15px; height:15px;}
+.min-empty{padding:60px 20px; text-align:center; color:var(--muted);}
+.min-empty h3{color:var(--text-2); font-size:1rem; margin-bottom:6px;}
+.min-empty p{font-size:.85rem;}
+.min-file-list{list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;}
+.min-file-item{display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 8px; font-size: 0.85rem;}
+.min-file-item a{color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.min-file-item a:hover{text-decoration: underline;}
+.min-file-item .del-file{color: var(--danger); background: none; border: none; cursor: pointer; padding: 4px; display: flex; align-items: center;}
+.min-file-item .del-file:hover{background: var(--danger-bg); border-radius: 4px;}
+.min-upload-area{border: 2px dashed var(--border-2); border-radius: 10px; padding: 20px; text-align: center; cursor: pointer; transition: all .2s;}
+.min-upload-area:hover{border-color: var(--primary); background: var(--primary-glow);}
+.min-upload-area p{font-size: .85rem; color: var(--muted); margin-bottom: 10px;}
 @media (max-width: 900px) {
   .min-toolbar{flex-direction:column;align-items:stretch; gap:16px}
   .min-actions{width:100%; flex-wrap:wrap}
   .search-wrap{flex:1}
   .min-table thead{display:none}
   .min-table,.min-table tbody,.min-table tr,.min-table td{display:block;width:100%}
-  .min-table tr{
-    background: var(--bg-elev); border: 1px solid var(--border);
-    border-radius: var(--radius); margin-bottom: 12px; padding: 16px;
-    box-shadow: var(--shadow-sm);
-  }
+  .min-table tr{background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; padding: 16px; box-shadow: var(--shadow-sm);}
   .min-table td{padding:6px 0;border:none;display:flex;justify-content:space-between;align-items:center;gap:10px; font-size:0.9rem;}
   .min-table td::before{content:attr(data-label);font-size:.75rem;color:var(--muted);font-weight:600}
   .min-table td:first-child{padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:8px;display:flex; justify-content:space-between}
   .min-table td:first-child::before{display:inline-block}
-  .min-actions-cell{ display:flex; gap:8px; justify-content:flex-end; flex-wrap:nowrap; margin-top:12px; border-top:1px solid var(--border); padding-top:12px; }
+  .min-actions-cell{display:flex; gap:8px; justify-content:flex-end; flex-wrap:nowrap; margin-top:12px; border-top:1px solid var(--border); padding-top:12px;}
   .min-actions-cell::before{display:none !important}
 }
 
-/* ============================== PERSONAL NOTEBOOK ============================== */
-.note-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 24px 0; margin-bottom: 16px; border-bottom: 1px solid var(--border); }
-.note-title { font-size: 1.3rem; font-weight: 800; color: var(--text); }
-.note-actions { display: flex; gap: 10px; align-items: center; }
-.note-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
-.note-card { padding: 20px; border-radius: var(--radius); background: var(--bg-elev); border: 1px solid var(--border); position: relative; transition: all .3s; }
-.note-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--primary); }
-.note-card .note-date { font-family: monospace; font-weight: 800; color: var(--accent); font-size: .85rem; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
-.note-card .note-title { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
-.note-card .note-content { font-size: .85rem; color: var(--text-2); line-height: 1.7; white-space: pre-wrap; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 16px; }
-.note-card .note-actions { display: flex; gap: 6px; justify-content: flex-end; position: absolute; bottom: 16px; left: 16px; }
-.note-act { width: 30px; height: 30px; border-radius: 7px; display: flex; align-items: center; justify-content: center; color: var(--muted); transition: all .2s; background: var(--bg-soft); }
-.note-act:hover { background: var(--bg-tint); color: var(--text); }
-.note-act.danger:hover { background: var(--danger-bg); color: var(--danger); }
-.note-act .ic { width: 14px; height: 14px; }
-.note-empty { padding: 60px 20px; text-align: center; color: var(--muted); grid-column: 1 / -1; }
-.note-empty h3 { color: var(--text-2); font-size: 1rem; margin-bottom: 6px; }
-.note-empty p { font-size: .85rem; }
+/* ============================== NOTEBOOK ============================== */
+.note-toolbar{display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 24px 0; margin-bottom: 16px; border-bottom: 1px solid var(--border);}
+.note-title{font-size: 1.3rem; font-weight: 800; color: var(--text);}
+.note-actions{display: flex; gap: 10px; align-items: center;}
+.note-grid{display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;}
+.note-card{padding: 20px; border-radius: var(--radius); background: var(--bg-elev); border: 1px solid var(--border); position: relative; transition: all .3s;}
+.note-card:hover{transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--primary);}
+.note-card .note-date{font-family: monospace; font-weight: 800; color: var(--accent); font-size: .85rem; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;}
+.note-card .note-title{font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; border-bottom: 1px solid var(--border); padding-bottom: 4px;}
+.note-card .note-content{font-size: .85rem; color: var(--text-2); line-height: 1.7; white-space: pre-wrap; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 16px;}
+.note-card .note-actions{display: flex; gap: 6px; justify-content: flex-end; position: absolute; bottom: 16px; left: 16px;}
+.note-act{width: 30px; height: 30px; border-radius: 7px; display: flex; align-items: center; justify-content: center; color: var(--muted); transition: all .2s; background: var(--bg-soft);}
+.note-act:hover{background: var(--bg-tint); color: var(--text);}
+.note-act.danger:hover{background: var(--danger-bg); color: var(--danger);}
+.note-act .ic{width: 14px; height: 14px;}
+.note-empty{padding: 60px 20px; text-align: center; color: var(--muted); grid-column: 1 / -1;}
+.note-empty h3{color: var(--text-2); font-size: 1rem; margin-bottom: 6px;}
+.note-empty p{font-size: .85rem;}
 @media (max-width: 768px) {
-  .note-toolbar { flex-direction: column; align-items: stretch; gap: 16px; }
-  .note-actions { width: 100%; justify-content: flex-end; }
-  .note-grid { grid-template-columns: 1fr; }
-  .note-card { padding-bottom: 60px; }
-  .note-card .note-actions { position: static; margin-top: 12px; justify-content: flex-end; border-top: 1px solid var(--border); padding-top: 12px; }
+  .note-toolbar{flex-direction: column; align-items: stretch; gap: 16px;}
+  .note-actions{width: 100%; justify-content: flex-end;}
+  .note-grid{grid-template-columns: 1fr;}
+  .note-card{padding-bottom: 60px;}
+  .note-card .note-actions{position: static; margin-top: 12px; justify-content: flex-end; border-top: 1px solid var(--border); padding-top: 12px;}
 }
 
 /* ============================== STAKEHOLDERS ============================== */
@@ -558,7 +485,7 @@ img{max-width:100%;display:block}
 @media (max-width: 900px) {
   .stk-table thead{display:none}
   .stk-table,.stk-table tbody,.stk-table tr,.stk-table td{display:block;width:100%}
-  .stk-table tr{ background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; padding: 16px; box-shadow: var(--shadow-sm); }
+  .stk-table tr{ background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; padding: 16px; box-shadow: var(--shadow-sm);}
   .stk-table td{padding:6px 0;border:none;display:flex;justify-content:space-between;align-items:center;gap:10px; font-size:0.9rem;}
   .stk-table td::before{content:attr(data-label);font-size:.75rem;color:var(--muted);font-weight:600}
   .stk-table td:first-child{padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:8px;display:flex; justify-content:space-between}
@@ -580,12 +507,23 @@ img{max-width:100%;display:block}
 .dc-progress-bar .pb-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-2));transition:width .5s;border-radius:4px}
 .dc-layout{display:grid;grid-template-columns:310px 1fr;gap:20px;align-items:start}
 .dc-sidebar{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius-lg);padding:10px;max-height:calc(100vh - 180px);overflow-y:auto;position:sticky;top:calc(var(--header-h) + 16px)}
+
+/* Dashboard button in sidebar */
+.dc-dash-btn{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;font-size:.86rem;font-weight:700;color:var(--text-2);cursor:pointer;transition:all .2s;margin-bottom:6px;border:1px solid transparent;}
+.dc-dash-btn:hover{background:var(--bg-soft);color:var(--text)}
+.dc-dash-btn.active{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;border-color:var(--primary);box-shadow:0 4px 14px var(--primary-glow)}
+.dc-dash-btn .ic{width:16px;height:16px}
+.dc-dash-divider{height:1px;background:var(--border);margin:8px 4px}
+
 .dc-sec{border-radius:8px;overflow:hidden;margin-bottom:2px}
 .dc-sec-head{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;border-radius:8px;font-size:.84rem;font-weight:700;color:var(--text-2);transition:all .2s}
 .dc-sec-head:hover{background:var(--bg-soft);color:var(--text)}
 .dc-sec.open .dc-sec-head{color:var(--primary);background:var(--primary-glow)}
 .dc-sec-num{width:26px;height:26px;border-radius:7px;background:var(--bg-soft);color:var(--text-2);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-family:monospace;font-weight:800;flex-shrink:0}
 .dc-sec.open .dc-sec-num{background:var(--primary);color:#fff}
+.dc-sec-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dc-sec-count{background:var(--bg-tint);color:var(--text-2);padding:2px 8px;border-radius:6px;font-size:.65rem;font-family:monospace;font-weight:800;min-width:24px;text-align:center;flex-shrink:0}
+.dc-sec.open .dc-sec-count{background:var(--primary);color:#fff}
 .dc-sec-body{display:none;padding:2px 0 6px}
 .dc-sec.open .dc-sec-body{display:block}
 .dc-form-link{display:flex;align-items:center;gap:6px;padding:7px 12px 7px 14px;font-size:.78rem;color:var(--text-2);border-radius:6px;cursor:pointer;transition:all .15s}
@@ -594,46 +532,149 @@ img{max-width:100%;display:block}
 .dc-form-link span:nth-child(2){flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dc-form-link .badge-count{margin-right:auto;background:var(--bg-tint);color:var(--text-2);padding:1px 7px;border-radius:5px;font-size:.65rem;font-family:monospace;font-weight:800;min-width:20px;text-align:center;flex-shrink:0}
 .dc-form-link.active .badge-count{background:var(--primary);color:#fff}
+.dc-form-link.has-data .badge-count{background:var(--success);color:#fff}
+
 .dc-main{min-height:400px}
-.dc-empty{padding:80px 24px;text-align:center;color:var(--muted);background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius-lg)}
-.dc-empty h3{color:var(--text-2);font-size:1rem;margin-bottom:6px}
-.dc-empty p{font-size:.85rem}
-.dc-form-header{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:14px}
+
+/* Glass card for descriptions */
+.dc-glass-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:16px;
+  padding:18px 22px;
+  margin-bottom:16px;
+  background:linear-gradient(135deg,rgba(110,197,163,0.10) 0%,rgba(232,168,124,0.08) 50%,rgba(30,74,63,0.10) 100%);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  border:1px solid rgba(255,255,255,0.35);
+  box-shadow:0 8px 30px rgba(26,46,40,0.06),inset 0 1px 0 rgba(255,255,255,0.5);
+}
+[data-theme="dark"] .dc-glass-card{
+  background:linear-gradient(135deg,rgba(110,197,163,0.08) 0%,rgba(232,168,124,0.06) 50%,rgba(110,197,163,0.08) 100%);
+  border-color:rgba(255,255,255,0.08);
+  box-shadow:0 8px 30px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.dc-glass-card::before{
+  content:'';
+  position:absolute;
+  inset:-50%;
+  background:
+    radial-gradient(circle at 25% 30%,rgba(110,197,163,0.22),transparent 45%),
+    radial-gradient(circle at 75% 70%,rgba(232,168,124,0.20),transparent 50%);
+  animation:glassWave 14s ease-in-out infinite;
+  pointer-events:none;
+  z-index:0;
+}
+.dc-glass-card::after{
+  content:'';
+  position:absolute;
+  inset:-40%;
+  background:radial-gradient(circle at 60% 40%,rgba(255,255,255,0.18),transparent 55%);
+  animation:glassWave 18s ease-in-out infinite reverse;
+  pointer-events:none;
+  z-index:0;
+}
+@keyframes glassWave{
+  0%,100%{transform:translate(0,0) scale(1);}
+  33%{transform:translate(4%,-3%) scale(1.05);}
+  66%{transform:translate(-3%,4%) scale(0.97);}
+}
+.dc-glass-card > *{position:relative; z-index:1;}
+.dc-glass-card p{font-size:.86rem;color:var(--text-2);line-height:1.8;margin:0;}
+.dc-glass-card .gl-label{font-size:.72rem;font-weight:700;letter-spacing:1px;color:var(--accent);text-transform:uppercase;margin-bottom:6px;display:block;}
+
 .dc-form-header h3{font-size:1.08rem;font-weight:800;color:var(--text);margin-bottom:4px}
-.dc-form-header .rep{font-size:.78rem;color:var(--accent);font-weight:700;margin-bottom:10px}
-.dc-form-header .purpose{font-size:.84rem;color:var(--text-2);line-height:1.8;background:var(--bg-soft);padding:10px 14px;border-radius:8px;border-right:3px solid var(--primary)}
+.dc-form-header h3 .code{font-family:monospace;font-size:.78rem;color:var(--muted);font-weight:500;margin-right:4px}
+.dc-form-header .rep{font-size:.78rem;color:var(--accent);font-weight:700;margin-bottom:12px}
+
 .dc-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px;flex-wrap:wrap}
-.dc-toolbar-info{font-size:.82rem;color:var(--text-2)}
-.dc-toolbar-info strong{color:var(--primary);font-family:monospace;font-size:.95rem;margin:0 3px}
+.dc-toolbar-left{display:flex;gap:8px;flex-wrap:wrap}
+.dc-toolbar-right{display:flex;gap:8px;flex-wrap:wrap}
+
 .dc-list{display:grid;gap:10px}
 .dc-record{padding:14px 18px;background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:space-between;gap:14px;transition:all .2s}
 .dc-record:hover{border-color:var(--primary);box-shadow:var(--shadow-sm)}
 .dc-record-info{flex:1;min-width:0}
 .dc-record-title{font-weight:700;color:var(--text);margin-bottom:3px;font-size:.9rem}
 .dc-record-preview{font-size:.75rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:monospace;direction:rtl;text-align:right}
-.dc-record-actions{display:flex;gap:6px;flex-shrink:0}
-.dc-record-actions .btn-ghost{padding:6px 12px;font-size:.75rem}
+.dc-record-actions{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap}
+.dc-record-actions .btn-ghost{padding:6px 11px;font-size:.74rem}
+.dc-record-actions .btn-ghost.print-btn{color:var(--primary);border-color:var(--primary)}
+.dc-record-actions .btn-ghost.print-btn:hover{background:var(--primary-glow)}
+
+.dc-empty{padding:70px 24px;text-align:center;color:var(--muted);background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius-lg)}
+.dc-empty h3{color:var(--text-2);font-size:1rem;margin-bottom:6px}
+.dc-empty p{font-size:.85rem}
+
 .dc-form{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px}
-.dc-field{margin-bottom:16px}
+
+.dc-fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dc-fields-grid .dc-field.full{grid-column:1/-1}
+
+.dc-field{margin-bottom:0}
 .dc-field label{display:flex;align-items:center;gap:6px;font-size:.84rem;font-weight:700;color:var(--text);margin-bottom:6px}
 .dc-field label .req{color:var(--danger);font-size:1rem}
-.dc-field .ex-hint{font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:5px;display:block}
-.dc-field input,.dc-field textarea{width:100%;padding:10px 12px;background:var(--bg-soft);border:1.5px solid var(--border);border-radius:8px;font-size:.88rem;color:var(--text);outline:none;transition:all .2s;font-family:inherit}
+.dc-field input,.dc-field textarea{width:100%;padding:11px 13px;background:var(--bg-soft);border:1.5px solid var(--border);border-radius:8px;font-size:.88rem;color:var(--text);outline:none;transition:all .2s;font-family:inherit}
 .dc-field input:focus,.dc-field textarea:focus{border-color:var(--primary);background:var(--bg-elev);box-shadow:0 0 0 3px var(--primary-glow)}
-.dc-field textarea{min-height:80px;resize:vertical;line-height:1.7}
+.dc-field textarea{min-height:85px;resize:vertical;line-height:1.7}
 .dc-field input[dir="ltr"]{font-family:monospace}
+.dc-field .date-input-wrap{position:relative;display:flex;align-items:center}
+.dc-field .date-input-wrap input{padding-left:38px}
+.dc-field .date-input-wrap .cal-open{position:absolute;left:4px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .2s}
+.dc-field .date-input-wrap .cal-open:hover{background:var(--primary-glow);color:var(--primary)}
+.dc-field .date-input-wrap .cal-open .ic{width:13px;height:13px}
+
 .dc-form .form-actions{margin-top:20px}
-.dc-help{background:rgba(201,138,62,.08);border:1px solid rgba(201,138,62,.25);border-radius:8px;padding:10px 14px;font-size:.78rem;color:var(--text-2);margin-bottom:14px;line-height:1.7}
-.dc-help strong{color:var(--warning)}
+
+/* DC Dashboard */
+.dc-dash{display:grid;gap:20px}
+.dc-dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.dc-dash-stat{position:relative;padding:22px 24px;border-radius:var(--radius-lg);background:var(--bg-elev);border:1px solid var(--border);overflow:hidden;transition:all .3s}
+.dc-dash-stat:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--primary)}
+.dc-dash-stat::before{content:'';position:absolute;top:0;right:0;width:60px;height:60px;background:var(--primary-glow);border-radius:50%;transform:translate(30%,-30%)}
+.dc-dash-stat .label{font-size:.78rem;color:var(--muted);font-weight:600;margin-bottom:6px}
+.dc-dash-stat .value{font-size:2.4rem;font-weight:900;line-height:1;color:var(--primary);letter-spacing:-1.5px;font-variant-numeric:tabular-nums}
+[data-theme="dark"] .dc-dash-stat .value{color:var(--primary-2)}
+.dc-dash-stat.has .value{color:var(--success)}
+.dc-dash-stat.pending .value{color:var(--warning)}
+.dc-dash-stat.no .value{color:var(--danger)}
+.dc-dash-stat .sub{font-size:.72rem;color:var(--muted);margin-top:4px}
+
+.dc-dash-progress{padding:24px 28px;border-radius:var(--radius-lg);background:var(--bg-elev);border:1px solid var(--border)}
+.dc-dash-progress .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.dc-dash-progress .top h3{font-size:1rem;font-weight:800;color:var(--text)}
+.dc-dash-progress .top .pct{font-size:1.6rem;font-weight:900;color:var(--primary);font-variant-numeric:tabular-nums}
+.dc-dash-progress .track{height:12px;background:var(--bg-tint);border-radius:8px;overflow:hidden}
+.dc-dash-progress .fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-2));border-radius:8px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+
+.dc-dash-sections{display:grid;gap:12px}
+.dc-dash-sec{padding:18px 22px;border-radius:var(--radius);background:var(--bg-elev);border:1px solid var(--border);transition:all .25s}
+.dc-dash-sec:hover{border-color:var(--primary);box-shadow:var(--shadow-sm)}
+.dc-dash-sec .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:12px}
+.dc-dash-sec .head .title{display:flex;align-items:center;gap:10px;font-size:.9rem;font-weight:700;color:var(--text);min-width:0}
+.dc-dash-sec .head .title .num{width:28px;height:28px;border-radius:7px;background:var(--primary-glow);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-family:monospace;font-weight:800;flex-shrink:0}
+.dc-dash-sec .head .stats{font-size:.78rem;color:var(--muted);font-family:monospace;font-weight:700;white-space:nowrap}
+.dc-dash-sec .bar{height:7px;background:var(--bg-tint);border-radius:4px;overflow:hidden}
+.dc-dash-sec .bar .fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-2));transition:width .5s}
+.dc-dash-sec .forms-chips{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
+.dc-dash-sec .form-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;font-size:.72rem;font-weight:600;background:var(--bg-soft);color:var(--text-2);border:1px solid var(--border);cursor:pointer;transition:all .2s}
+.dc-dash-sec .form-chip:hover{background:var(--primary-glow);border-color:var(--primary);color:var(--primary)}
+.dc-dash-sec .form-chip.has{background:var(--success-bg);border-color:var(--success);color:var(--success)}
+.dc-dash-sec .form-chip .num{font-family:monospace;font-weight:800;font-size:.68rem;padding:0 5px;border-radius:4px;background:rgba(0,0,0,0.06)}
+.dc-dash-sec .form-chip.has .num{background:rgba(61,122,95,0.2)}
+
 @media (max-width:1024px){
   .dc-layout{grid-template-columns:1fr}
   .dc-sidebar{position:static;max-height:none;order:2}
   .dc-main{order:1}
   .dc-header{flex-direction:column;align-items:stretch}
+  .dc-fields-grid{grid-template-columns:1fr}
+  .dc-dash-stats{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:520px){
   .dc-record{flex-direction:column;align-items:stretch}
   .dc-record-actions{justify-content:flex-end}
+  .dc-dash-stats{grid-template-columns:1fr}
 }
 
 /* ============================== MODALS / TOAST ============================== */
@@ -651,7 +692,6 @@ img{max-width:100%;display:block}
 .btn-lg.primary:hover{background:var(--primary-2)}
 .btn-lg.ghost{background:var(--bg-soft);color:var(--text-2);border:1px solid var(--border)}
 .form-err{color:var(--danger);font-size:.78rem;min-height:16px;margin-top:4px}
-
 .file-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:16px;max-height:300px;overflow-y:auto;}
 .file-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--bg-soft);border:1px solid var(--border);border-radius:8px;font-size:.85rem;}
 .file-item a{color:var(--primary);text-decoration:none;display:flex;align-items:center;gap:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -661,7 +701,6 @@ img{max-width:100%;display:block}
 .upload-area{border:2px dashed var(--border-2);border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;}
 .upload-area:hover{border-color:var(--primary);background:var(--primary-glow);}
 .upload-area p{font-size:.85rem;color:var(--muted);margin-bottom:10px;}
-
 .toast-wrap{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:500;display:flex;flex-direction:column;gap:8px;pointer-events:none;align-items:center}
 .toast{padding:12px 20px;border-radius:10px;font-size:.85rem;font-weight:600;background:var(--text);color:var(--bg);box-shadow:var(--shadow-lg);pointer-events:auto;display:flex;align-items:center;gap:8px}
 .toast.success{background:var(--success);color:#fff}
@@ -700,11 +739,11 @@ img{max-width:100%;display:block}
   :root{--header-h:62px}
   .app-header{padding:0 12px;gap:8px}
   .app-brand-text{display:none}
-  .mobile-menu-btn { display: flex; }
-  .app-tabs { position: absolute; top: var(--header-h); left: 0; right: 0; background: var(--bg-elev); flex-direction: column; padding: 12px; border-bottom: 1px solid var(--border); box-shadow: var(--shadow-md); display: none; z-index: 100; }
-  .app-tabs.active { display: flex; }
-  .app-tab { justify-content: flex-start; padding: 12px 16px; }
-  .app-tab span { display: inline; }
+  .mobile-menu-btn{display:flex;}
+  .app-tabs{position:absolute;top:var(--header-h);left:0;right:0;background:var(--bg-elev);flex-direction:column;padding:12px;border-bottom:1px solid var(--border);box-shadow:var(--shadow-md);display:none;z-index:100;}
+  .app-tabs.active{display:flex;}
+  .app-tab{justify-content:flex-start;padding:12px 16px;}
+  .app-tab span{display:inline;}
   .app-main{padding:0 12px 24px}
   .prop-hero{padding:36px 22px}
   .sec-head{gap:14px;margin-bottom:22px}
@@ -725,18 +764,21 @@ img{max-width:100%;display:block}
   .tl-bar{height:36px;font-size:.62rem}
   .tl-week{min-width:32px}
   .form-row.two-col{grid-template-columns:1fr}
-  .form-actions { flex-direction: column; }
-  .form-actions button { width: 100%; }
-  .min-actions { flex-direction: column; }
-  .min-actions .search-wrap { width: 100%; }
+  .form-actions{flex-direction:column;}
+  .form-actions button{width:100%;}
+  .min-actions{flex-direction:column;}
+  .min-actions .search-wrap{width:100%;}
 }
 
 /* ============================== PRINT ============================== */
-#printableMinute { display: none; }
-.print-header { display: none; }
+#printableMinute{display:none;}
+#printableDC{display:none;}
+.print-header{display:none;}
 
 @media print {
   @page { margin: 1cm; size: A4 portrait; }
+
+  /* ============ MINUTES ============ */
   body.printing-minute * { visibility: hidden; }
   body.printing-minute #printableMinute, body.printing-minute #printableMinute * { visibility: visible; }
   body.printing-minute #printableMinute {
@@ -754,14 +796,87 @@ img{max-width:100%;display:block}
   body.printing-minute .print-section p { font-size: 11pt; white-space: pre-wrap; margin: 0; color: #222; }
   body.printing-minute .print-meta { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 11pt; font-weight: bold; }
 
-  body:not(.printing-minute) { background: #fff !important; color: #000 !important; font-size: 9.5pt !important; }
-  body:not(.printing-minute)::before { display: none !important; }
+  /* ============ DATA COLLECTION ============ */
+  body.printing-dc * { visibility: hidden; }
+  body.printing-dc #printableDC, body.printing-dc #printableDC * { visibility: visible; }
+  body.printing-dc #printableDC {
+    display: block !important;
+    position: absolute; left: 0; top: 0; width: 100%;
+    padding: 1.2cm; background: #fff; color: #000;
+    font-size: 9.5pt; line-height: 1.7;
+  }
+  body.printing-dc .dc-print-header {
+    text-align: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+  }
+  body.printing-dc .dc-print-header h1 { font-size: 14pt; margin-bottom: 4px; color: #000; }
+  body.printing-dc .dc-print-header p { font-size: 9pt; color: #333; }
+  body.printing-dc .dc-print-meta {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 7px 12px;
+    background: #f4f4f4;
+    border: 1px solid #999;
+    border-radius: 4px;
+    font-size: 8.5pt;
+  }
+  body.printing-dc .dc-print-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+  }
+  body.printing-dc .dc-print-table th,
+  body.printing-dc .dc-print-table td {
+    border: 1px solid #999;
+    padding: 5px 8px;
+    font-size: 8.5pt;
+    text-align: right;
+    vertical-align: top;
+    word-break: break-word;
+  }
+  body.printing-dc .dc-print-table th {
+    background: #eaeaea;
+    font-weight: bold;
+    color: #000;
+  }
+  body.printing-dc .dc-print-table .label-col {
+    width: 32%;
+    font-weight: bold;
+    background: #f5f5f5;
+  }
+  body.printing-dc .dc-print-table .row-num {
+    width: 32px;
+    text-align: center;
+    font-family: monospace;
+    font-weight: bold;
+  }
+  body.printing-dc .dc-print-footer {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 8pt;
+    color: #666;
+    border-top: 1px solid #999;
+    padding-top: 6px;
+  }
+  body.printing-dc .dc-print-empty {
+    color: #999;
+    font-style: italic;
+  }
+
+  /* ============ CHECKLIST ============ */
+  body:not(.printing-minute):not(.printing-dc) { background: #fff !important; color: #000 !important; font-size: 9.5pt !important; }
+  body:not(.printing-minute):not(.printing-dc)::before { display: none !important; }
   .app-header, .app-tabs, .app-actions, .chk-toolbar, .chk-toolbar-right, .radios, .cal-open, 
   .save-btn, .toast-wrap, .modal-bg, .chk-chevron, .chk-head-meta, .dash-row,
   #dashboardContainer { display: none !important; }
-  body:not(.printing-minute) * { visibility: hidden; }
-  body:not(.printing-minute) #view-checklist, body:not(.printing-minute) #view-checklist * { visibility: visible; }
-  body:not(.printing-minute) #view-checklist { position: absolute; left: 0; top: 0; width: 100%; padding: 0; margin: 0; }
+  body:not(.printing-minute):not(.printing-dc) * { visibility: hidden; }
+  body:not(.printing-minute):not(.printing-dc) #view-checklist, body:not(.printing-minute):not(.printing-dc) #view-checklist * { visibility: visible; }
+  body:not(.printing-minute):not(.printing-dc) #view-checklist { position: absolute; left: 0; top: 0; width: 100%; padding: 0; margin: 0; }
   .print-header { display: block !important; text-align: center; margin-bottom: 15px; border-bottom: 2px solid #000; padding-bottom: 10px; visibility: visible !important; }
   .print-header h1 { font-size: 15pt !important; margin-bottom: 5px; color: #000 !important; }
   .print-header p { font-size: 9pt !important; color: #555 !important; }
@@ -884,7 +999,7 @@ img{max-width:100%;display:block}
   <main class="app-main">
     <div class="container">
       
-      <!-- ============== HOME - MOTION PROPOSAL ============== -->
+      <!-- ============== HOME ============== -->
       <section class="view active" id="view-home">
         <div class="prop-wrap">
           <header class="prop-hero">
@@ -1191,13 +1306,7 @@ img{max-width:100%;display:block}
         </div>
         <div class="dc-layout">
           <aside class="dc-sidebar" id="dcSidebar"></aside>
-          <main class="dc-main" id="dcMain">
-            <div class="dc-empty">
-              <svg class="ic" viewBox="0 0 24 24" style="width:56px;height:56px;margin:0 auto 16px;color:var(--border-2)"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
-              <h3>یک فرم را از فهرست انتخاب کنید</h3>
-              <p>۱۲ حوزه اطلاعاتی، ۳۴ فرم تخصصی</p>
-            </div>
-          </main>
+          <main class="dc-main" id="dcMain"></main>
         </div>
       </section>
 
@@ -1429,6 +1538,7 @@ img{max-width:100%;display:block}
 </div>
 
 <div id="printableMinute"></div>
+<div id="printableDC"></div>
 
 <div class="toast-wrap" id="toastWrap"></div>
 
@@ -1895,7 +2005,6 @@ async function renderChecklist(){
       if(e?.status==='has')has++;
       else if(e?.status==='no')no++;
     });
-    const done=has+no;
     html+=`<div class="chk-group collapsed" data-g="${gi}">
       <div class="chk-head" data-toggle="${gi}">
         <div class="chk-head-left">
@@ -2070,7 +2179,7 @@ function attachChecklistListeners(){
 async function updateGroupCounts(){
   const state = await getCheck();
   CHECKLIST.forEach((group,gi)=>{
-    let has=0,no=0,total=group.items.length;
+    let has=0,no=0;
     group.items.forEach((_,ii)=>{
       const e=state[gi+'_'+ii];
       if(e?.status==='has')has++;
@@ -2118,21 +2227,17 @@ async function refreshFileList() {
       btn.addEventListener('click', async (e) => {
         e.preventDefault();
         if(!confirm('آیا از حذف این فایل اطمینان دارید؟')) return;
-        
         const idx = parseInt(btn.dataset.delFile);
         const fileToDelete = files[idx];
-        
         try {
           await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${fileToDelete.path}`, {
             method: 'DELETE',
             headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
           });
-        } catch (err) { console.error('Delete failed:', err); }
-          
+        } catch (err) {}
         const state = await getCheck();
         state[CURRENT_FILE_KEY].files.splice(idx, 1);
         await saveCheck(state);
-        
         await refreshFileList();
         await renderChecklist();
         toast('فایل حذف شد', 'success');
@@ -2237,14 +2342,12 @@ function renderMinuteFiles() {
         if(!confirm('آیا از حذف این فایل اطمینان دارید؟')) return;
         const idx = parseInt(btn.dataset.delMinFile);
         const fileToDelete = MINUTE_FILES[idx];
-        
         try {
           await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${fileToDelete.path}`, {
             method: 'DELETE',
             headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
           });
         } catch (err) {}
-        
         MINUTE_FILES.splice(idx, 1);
         renderMinuteFiles();
         toast('فایل حذف شد', 'success');
@@ -2272,19 +2375,15 @@ async function handleMinuteFileUpload(fileList) {
   for (let i = 0; i < fileList.length; i++) {
     const file = fileList[i];
     if(file.size > 50 * 1024 * 1024) { lastError = `فایل «${file.name}» بزرگتر از ۵۰ مگابایت است.`; continue; }
-    
     const cleanName = file.name.replace(/[^\w.\-]/g, '_');
     const filePath = `minutes/${Date.now()}_${cleanName}`;
-    
     try {
       const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${filePath}`, {
         method: 'POST',
         headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': file.type || 'application/octet-stream', 'x-upsert': 'true' },
         body: file
       });
-      
       if(!res.ok) { lastError = `خطا ${res.status} در آپلود ${file.name}`; continue; }
-      
       const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${filePath}`;
       MINUTE_FILES.push({ name: file.name, url: publicUrl, path: filePath });
       successCount++;
@@ -2314,6 +2413,12 @@ async function openCalendar(key){
     else { const p=pDate(new Date()); calYear=p.jy; calMonth=p.jm; calSelected=null; }
   } else if(key === 'note') {
     const cur = $('noteDate').value;
+    const en = pToEn(cur);
+    if(en){ const [y,m,d]=en.split('/').map(Number); calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d}; }
+    else { const p=pDate(new Date()); calYear=p.jy; calMonth=p.jm; calSelected=null; }
+  } else if(key.startsWith('dc:')) {
+    const fk = key.slice(3);
+    const cur = document.querySelector(`[data-k="${fk}"]`)?.value || '';
     const en = pToEn(cur);
     if(en){ const [y,m,d]=en.split('/').map(Number); calYear=y; calMonth=m; calSelected={jy:y,jm:m,jd:d}; }
     else { const p=pDate(new Date()); calYear=p.jy; calMonth=p.jm; calSelected=null; }
@@ -2364,6 +2469,13 @@ async function pickDate(jy,jm,jd){
   }
   if(CAL_TARGET_KEY === 'note') {
     $('noteDate').value = s;
+    $('calModal').classList.remove('open');
+    return;
+  }
+  if(CAL_TARGET_KEY.startsWith('dc:')) {
+    const fk = CAL_TARGET_KEY.slice(3);
+    const inp = document.querySelector(`[data-k="${fk}"]`);
+    if(inp) inp.value = s;
     $('calModal').classList.remove('open');
     return;
   }
@@ -2428,16 +2540,13 @@ function setMinuteMode(mode, data = null) {
   $('minuteMode').value = mode;
   const isView = mode === 'view';
   const inputs = ['minuteDate', 'minuteAttendees', 'minuteDesc', 'minuteResolutions', 'minuteNotebook'];
-  
   inputs.forEach(id => {
     $(id).readOnly = isView;
     $(id).style.backgroundColor = isView ? 'var(--bg-tint)' : 'var(--bg-soft)';
   });
-  
   $('saveMinuteBtn').style.display = isView ? 'none' : 'flex';
   $('minUploadArea').style.display = isView ? 'none' : 'block';
   $('minuteCalBtn').style.display = isView ? 'none' : 'flex';
-  
   $('cancelMinuteBtn').textContent = isView ? 'بستن' : 'انصراف';
   $('minuteFormTitle').textContent = isView ? 'مشاهده صورت‌جلسه' : (mode === 'edit' ? 'ویرایش صورت‌جلسه' : 'ثبت صورت‌جلسه جدید');
   
@@ -2783,9 +2892,8 @@ $('saveStkBtn').addEventListener('click',async ()=>{
   toast('ذخیره شد','success');
 });
 
-/* ============================== DATA COLLECTION ============================== */
-/* Field format: [key, label, type, example, required?]
-   type: 't'=text, 'a'=textarea, 'n'=number (as text) */
+/* ============================== DATA COLLECTION — FORM DEFINITIONS ============================== */
+/* Field format: [key, label, type, example, required?]  type: 't'=text, 'a'=textarea, 'n'=number */
 const DC_FORMS = {
   'ORG-01':{t:'مشخصات کلان سازمان',m:0,r:'یک‌بار برای کل سازمان',f:[
     ['orgTitle','عنوان رسمی سازمان','t','کمیته امداد امام خمینی (ره)',1],
@@ -3365,7 +3473,7 @@ const DC_FORMS = {
 };
 
 const DC_SECTIONS = [
-  {id:1, t:'اطلاعات پایه و شناخت سازمان', p:'شناسایی مأموریت، ساختار، گستره فعالیت، ظرفیت عملیاتی و محدوده مسئولیت واحدها.', forms:['ORG-01','ORG-02','ORG-03']},
+  {id:1, t:'اطلاعات پایه و شناخت سازمان', p:'شناسایی مأموریت، ساختار، گستره فعالیت، ظرفیت عملیاتی و محدوده مسئولیت واحدهای سازمان.', forms:['ORG-01','ORG-02','ORG-03']},
   {id:2, t:'شناسایی خدمات و فعالیت‌ها', p:'شناسایی خدماتی که سازمان ارائه می‌کند و فعالیت‌هایی که برای استمرار ارائه آن‌ها باید حفظ شوند.', forms:['SVC-01','SVC-02','SVC-03','SVC-04','SVC-05']},
   {id:3, t:'تحلیل اثرات توقف (BIA)', p:'تعیین میزان اثر توقف خدمات، فرآیندها و سامانه‌ها بر مأموریت سازمان و مشخص‌کردن اولویت بازیابی.', forms:['BIA-01','BIA-02','BIA-03']},
   {id:4, t:'تهدیدات، ریسک‌ها و سناریوها', p:'شناسایی شرایطی که ممکن است استمرار فعالیت سازمان را مختل کنند و تعیین پیامدها و راهکارهای مقابله.', forms:['RSK-01','RSK-02','RSK-03','RSK-04']},
@@ -3379,37 +3487,58 @@ const DC_SECTIONS = [
   {id:12, t:'آزمون، مانور و ارزیابی', p:'ارزیابی عملی قابلیت اجرای برنامه‌های تداوم کسب‌وکار و شناسایی نقاط ضعف پیش از وقوع بحران.', forms:['TST-01','TST-02']}
 ];
 
-let DC_CURRENT = null;
-let DC_OPEN_SECTION = 1;
+const DATE_KEYS = new Set(['date', 'installDate', 'lastRestoreTest', 'lastDRTest', 'lastIntegrityTest', 'lastVerified']);
 
-async function dcInit(){
+let DC_CURRENT = null;
+let DC_OPEN_SECTION = null;
+let DC_COUNTS_CACHE = {};
+
+function dcIsDateField(key){ return DATE_KEYS.has(key); }
+
+function dcInit(){
   renderDCSidebar();
-  if(DC_CURRENT) await dcRenderMain();
+  dcRenderMain();
   updateDCBadges();
 }
 
 function renderDCSidebar(){
-  let h='';
+  let h = `<div class="dc-dash-btn ${DC_CURRENT===null?'active':''}" data-dash="1">
+    <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+    <span>داشبورد</span>
+  </div>
+  <div class="dc-dash-divider"></div>`;
+
   DC_SECTIONS.forEach(sec=>{
     const open = sec.id === DC_OPEN_SECTION;
+    const secCount = sec.forms.reduce((sum, code)=> sum + (DC_COUNTS_CACHE[code]||0), 0);
     h += `<div class="dc-sec ${open?'open':''}" data-sec="${sec.id}">
       <div class="dc-sec-head">
         <div class="dc-sec-num">${faDigits(sec.id)}</div>
-        <span>${escapeHtml(sec.t)}</span>
+        <span class="dc-sec-title">${escapeHtml(sec.t)}</span>
+        <span class="dc-sec-count" data-sec-badge="${sec.id}">${faDigits(secCount)}</span>
       </div>
       <div class="dc-sec-body">`;
     sec.forms.forEach(code=>{
       const f = DC_FORMS[code];
       const active = code === DC_CURRENT ? 'active' : '';
-      h += `<div class="dc-form-link ${active}" data-form="${code}">
+      const hasData = (DC_COUNTS_CACHE[code]||0) > 0 ? 'has-data' : '';
+      h += `<div class="dc-form-link ${active} ${hasData}" data-form="${code}">
         <svg class="ic" viewBox="0 0 24 24" style="width:11px;height:11px;opacity:.6"><circle cx="12" cy="12" r="9"/></svg>
         <span>${escapeHtml(f.t)}</span>
-        <span class="badge-count" data-badge="${code}">۰</span>
+        <span class="badge-count" data-badge="${code}">${faDigits(DC_COUNTS_CACHE[code]||0)}</span>
       </div>`;
     });
     h += `</div></div>`;
   });
   $('dcSidebar').innerHTML = h;
+
+  const dashBtn = $('dcSidebar').querySelector('[data-dash]');
+  if(dashBtn) dashBtn.addEventListener('click', ()=>{
+    DC_CURRENT = null;
+    renderDCSidebar();
+    dcRenderMain();
+  });
+
   $('dcSidebar').querySelectorAll('.dc-sec-head').forEach(el=>{
     el.addEventListener('click', ()=>{
       const sec = +el.closest('.dc-sec').dataset.sec;
@@ -3426,29 +3555,45 @@ function renderDCSidebar(){
   });
 }
 
-async function updateDCBadges(){
+async function dcFetchCounts(){
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_forms?select=category`, {
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
     });
-    if(!res.ok) return;
+    if(!res.ok) return {};
     const data = await res.json();
     const counts = {};
     if(Array.isArray(data)) data.forEach(r=>{ counts[r.category] = (counts[r.category]||0)+1; });
-    let total=0, filled=0;
-    DC_SECTIONS.forEach(sec=>sec.forms.forEach(code=>{
+    return counts;
+  } catch(e) { return {}; }
+}
+
+async function updateDCBadges(){
+  DC_COUNTS_CACHE = await dcFetchCounts();
+  let total = 0, filled = 0;
+  DC_SECTIONS.forEach(sec=>{
+    let secCount = 0;
+    sec.forms.forEach(code=>{
+      const c = DC_COUNTS_CACHE[code]||0;
+      secCount += c;
       const badge = document.querySelector(`[data-badge="${code}"]`);
-      const c = counts[code]||0;
       if(badge) badge.textContent = faDigits(c);
       total++;
-      if(c>0) filled++;
-    }));
-    const pct = total ? Math.round((filled/total)*100) : 0;
-    const pf = $('dcProgressFill');
-    const pt = $('dcProgressText');
-    if(pf) pf.style.width = pct+'%';
-    if(pt) pt.textContent = faDigits(pct)+'٪';
-  } catch(e) {}
+      if(c > 0) filled++;
+    });
+    const secBadge = document.querySelector(`[data-sec-badge="${sec.id}"]`);
+    if(secBadge) secBadge.textContent = faDigits(secCount);
+    // Update has-data class on form links
+    sec.forms.forEach(code=>{
+      const link = document.querySelector(`[data-form="${code}"]`);
+      if(link) link.classList.toggle('has-data', (DC_COUNTS_CACHE[code]||0) > 0);
+    });
+  });
+  const pct = total ? Math.round((filled/total)*100) : 0;
+  const pf = $('dcProgressFill');
+  const pt = $('dcProgressText');
+  if(pf) pf.style.width = pct+'%';
+  if(pt) pt.textContent = faDigits(pct)+'٪';
 }
 
 async function dcFetchRecords(category){
@@ -3462,59 +3607,90 @@ async function dcFetchRecords(category){
   } catch(e) { return []; }
 }
 
+async function dcFetchAllRecords(){
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_forms?select=*&order=created_at.desc`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+    });
+    if(!res.ok) return [];
+    const d = await res.json();
+    return Array.isArray(d) ? d : [];
+  } catch(e) { return []; }
+}
+
 async function dcInsertRecord(category, data){
-  return await fetch(`${SUPABASE_URL}/rest/v1/bcp_forms`, {
-    method: 'POST',
-    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-    body: JSON.stringify({ category, data })
-  });
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_forms`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ category, data })
+    });
+    return res.ok;
+  } catch(e) { return false; }
 }
 
 async function dcUpdateRecord(id, data){
-  return await fetch(`${SUPABASE_URL}/rest/v1/bcp_forms?id=eq.${id}`, {
-    method: 'PATCH',
-    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-    body: JSON.stringify({ data, updated_at: new Date().toISOString() })
-  });
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_forms?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ data, updated_at: new Date().toISOString() })
+    });
+    return res.ok;
+  } catch(e) { return false; }
 }
 
 async function dcDeleteRecord(id){
-  return await fetch(`${SUPABASE_URL}/rest/v1/bcp_forms?id=eq.${id}`, {
-    method: 'DELETE',
-    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
-  });
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_forms?id=eq.${id}`, {
+      method: 'DELETE',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+    });
+    return res.ok;
+  } catch(e) { return false; }
 }
 
 async function dcRenderMain(){
   if(!DC_CURRENT){
-    $('dcMain').innerHTML = `<div class="dc-empty">
-      <svg class="ic" viewBox="0 0 24 24" style="width:56px;height:56px;margin:0 auto 16px;color:var(--border-2)"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
-      <h3>یک فرم را از فهرست انتخاب کنید</h3>
-      <p>۱۲ حوزه اطلاعاتی، ۳۴ فرم تخصصی</p>
-    </div>`;
+    await dcRenderDashboard();
     return;
   }
   const f = DC_FORMS[DC_CURRENT];
   const sec = DC_SECTIONS.find(s=>s.forms.includes(DC_CURRENT));
   const list = await dcFetchRecords(DC_CURRENT);
-  const showAddBtn = !f.m || list.length === 0;
 
   let h = `<div class="dc-form-header">
-    <h3>${escapeHtml(f.t)} <span style="font-family:monospace;font-size:.78rem;color:var(--muted);font-weight:500">(${DC_CURRENT})</span></h3>
-    <div class="rep">${escapeHtml(f.r)}</div>`;
-  if(sec?.p) h += `<div class="purpose">${escapeHtml(sec.p)}</div>`;
-  h += `</div>`;
+    <h3>${escapeHtml(f.t)} <span class="code">(${DC_CURRENT})</span></h3>
+    <div class="rep">${escapeHtml(f.r)}</div>
+  </div>`;
+
+  if(sec?.p){
+    h += `<div class="dc-glass-card">
+      <p>${escapeHtml(sec.p)}</p>
+    </div>`;
+  }
 
   h += `<div class="dc-toolbar">
-    <div class="dc-toolbar-info">تعداد ثبت‌شده: <strong>${faDigits(list.length)}</strong> مورد ${f.m?'':'(فقط یک مورد)'}</div>
-    ${(!f.m && list.length > 0) ? '<span style="font-size:.78rem;color:var(--muted)">این فرم تک‌موردی است. برای ویرایش روی «ویرایش» بزنید.</span>' : '<button class="btn-primary" id="dcAddBtn"><svg class="ic ic-sm" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> ثبت مورد جدید</button>'}
+    <div class="dc-toolbar-left">
+      <button class="btn-ghost" id="dcPrintBlankBtn">
+        <svg class="ic ic-sm" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        پرینت فرم خالی
+      </button>
+      ${list.length > 0 ? `<button class="btn-ghost" id="dcPrintAllBtn">
+        <svg class="ic ic-sm" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        پرینت همه (${faDigits(list.length)})
+      </button>` : ''}
+    </div>
+    <div class="dc-toolbar-right">
+      ${(!f.m && list.length > 0) ? '' : '<button class="btn-primary" id="dcAddBtn"><svg class="ic ic-sm" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> ثبت مورد جدید</button>'}
+    </div>
   </div>`;
 
   if(list.length === 0){
-    h += `<div class="dc-empty" style="padding:60px 20px">
+    h += `<div class="dc-empty">
       <svg class="ic" viewBox="0 0 24 24" style="width:48px;height:48px;margin:0 auto 14px;color:var(--border-2)"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
       <h3>هنوز داده‌ای ثبت نشده</h3>
-      <p>برای شروع، روی «ثبت مورد جدید» کلیک کنید</p>
+      <p>برای شروع روی «ثبت مورد جدید» کلیک کنید</p>
     </div>`;
   } else {
     h += `<div class="dc-list">`;
@@ -3528,6 +3704,10 @@ async function dcRenderMain(){
           <div class="dc-record-preview">${escapeHtml(String(preview).slice(0,180))}</div>
         </div>
         <div class="dc-record-actions">
+          <button class="btn-ghost print-btn" data-dc-print="${rec.id}">
+            <svg class="ic ic-sm" viewBox="0 0 24 24" style="width:12px;height:12px"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            پرینت
+          </button>
           <button class="btn-ghost" data-dc-edit="${rec.id}">ویرایش</button>
           <button class="btn-ghost" data-dc-del="${rec.id}" style="color:var(--danger);border-color:var(--danger)">حذف</button>
         </div>
@@ -3539,43 +3719,161 @@ async function dcRenderMain(){
 
   const addBtn = $('dcAddBtn');
   if(addBtn) addBtn.addEventListener('click', ()=>dcShowForm());
+  const printBlankBtn = $('dcPrintBlankBtn');
+  if(printBlankBtn) printBlankBtn.addEventListener('click', ()=>dcPrintBlank(DC_CURRENT));
+  const printAllBtn = $('dcPrintAllBtn');
+  if(printAllBtn) printAllBtn.addEventListener('click', ()=>dcPrintAll(list, DC_CURRENT));
+
   $('dcMain').querySelectorAll('[data-dc-edit]').forEach(b=>b.addEventListener('click', ()=>{
     const r = list.find(x=>String(x.id) === b.dataset.dcEdit);
     if(r) dcShowForm(r);
   }));
+  $('dcMain').querySelectorAll('[data-dc-print]').forEach(b=>b.addEventListener('click', ()=>{
+    const r = list.find(x=>String(x.id) === b.dataset.dcPrint);
+    if(r) dcPrintSingle(r, DC_CURRENT);
+  }));
   $('dcMain').querySelectorAll('[data-dc-del]').forEach(b=>b.addEventListener('click', async ()=>{
     if(!confirm('حذف این مورد؟')) return;
-    await dcDeleteRecord(b.dataset.dcDel);
-    await dcRenderMain();
-    updateDCBadges();
-    toast('حذف شد','success');
+    const ok = await dcDeleteRecord(b.dataset.dcDel);
+    if(ok){
+      await dcRenderMain();
+      updateDCBadges();
+      toast('حذف شد','success');
+    } else {
+      toast('خطا در حذف','danger');
+    }
   }));
+}
+
+async function dcRenderDashboard(){
+  DC_COUNTS_CACHE = await dcFetchCounts();
+  const totalForms = Object.keys(DC_FORMS).length;
+  let filled = 0;
+  let totalRecords = 0;
+  DC_SECTIONS.forEach(sec=>{
+    sec.forms.forEach(code=>{
+      const c = DC_COUNTS_CACHE[code]||0;
+      totalRecords += c;
+      if(c > 0) filled++;
+    });
+  });
+  const empty = totalForms - filled;
+  const pct = totalForms ? Math.round((filled/totalForms)*100) : 0;
+
+  let h = `<div class="dc-dash">
+    <div class="dc-dash-stats">
+      <div class="dc-dash-stat">
+        <div class="label">کل فرم‌ها</div>
+        <div class="value">${faDigits(totalForms)}</div>
+        <div class="sub">در ۱۲ حوزه</div>
+      </div>
+      <div class="dc-dash-stat has">
+        <div class="label">تکمیل‌شده</div>
+        <div class="value">${faDigits(filled)}</div>
+        <div class="sub">فرم دارای داده</div>
+      </div>
+      <div class="dc-dash-stat no">
+        <div class="label">خالی</div>
+        <div class="value">${faDigits(empty)}</div>
+        <div class="sub">فرم بدون داده</div>
+      </div>
+      <div class="dc-dash-stat pending">
+        <div class="label">کل رکوردها</div>
+        <div class="value">${faDigits(totalRecords)}</div>
+        <div class="sub">در همه فرم‌ها</div>
+      </div>
+    </div>
+
+    <div class="dc-dash-progress">
+      <div class="top">
+        <h3>پیشرفت کلی تکمیل</h3>
+        <div class="pct">${faDigits(pct)}٪</div>
+      </div>
+      <div class="track"><div class="fill" style="width:${pct}%"></div></div>
+    </div>
+
+    <div class="dc-dash-sections">`;
+
+  DC_SECTIONS.forEach(sec=>{
+    let secFilled = 0, secRecords = 0;
+    sec.forms.forEach(code=>{
+      const c = DC_COUNTS_CACHE[code]||0;
+      secRecords += c;
+      if(c > 0) secFilled++;
+    });
+    const secPct = sec.forms.length ? Math.round((secFilled/sec.forms.length)*100) : 0;
+    h += `<div class="dc-dash-sec">
+      <div class="head">
+        <div class="title">
+          <div class="num">${faDigits(sec.id)}</div>
+          <span>${escapeHtml(sec.t)}</span>
+        </div>
+        <div class="stats">${faDigits(secFilled)}/${faDigits(sec.forms.length)} · ${faDigits(secRecords)} رکورد</div>
+      </div>
+      <div class="bar"><div class="fill" style="width:${secPct}%"></div></div>
+      <div class="forms-chips">`;
+    sec.forms.forEach(code=>{
+      const f = DC_FORMS[code];
+      const c = DC_COUNTS_CACHE[code]||0;
+      h += `<div class="form-chip ${c>0?'has':''}" data-chip="${code}">
+        <span>${escapeHtml(f.t)}</span>
+        <span class="num">${faDigits(c)}</span>
+      </div>`;
+    });
+    h += `</div></div>`;
+  });
+  h += `</div></div>`;
+
+  $('dcMain').innerHTML = h;
+
+  $('dcMain').querySelectorAll('[data-chip]').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      DC_CURRENT = chip.dataset.chip;
+      renderDCSidebar();
+      dcRenderMain();
+    });
+  });
 }
 
 function dcShowForm(rec = null){
   const f = DC_FORMS[DC_CURRENT];
   const sec = DC_SECTIONS.find(s=>s.forms.includes(DC_CURRENT));
+
   let h = `<div class="dc-form-header">
     <h3>${rec?'ویرایش':'ثبت'} ${escapeHtml(f.t)}</h3>
     <div class="rep">${escapeHtml(f.r)}</div>
-  </div>
-  <div class="dc-form">
-    <div class="dc-help">
-      <strong>راهنما:</strong> فیلدهای ستاره‌دار (<span style="color:var(--danger)">*</span>) الزامی هستند. مقادیر داخل پرانتز به‌عنوان «مثال» نمایش داده شده‌اند و می‌توانید با کلیک روی هر کادر، مقدار واقعی سازمان خود را وارد کنید.
+  </div>`;
+
+  if(sec?.p){
+    h += `<div class="dc-glass-card">
+      <p>${escapeHtml(sec.p)}</p>
     </div>`;
+  }
+
+  h += `<div class="dc-form"><div class="dc-fields-grid">`;
 
   f.f.forEach(([key, label, type, example, required])=>{
     const val = rec?.data?.[key] || '';
-    h += `<div class="dc-field">
-      <label>${escapeHtml(label)} ${required?'<span class="req">*</span>':''}</label>
-      ${example?`<span class="ex-hint">مثال: ${escapeHtml(example)}</span>`:''}`;
+    const isFull = type === 'a';
+    const isDate = dcIsDateField(key);
+    h += `<div class="dc-field${isFull?' full':''}">
+      <label>${escapeHtml(label)} ${required?'<span class="req">*</span>':''}</label>`;
     if(type === 'a'){
       h += `<textarea data-k="${key}" placeholder="${escapeHtml(example||'')}">${escapeHtml(val)}</textarea>`;
+    } else if(isDate){
+      h += `<div class="date-input-wrap">
+        <input type="text" data-k="${key}" value="${escapeHtml(String(val))}" placeholder="${escapeHtml(example||'')}" dir="ltr">
+        <button class="cal-open" data-dc-cal="${key}" title="تقویم">
+          <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </button>
+      </div>`;
     } else {
       h += `<input type="text" data-k="${key}" value="${escapeHtml(String(val))}" placeholder="${escapeHtml(example||'')}" ${type==='n'?'dir="ltr"':''}>`;
     }
     h += `</div>`;
   });
+
+  h += `</div>`;
 
   h += `<div class="form-actions">
     <button class="btn-ghost" id="dcCancel">انصراف</button>
@@ -3584,6 +3882,11 @@ function dcShowForm(rec = null){
 
   $('dcMain').innerHTML = h;
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Bind calendar buttons
+  $('dcMain').querySelectorAll('[data-dc-cal]').forEach(b=>{
+    b.addEventListener('click', ()=>openCalendar('dc:'+b.dataset.dcCal));
+  });
 
   $('dcCancel').addEventListener('click', ()=>dcRenderMain());
   $('dcSave').addEventListener('click', async ()=>{
@@ -3604,7 +3907,7 @@ function dcShowForm(rec = null){
     let ok;
     if(rec) ok = await dcUpdateRecord(rec.id, data);
     else ok = await dcInsertRecord(DC_CURRENT, data);
-    if(ok && (ok.status === undefined || ok.ok)) { // fetch returns Response
+    if(ok) {
       toast(rec?'ویرایش شد':'ثبت شد','success');
       await dcRenderMain();
       updateDCBadges();
@@ -3612,6 +3915,118 @@ function dcShowForm(rec = null){
       toast('خطا در ذخیره‌سازی. اتصال به سرور را بررسی کنید.','danger');
     }
   });
+}
+
+/* ============================== DC PRINT ============================== */
+function dcPrintSingle(record, formCode){
+  const f = DC_FORMS[formCode];
+  if(!f) return;
+  const p = pDate(new Date());
+  const today = `${p.jd} ${p.monthName} ${p.jy}`;
+
+  let h = `<div class="dc-print-header">
+    <h1>${escapeHtml(f.t)}</h1>
+    <p>کمیته امداد امام خمینی (ره) — طرح تداوم کسب‌وکار (BCP)</p>
+  </div>
+  <div class="dc-print-meta">
+    <span><strong>کد فرم:</strong> ${formCode}</span>
+    <span><strong>تاریخ چاپ:</strong> ${today}</span>
+  </div>
+  <table class="dc-print-table">`;
+
+  f.f.forEach(([key, label])=>{
+    const val = record.data[key] || '';
+    h += `<tr>
+      <td class="label-col">${escapeHtml(label)}</td>
+      <td>${val ? escapeHtml(val) : '<span class="dc-print-empty">—</span>'}</td>
+    </tr>`;
+  });
+  h += `</table>
+  <div class="dc-print-footer">این سند به صورت خودکار توسط سامانه تداوم کسب‌وکار تولید شده است.</div>`;
+
+  $('printableDC').innerHTML = h;
+  document.body.classList.add('printing-dc');
+  window.print();
+  setTimeout(()=>{document.body.classList.remove('printing-dc');}, 100);
+}
+
+function dcPrintAll(records, formCode){
+  const f = DC_FORMS[formCode];
+  if(!f || !records.length) return;
+  const p = pDate(new Date());
+  const today = `${p.jd} ${p.monthName} ${p.jy}`;
+
+  let h = `<div class="dc-print-header">
+    <h1>${escapeHtml(f.t)}</h1>
+    <p>کمیته امداد امام خمینی (ره) — طرح تداوم کسب‌وکار (BCP)</p>
+  </div>
+  <div class="dc-print-meta">
+    <span><strong>کد فرم:</strong> ${formCode}</span>
+    <span><strong>تعداد رکورد:</strong> ${faDigits(records.length)}</span>
+    <span><strong>تاریخ چاپ:</strong> ${today}</span>
+  </div>
+  <table class="dc-print-table">
+    <thead><tr><th class="row-num">#</th>`;
+  f.f.forEach(([key, label])=>{
+    h += `<th>${escapeHtml(label)}</th>`;
+  });
+  h += `</tr></thead><tbody>`;
+  records.forEach((r, i)=>{
+    h += `<tr><td class="row-num">${faDigits(i+1)}</td>`;
+    f.f.forEach(([key])=>{
+      const val = r.data[key] || '';
+      h += `<td>${val ? escapeHtml(val) : '—'}</td>`;
+    });
+    h += `</tr>`;
+  });
+  h += `</tbody></table>
+  <div class="dc-print-footer">این سند به صورت خودکار توسط سامانه تداوم کسب‌وکار تولید شده است.</div>`;
+
+  // Landscape for wide table
+  const style = document.createElement('style');
+  style.id = 'dcPrintLandscape';
+  style.textContent = '@media print { @page { size: A4 landscape; margin: 1cm; } }';
+  document.head.appendChild(style);
+
+  $('printableDC').innerHTML = h;
+  document.body.classList.add('printing-dc');
+  window.print();
+  setTimeout(()=>{
+    document.body.classList.remove('printing-dc');
+    const s = document.getElementById('dcPrintLandscape');
+    if(s) s.remove();
+  }, 100);
+}
+
+function dcPrintBlank(formCode){
+  const f = DC_FORMS[formCode];
+  if(!f) return;
+  const p = pDate(new Date());
+  const today = `${p.jd} ${p.monthName} ${p.jy}`;
+
+  let h = `<div class="dc-print-header">
+    <h1>${escapeHtml(f.t)}</h1>
+    <p>کمیته امداد امام خمینی (ره) — طرح تداوم کسب‌وکار (BCP)</p>
+  </div>
+  <div class="dc-print-meta">
+    <span><strong>کد فرم:</strong> ${formCode}</span>
+    <span><strong>تاریخ چاپ:</strong> ${today}</span>
+  </div>
+  <table class="dc-print-table">`;
+
+  f.f.forEach(([key, label])=>{
+    h += `<tr>
+      <td class="label-col">${escapeHtml(label)}</td>
+      <td>&nbsp;</td>
+    </tr>`;
+  });
+  h += `</table>
+  <div class="dc-print-footer">این فرم برای تکمیل دستی چاپ شده است.</div>`;
+
+  $('printableDC').innerHTML = h;
+  document.body.classList.add('printing-dc');
+  window.print();
+  setTimeout(()=>{document.body.classList.remove('printing-dc');}, 100);
 }
 
 /* ============================== MODAL HELPERS ============================== */
