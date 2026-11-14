@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" data-theme="light">
+<html lang="fa" dir="rtl" data-theme="bw">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -41,6 +41,68 @@
   --shadow-md:0 4px 20px rgba(0,0,0,.4);
   --shadow-lg:0 20px 60px rgba(0,0,0,.55);
 }
+/* ============================== BW THEME (SEVERANCE) ============================== */
+[data-theme="bw"]{
+  --bg:#e8e5dd;
+  --bg-elev:#f4f1ea;
+  --bg-soft:#e0dcd1;
+  --bg-tint:#d4cfc1;
+  --text:#0a0a0a;
+  --text-2:#2b2b2b;
+  --muted:#6e6a63;
+  --primary:#0a0a0a;
+  --primary-2:#242424;
+  --primary-glow:rgba(10,10,10,.10);
+  --accent:#4a463e;
+  --accent-2:#2e2b25;
+  --border:#c8c4b6;
+  --border-2:#a8a395;
+  --success:#0a0a0a;
+  --success-bg:rgba(10,10,10,.08);
+  --danger:#4a4a4a;
+  --danger-bg:rgba(74,74,74,.12);
+  --warning:#5a5a5a;
+  --shadow-sm:0 1px 2px rgba(10,10,10,.06);
+  --shadow-md:0 2px 8px rgba(10,10,10,.10), 0 1px 2px rgba(10,10,10,.05);
+  --shadow-lg:0 20px 50px rgba(10,10,10,.16), 0 4px 12px rgba(10,10,10,.08);
+}
+[data-theme="bw"] body::before{opacity:.025}
+[data-theme="bw"] .login-stage{background:radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%)}
+[data-theme="bw"] .prop-hero{background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 45%,#2a2a2a 100%)}
+[data-theme="bw"] .prop-hero::before{background:radial-gradient(circle at 15% 20%,rgba(255,255,255,.10) 0%,transparent 50%),radial-gradient(circle at 85% 80%,rgba(255,255,255,.07) 0%,transparent 45%)}
+[data-theme="bw"] .hero-h1 .accent{color:#d4cfc1}
+[data-theme="bw"] .hero-tagline span[style*="6ec5a3"]{background:rgba(255,255,255,.65)!important}
+[data-theme="bw"] .hero-h1 span[style*="e8a87c"]{border-bottom-color:rgba(255,255,255,.7)!important}
+[data-theme="bw"] .priority-tag.p1{background:#000}
+[data-theme="bw"] .priority-tag.p2{background:#4a4a4a}
+[data-theme="bw"] .priority-tag.p3{background:#8a8a8a}
+[data-theme="bw"] .tl-bar.phase-1{background:rgba(10,10,10,.15);color:#0a0a0a}
+[data-theme="bw"] .tl-bar.phase-2{background:rgba(10,10,10,.30);color:#0a0a0a}
+[data-theme="bw"] .risk-level.critical::before{background:#000}
+[data-theme="bw"] .risk-level.high::before{background:#404040}
+[data-theme="bw"] .risk-level.mid::before{background:#808080}
+[data-theme="bw"] .risk-level.low::before{background:#c0c0c0}
+[data-theme="bw"] .modal-bg{background:rgba(0,0,0,.6)}
+[data-theme="bw"] .dc-glass-card{
+  background:linear-gradient(135deg,rgba(10,10,10,0.06) 0%,rgba(10,10,10,0.03) 50%,rgba(10,10,10,0.06) 100%);
+  border-color:rgba(10,10,10,0.15);
+  box-shadow:0 4px 20px rgba(10,10,10,0.06),inset 0 1px 0 rgba(255,255,255,0.5);
+}
+[data-theme="bw"] .dc-glass-card::before{
+  background:radial-gradient(circle at 25% 30%,rgba(10,10,10,0.06),transparent 45%),radial-gradient(circle at 75% 70%,rgba(10,10,10,0.04),transparent 50%);
+}
+[data-theme="bw"] .dc-glass-card::after{
+  background:radial-gradient(circle at 60% 40%,rgba(255,255,255,0.25),transparent 55%);
+}
+[data-theme="bw"] .dc-dash-btn.active{
+  background:linear-gradient(135deg,#0a0a0a,#2a2a2a);
+  box-shadow:0 4px 14px rgba(10,10,10,.15);
+}
+[data-theme="bw"] .cost-total,[data-theme="bw"] .risk-formula{
+  background:linear-gradient(135deg,#0a0a0a 0%,#2a2a2a 100%);
+}
+[data-theme="bw"] .dc-record .print-btn{color:#0a0a0a;border-color:#0a0a0a}
+
 html{font-size:15px;-webkit-text-size-adjust:100%}
 body{
   font-family:var(--font);background:var(--bg);color:var(--text);
@@ -508,7 +570,6 @@ img{max-width:100%;display:block}
 .dc-layout{display:grid;grid-template-columns:310px 1fr;gap:20px;align-items:start}
 .dc-sidebar{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius-lg);padding:10px;max-height:calc(100vh - 180px);overflow-y:auto;position:sticky;top:calc(var(--header-h) + 16px)}
 
-/* Dashboard button in sidebar */
 .dc-dash-btn{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;font-size:.86rem;font-weight:700;color:var(--text-2);cursor:pointer;transition:all .2s;margin-bottom:6px;border:1px solid transparent;}
 .dc-dash-btn:hover{background:var(--bg-soft);color:var(--text)}
 .dc-dash-btn.active{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;border-color:var(--primary);box-shadow:0 4px 14px var(--primary-glow)}
@@ -536,7 +597,6 @@ img{max-width:100%;display:block}
 
 .dc-main{min-height:400px}
 
-/* Glass card for descriptions */
 .dc-glass-card{
   position:relative;
   overflow:hidden;
@@ -626,7 +686,6 @@ img{max-width:100%;display:block}
 
 .dc-form .form-actions{margin-top:20px}
 
-/* DC Dashboard */
 .dc-dash{display:grid;gap:20px}
 .dc-dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .dc-dash-stat{position:relative;padding:22px 24px;border-radius:var(--radius-lg);background:var(--bg-elev);border:1px solid var(--border);overflow:hidden;transition:all .3s}
@@ -778,7 +837,6 @@ img{max-width:100%;display:block}
 @media print {
   @page { margin: 1cm; size: A4 portrait; }
 
-  /* ============ MINUTES ============ */
   body.printing-minute * { visibility: hidden; }
   body.printing-minute #printableMinute, body.printing-minute #printableMinute * { visibility: visible; }
   body.printing-minute #printableMinute {
@@ -796,7 +854,6 @@ img{max-width:100%;display:block}
   body.printing-minute .print-section p { font-size: 11pt; white-space: pre-wrap; margin: 0; color: #222; }
   body.printing-minute .print-meta { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 11pt; font-weight: bold; }
 
-  /* ============ DATA COLLECTION ============ */
   body.printing-dc * { visibility: hidden; }
   body.printing-dc #printableDC, body.printing-dc #printableDC * { visibility: visible; }
   body.printing-dc #printableDC {
@@ -868,7 +925,6 @@ img{max-width:100%;display:block}
     font-style: italic;
   }
 
-  /* ============ CHECKLIST ============ */
   body:not(.printing-minute):not(.printing-dc) { background: #fff !important; color: #000 !important; font-size: 9.5pt !important; }
   body:not(.printing-minute):not(.printing-dc)::before { display: none !important; }
   .app-header, .app-tabs, .app-actions, .chk-toolbar, .chk-toolbar-right, .radios, .cal-open, 
@@ -985,7 +1041,7 @@ img{max-width:100%;display:block}
     <div class="app-actions">
       <img src="me.jpg" alt="مدیر پروژه" class="user-avatar" title="مدیر پروژه" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23e2e8f0%22/%3E%3Ccircle cx=%2250%22 cy=%2240%22 r=%2220%22 fill=%22%2394a3b8%22/%3E%3Cpath d=%22M20 90 Q50 60 80 90%22 fill=%22%2394a3b8%22/%3E%3C/svg%3E'">
       <button class="icon-btn" id="themeBtn" title="تغییر تم">
-        <svg class="ic" viewBox="0 0 24 24" id="themeIcon"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="ic" viewBox="0 0 24 24" id="themeIcon"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20z" fill="currentColor"/></svg>
       </button>
       <button class="icon-btn" id="changePassBtn" title="تغییر رمز">
         <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
@@ -1637,14 +1693,21 @@ function applyTheme(t){
   document.documentElement.setAttribute('data-theme',t);
   localStorage.setItem('bcp_theme',t);
   const icon=$('themeIcon');
-  if(icon){icon.innerHTML=t==='dark'
-    ?'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'
-    :'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';}
+  if(icon){
+    if(t==='dark'){
+      icon.innerHTML='<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+    } else if(t==='bw'){
+      icon.innerHTML='<circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20z" fill="currentColor"/>';
+    } else {
+      icon.innerHTML='<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';
+    }
+  }
 }
-applyTheme(localStorage.getItem('bcp_theme')||'light');
+applyTheme(localStorage.getItem('bcp_theme')||'bw');
 $('themeBtn').addEventListener('click',()=>{
   const cur=document.documentElement.getAttribute('data-theme');
-  applyTheme(cur==='dark'?'light':'dark');
+  const next = cur === 'bw' ? 'light' : cur === 'light' ? 'dark' : 'bw';
+  applyTheme(next);
 });
 
 /* ============================== LOGIN LOGIC ============================== */
@@ -2893,7 +2956,6 @@ $('saveStkBtn').addEventListener('click',async ()=>{
 });
 
 /* ============================== DATA COLLECTION — FORM DEFINITIONS ============================== */
-/* Field format: [key, label, type, example, required?]  type: 't'=text, 'a'=textarea, 'n'=number */
 const DC_FORMS = {
   'ORG-01':{t:'مشخصات کلان سازمان',m:0,r:'یک‌بار برای کل سازمان',f:[
     ['orgTitle','عنوان رسمی سازمان','t','کمیته امداد امام خمینی (ره)',1],
@@ -3583,7 +3645,6 @@ async function updateDCBadges(){
     });
     const secBadge = document.querySelector(`[data-sec-badge="${sec.id}"]`);
     if(secBadge) secBadge.textContent = faDigits(secCount);
-    // Update has-data class on form links
     sec.forms.forEach(code=>{
       const link = document.querySelector(`[data-form="${code}"]`);
       if(link) link.classList.toggle('has-data', (DC_COUNTS_CACHE[code]||0) > 0);
@@ -3599,17 +3660,6 @@ async function updateDCBadges(){
 async function dcFetchRecords(category){
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_forms?category=eq.${category}&select=*&order=created_at.desc`, {
-      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
-    });
-    if(!res.ok) return [];
-    const d = await res.json();
-    return Array.isArray(d) ? d : [];
-  } catch(e) { return []; }
-}
-
-async function dcFetchAllRecords(){
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_forms?select=*&order=created_at.desc`, {
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
     });
     if(!res.ok) return [];
@@ -3883,7 +3933,6 @@ function dcShowForm(rec = null){
   $('dcMain').innerHTML = h;
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // Bind calendar buttons
   $('dcMain').querySelectorAll('[data-dc-cal]').forEach(b=>{
     b.addEventListener('click', ()=>openCalendar('dc:'+b.dataset.dcCal));
   });
@@ -3982,7 +4031,6 @@ function dcPrintAll(records, formCode){
   h += `</tbody></table>
   <div class="dc-print-footer">این سند به صورت خودکار توسط سامانه تداوم کسب‌وکار تولید شده است.</div>`;
 
-  // Landscape for wide table
   const style = document.createElement('style');
   style.id = 'dcPrintLandscape';
   style.textContent = '@media print { @page { size: A4 landscape; margin: 1cm; } }';
