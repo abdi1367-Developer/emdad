@@ -1,4 +1,21 @@
 <!DOCTYPE html>
+<!--
+======================================================================
+SETUP SQL (اجرا در Supabase SQL Editor — یک بار):
+----------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.bcp_forms (
+  id BIGSERIAL PRIMARY KEY,
+  category TEXT NOT NULL,
+  data JSONB NOT NULL DEFAULT '{}'::jsonb,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_bcp_forms_category ON public.bcp_forms(category);
+ALTER TABLE public.bcp_forms ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "allow_all_forms" ON public.bcp_forms;
+CREATE POLICY "allow_all_forms" ON public.bcp_forms FOR ALL USING (true) WITH CHECK (true);
+======================================================================
+-->
 <html lang="fa" dir="rtl" data-theme="light">
 <head>
 <meta charset="UTF-8">
@@ -284,7 +301,6 @@ img{max-width:100%;display:block}
 .chk-group.collapsed .chk-body{display:none}
 .chk-body{padding:0;border-top:1px solid var(--border)}
 
-/* Desktop: single line - 7 columns total */
 .chk-row{
   display:grid;
   grid-template-columns:32px minmax(200px,1fr) auto auto 135px 115px auto;
@@ -302,7 +318,6 @@ img{max-width:100%;display:block}
 .chk-row[data-status="has"] .chk-txt{color:var(--success);font-weight:600}
 .chk-row[data-status="no"] .chk-txt{color:var(--danger);font-weight:600}
 
-/* Priority tag */
 .priority-tag{
   display: inline-flex;
   align-items: center;
@@ -324,7 +339,6 @@ img{max-width:100%;display:block}
   50% { opacity: 0.5; transform: scale(0.9); }
 }
 
-/* Wrapper for the 4 buttons/inputs - transparent on desktop (children become grid items) */
 .chk-buttons{display:contents}
 .print-status{display:none;}
 
@@ -358,7 +372,6 @@ img{max-width:100%;display:block}
 .save-btn.saved{background:var(--success);color:#fff;border-color:var(--success)}
 .save-btn .ic{width:13px;height:13px}
 
-/* Tablet: keep single row */
 @media (max-width:1400px) and (min-width:901px){
   .chk-row{
     grid-template-columns:28px minmax(150px,1fr) auto auto 110px 90px auto;
@@ -374,7 +387,6 @@ img{max-width:100%;display:block}
   .radio-pill{padding:5px 8px;font-size:.72rem}
 }
 
-/* Mobile: card layout */
 @media (max-width:900px){
   .chk-body{background:var(--bg-soft);padding:12px;}
   .chk-row{
@@ -558,6 +570,72 @@ img{max-width:100%;display:block}
   .stk-actions .search-wrap{flex:1}
 }
 
+/* ============================== DATA COLLECTION ============================== */
+.dc-header{display:flex;justify-content:space-between;align-items:center;padding:24px 0;margin-bottom:16px;border-bottom:1px solid var(--border);gap:16px;flex-wrap:wrap}
+.dc-title{font-size:1.3rem;font-weight:800;color:var(--text)}
+.dc-sub{font-size:.82rem;color:var(--muted);margin-top:4px}
+.dc-progress-bar{background:var(--bg-elev);border:1px solid var(--border);border-radius:10px;padding:10px 16px;min-width:220px}
+.dc-progress-bar .pb-label{font-size:.72rem;color:var(--muted);font-weight:600;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.dc-progress-bar .pb-track{height:7px;background:var(--bg-tint);border-radius:4px;overflow:hidden}
+.dc-progress-bar .pb-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-2));transition:width .5s;border-radius:4px}
+.dc-layout{display:grid;grid-template-columns:310px 1fr;gap:20px;align-items:start}
+.dc-sidebar{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius-lg);padding:10px;max-height:calc(100vh - 180px);overflow-y:auto;position:sticky;top:calc(var(--header-h) + 16px)}
+.dc-sec{border-radius:8px;overflow:hidden;margin-bottom:2px}
+.dc-sec-head{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;border-radius:8px;font-size:.84rem;font-weight:700;color:var(--text-2);transition:all .2s}
+.dc-sec-head:hover{background:var(--bg-soft);color:var(--text)}
+.dc-sec.open .dc-sec-head{color:var(--primary);background:var(--primary-glow)}
+.dc-sec-num{width:26px;height:26px;border-radius:7px;background:var(--bg-soft);color:var(--text-2);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-family:monospace;font-weight:800;flex-shrink:0}
+.dc-sec.open .dc-sec-num{background:var(--primary);color:#fff}
+.dc-sec-body{display:none;padding:2px 0 6px}
+.dc-sec.open .dc-sec-body{display:block}
+.dc-form-link{display:flex;align-items:center;gap:6px;padding:7px 12px 7px 14px;font-size:.78rem;color:var(--text-2);border-radius:6px;cursor:pointer;transition:all .15s}
+.dc-form-link:hover{background:var(--bg-soft);color:var(--text)}
+.dc-form-link.active{background:var(--primary-glow);color:var(--primary);font-weight:700}
+.dc-form-link span:nth-child(2){flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dc-form-link .badge-count{margin-right:auto;background:var(--bg-tint);color:var(--text-2);padding:1px 7px;border-radius:5px;font-size:.65rem;font-family:monospace;font-weight:800;min-width:20px;text-align:center;flex-shrink:0}
+.dc-form-link.active .badge-count{background:var(--primary);color:#fff}
+.dc-main{min-height:400px}
+.dc-empty{padding:80px 24px;text-align:center;color:var(--muted);background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius-lg)}
+.dc-empty h3{color:var(--text-2);font-size:1rem;margin-bottom:6px}
+.dc-empty p{font-size:.85rem}
+.dc-form-header{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:14px}
+.dc-form-header h3{font-size:1.08rem;font-weight:800;color:var(--text);margin-bottom:4px}
+.dc-form-header .rep{font-size:.78rem;color:var(--accent);font-weight:700;margin-bottom:10px}
+.dc-form-header .purpose{font-size:.84rem;color:var(--text-2);line-height:1.8;background:var(--bg-soft);padding:10px 14px;border-radius:8px;border-right:3px solid var(--primary)}
+.dc-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px;flex-wrap:wrap}
+.dc-toolbar-info{font-size:.82rem;color:var(--text-2)}
+.dc-toolbar-info strong{color:var(--primary);font-family:monospace;font-size:.95rem;margin:0 3px}
+.dc-list{display:grid;gap:10px}
+.dc-record{padding:14px 18px;background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:space-between;gap:14px;transition:all .2s}
+.dc-record:hover{border-color:var(--primary);box-shadow:var(--shadow-sm)}
+.dc-record-info{flex:1;min-width:0}
+.dc-record-title{font-weight:700;color:var(--text);margin-bottom:3px;font-size:.9rem}
+.dc-record-preview{font-size:.75rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:monospace;direction:rtl;text-align:right}
+.dc-record-actions{display:flex;gap:6px;flex-shrink:0}
+.dc-record-actions .btn-ghost{padding:6px 12px;font-size:.75rem}
+.dc-form{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px}
+.dc-field{margin-bottom:16px}
+.dc-field label{display:flex;align-items:center;gap:6px;font-size:.84rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.dc-field label .req{color:var(--danger);font-size:1rem}
+.dc-field .ex-hint{font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:5px;display:block}
+.dc-field input,.dc-field textarea{width:100%;padding:10px 12px;background:var(--bg-soft);border:1.5px solid var(--border);border-radius:8px;font-size:.88rem;color:var(--text);outline:none;transition:all .2s;font-family:inherit}
+.dc-field input:focus,.dc-field textarea:focus{border-color:var(--primary);background:var(--bg-elev);box-shadow:0 0 0 3px var(--primary-glow)}
+.dc-field textarea{min-height:80px;resize:vertical;line-height:1.7}
+.dc-field input[dir="ltr"]{font-family:monospace}
+.dc-form .form-actions{margin-top:20px}
+.dc-help{background:rgba(201,138,62,.08);border:1px solid rgba(201,138,62,.25);border-radius:8px;padding:10px 14px;font-size:.78rem;color:var(--text-2);margin-bottom:14px;line-height:1.7}
+.dc-help strong{color:var(--warning)}
+@media (max-width:1024px){
+  .dc-layout{grid-template-columns:1fr}
+  .dc-sidebar{position:static;max-height:none;order:2}
+  .dc-main{order:1}
+  .dc-header{flex-direction:column;align-items:stretch}
+}
+@media (max-width:520px){
+  .dc-record{flex-direction:column;align-items:stretch}
+  .dc-record-actions{justify-content:flex-end}
+}
+
 /* ============================== MODALS / TOAST ============================== */
 .modal-bg{position:fixed;inset:0;z-index:200;background:rgba(10,20,16,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px}
 .modal-bg.open{display:flex}
@@ -609,7 +687,6 @@ img{max-width:100%;display:block}
 .cal-today-btn{flex:1;padding:10px;border-radius:8px;background:var(--bg-soft);color:var(--text-2);font-weight:600;font-size:.85rem;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:6px}
 .cal-today-btn:hover{background:var(--bg-tint);color:var(--text)}
 
-/* Mobile global */
 @media (max-width:1024px){
   .hero-inner{grid-template-columns:1fr;gap:24px}
   .hero-side{align-items:flex-start}
@@ -660,8 +737,6 @@ img{max-width:100%;display:block}
 
 @media print {
   @page { margin: 1cm; size: A4 portrait; }
-  
-  /* ============ PRINT MINUTES ============ */
   body.printing-minute * { visibility: hidden; }
   body.printing-minute #printableMinute, body.printing-minute #printableMinute * { visibility: visible; }
   body.printing-minute #printableMinute {
@@ -679,164 +754,43 @@ img{max-width:100%;display:block}
   body.printing-minute .print-section p { font-size: 11pt; white-space: pre-wrap; margin: 0; color: #222; }
   body.printing-minute .print-meta { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 11pt; font-weight: bold; }
 
-  /* ============ PRINT CHECKLIST ============ */
   body:not(.printing-minute) { background: #fff !important; color: #000 !important; font-size: 9.5pt !important; }
   body:not(.printing-minute)::before { display: none !important; }
-  
-  /* Hide all UI */
   .app-header, .app-tabs, .app-actions, .chk-toolbar, .chk-toolbar-right, .radios, .cal-open, 
   .save-btn, .toast-wrap, .modal-bg, .chk-chevron, .chk-head-meta, .dash-row,
-  #dashboardContainer { 
-    display: none !important; 
-  }
-  
-  /* Show only checklist */
+  #dashboardContainer { display: none !important; }
   body:not(.printing-minute) * { visibility: hidden; }
   body:not(.printing-minute) #view-checklist, body:not(.printing-minute) #view-checklist * { visibility: visible; }
   body:not(.printing-minute) #view-checklist { position: absolute; left: 0; top: 0; width: 100%; padding: 0; margin: 0; }
-  
-  /* Print Header */
   .print-header { display: block !important; text-align: center; margin-bottom: 15px; border-bottom: 2px solid #000; padding-bottom: 10px; visibility: visible !important; }
   .print-header h1 { font-size: 15pt !important; margin-bottom: 5px; color: #000 !important; }
   .print-header p { font-size: 9pt !important; color: #555 !important; }
-
-  /* Groups */
-  .chk-group { 
-    border: 1.5px solid #666 !important; 
-    border-radius: 6px !important; 
-    margin-bottom: 12px !important; 
-    break-inside: avoid; 
-    background: #fff !important; 
-    display: block !important; 
-  }
+  .chk-group { border: 1.5px solid #666 !important; border-radius: 6px !important; margin-bottom: 12px !important; break-inside: avoid; background: #fff !important; display: block !important; }
   .chk-body { display: block !important; padding: 8px !important; border-top: none !important; background: #fff !important; }
-  .chk-head { 
-    background: #e8e8e8 !important; 
-    padding: 7px 12px !important; 
-    border-bottom: 1.5px solid #666 !important;
-    display: flex !important; align-items: center !important; justify-content: flex-start !important;
-    border-radius: 6px 6px 0 0 !important;
-  }
+  .chk-head { background: #e8e8e8 !important; padding: 7px 12px !important; border-bottom: 1.5px solid #666 !important; display: flex !important; align-items: center !important; justify-content: flex-start !important; border-radius: 6px 6px 0 0 !important; }
   .chk-head-left { display: flex !important; align-items: center !important; gap: 10px !important; }
   .chk-head-left h3 { font-size: 10.5pt !important; color: #000 !important; font-weight: bold !important; margin: 0 !important; }
-  .chk-num { 
-    width: 24px !important; height: 24px !important; font-size: 8.5pt !important; 
-    background: #fff !important; color: #000 !important; border: 1px solid #666 !important;
-    border-radius: 4px !important; display: flex !important; align-items: center !important; justify-content: center !important;
-  }
-  
-  /* Row layout - horizontal flex */
-  .chk-row { 
-    display: flex !important; 
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    padding: 6px 10px !important;
-    border: 1px solid #bbb !important;
-    border-radius: 4px !important;
-    margin-bottom: 5px !important;
-    background: #fff !important;
-    page-break-inside: avoid !important;
-    gap: 8px !important;
-  }
+  .chk-num { width: 24px !important; height: 24px !important; font-size: 8.5pt !important; background: #fff !important; color: #000 !important; border: 1px solid #666 !important; border-radius: 4px !important; display: flex !important; align-items: center !important; justify-content: center !important; }
+  .chk-row { display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: flex-end !important; padding: 6px 10px !important; border: 1px solid #bbb !important; border-radius: 4px !important; margin-bottom: 5px !important; background: #fff !important; page-break-inside: avoid !important; gap: 8px !important; }
   .chk-idx { display: none !important; }
-  
-  /* Text - right side (largest) */
-  .chk-txt { 
-    flex: 1 !important; 
-    min-width: 0 !important;
-    font-size: 9pt !important; 
-    color: #000 !important; 
-    line-height: 1.45 !important; 
-    text-align: right !important;
-    padding-left: 10px !important;
-  }
-  .chk-txt .priority-tag {
-    display: none !important;
-  }
-  
-  /* Buttons wrapper - flatten */
-  .chk-buttons { 
-    display: contents !important; 
-  }
-  
-  /* Priority tag (in buttons area) */
-  .chk-buttons .priority-tag,
-  .chk-row .priority-tag { 
-    display: inline-flex !important;
-    width: 18px !important;
-    height: 18px !important;
-    font-size: 8pt !important;
-    animation: none !important;
-    flex-shrink: 0 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-  
-  /* Status (دارد/ندارد) */
-  .print-status {
-    display: block !important;
-    width: 55px !important;
-    font-weight: bold !important;
-    font-size: 8.5pt !important;
-    text-align: center !important;
-    flex-shrink: 0 !important;
-  }
+  .chk-txt { flex: 1 !important; min-width: 0 !important; font-size: 9pt !important; color: #000 !important; line-height: 1.45 !important; text-align: right !important; padding-left: 10px !important; }
+  .chk-txt .priority-tag { display: none !important; }
+  .chk-buttons { display: contents !important; }
+  .chk-buttons .priority-tag, .chk-row .priority-tag { display: inline-flex !important; width: 18px !important; height: 18px !important; font-size: 8pt !important; animation: none !important; flex-shrink: 0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .print-status { display: block !important; width: 55px !important; font-weight: bold !important; font-size: 8.5pt !important; text-align: center !important; flex-shrink: 0 !important; }
   .chk-row[data-status="has"] .print-status { color: #0a6b3a !important; }
   .chk-row[data-status="has"] .print-status::before { content: "✓ دارد"; }
   .chk-row[data-status="no"] .print-status { color: #a02020 !important; }
   .chk-row[data-status="no"] .print-status::before { content: "✕ ندارد"; }
   .chk-row[data-status=""] .print-status::before { content: "—"; color: #999 !important; }
-
-  /* File count */
-  .file-btn {
-    display: flex !important;
-    width: 40px !important;
-    background: none !important;
-    border: none !important;
-    padding: 0 !important;
-    color: #000 !important;
-    font-size: 8.5pt !important;
-    gap: 2px !important;
-    flex-shrink: 0 !important;
-    justify-content: center !important;
-  }
+  .file-btn { display: flex !important; width: 40px !important; background: none !important; border: none !important; padding: 0 !important; color: #000 !important; font-size: 8.5pt !important; gap: 2px !important; flex-shrink: 0 !important; justify-content: center !important; }
   .file-btn .ic { display: none !important; }
   .file-btn span::before { content: "📎 "; font-weight: bold; }
-  
-  /* Date and owner inputs */
-  .date-wrap { 
-    width: 75px !important; 
-    flex-shrink: 0 !important;
-  }
-  .owner-wrap { 
-    width: 80px !important; 
-    flex-shrink: 0 !important;
-  }
-  .date-wrap input, .owner-wrap input { 
-    border: 1px solid #999 !important; 
-    background: #fafafa !important; 
-    color: #000 !important; 
-    font-size: 8pt !important; 
-    padding: 2px 3px !important; 
-    border-radius: 2px !important;
-    width: 100% !important;
-    text-align: center !important;
-    height: 20px !important;
-    font-family: monospace !important;
-    box-sizing: border-box !important;
-  }
-  .owner-wrap input { 
-    text-align: right !important; 
-    font-family: 'Vazirmatn', sans-serif !important;
-    padding-right: 4px !important;
-    font-size: 8pt !important;
-  }
-  .date-wrap input::placeholder, .owner-wrap input::placeholder { 
-    color: #999 !important; 
-    opacity: 1 !important;
-    font-size: 7pt !important;
-  }
+  .date-wrap { width: 75px !important; flex-shrink: 0 !important; }
+  .owner-wrap { width: 80px !important; flex-shrink: 0 !important; }
+  .date-wrap input, .owner-wrap input { border: 1px solid #999 !important; background: #fafafa !important; color: #000 !important; font-size: 8pt !important; padding: 2px 3px !important; border-radius: 2px !important; width: 100% !important; text-align: center !important; height: 20px !important; font-family: monospace !important; box-sizing: border-box !important; }
+  .owner-wrap input { text-align: right !important; font-family: 'Vazirmatn', sans-serif !important; padding-right: 4px !important; font-size: 8pt !important; }
+  .date-wrap input::placeholder, .owner-wrap input::placeholder { color: #999 !important; opacity: 1 !important; font-size: 7pt !important; }
 }
 </style>
 </head>
@@ -895,6 +849,10 @@ img{max-width:100%;display:block}
       <button class="app-tab" data-tab="checklist">
         <svg class="ic" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
         <span>چک‌لیست</span>
+      </button>
+      <button class="app-tab" data-tab="collect">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6"/><path d="M9 16h6"/></svg>
+        <span>جمع‌آوری اطلاعات</span>
       </button>
       <button class="app-tab" data-tab="minutes">
         <svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -995,7 +953,7 @@ img{max-width:100%;display:block}
                 <div class="mini-card">
                   <div class="icon-box"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
                   <h4>رویکرد یکپارچه</h4>
-                  <p>همراستاسازی اهداف تداوم با مأموریت سازمان از طریق BIA، تحلیل ریسک و تدوین اسناد</p>
+                  <p>هم‌راستاسازی اهداف تداوم با مأموریت سازمان از طریق BIA، تحلیل ریسک و تدوین اسناد</p>
                 </div>
                 <div class="mini-card">
                   <div class="icon-box"><svg class="ic" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
@@ -1217,6 +1175,30 @@ img{max-width:100%;display:block}
         </div>
         <div id="dashboardContainer"></div>
         <div id="checklistContainer"></div>
+      </section>
+
+      <!-- ============== DATA COLLECTION ============== -->
+      <section class="view" id="view-collect">
+        <div class="dc-header">
+          <div>
+            <div class="dc-title">جمع‌آوری اطلاعات BCP</div>
+            <div class="dc-sub">۱۲ حوزه، ۳۴ فرم تخصصی — مطابق سند جامع اطلاعات</div>
+          </div>
+          <div class="dc-progress-bar">
+            <div class="pb-label"><span>تکمیل کل سامانه</span><span id="dcProgressText">۰٪</span></div>
+            <div class="pb-track"><div class="pb-fill" id="dcProgressFill" style="width:0%"></div></div>
+          </div>
+        </div>
+        <div class="dc-layout">
+          <aside class="dc-sidebar" id="dcSidebar"></aside>
+          <main class="dc-main" id="dcMain">
+            <div class="dc-empty">
+              <svg class="ic" viewBox="0 0 24 24" style="width:56px;height:56px;margin:0 auto 16px;color:var(--border-2)"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+              <h3>یک فرم را از فهرست انتخاب کنید</h3>
+              <p>۱۲ حوزه اطلاعاتی، ۳۴ فرم تخصصی</p>
+            </div>
+          </main>
+        </div>
       </section>
 
       <!-- ============== MINUTES ============== -->
@@ -1652,6 +1634,7 @@ document.querySelectorAll('.app-tab').forEach(tab=>{
 
     if(tab.dataset.tab==='home'){ animateCounters(); }
     if(tab.dataset.tab==='checklist'){ renderDashboard(); renderChecklist(); }
+    if(tab.dataset.tab==='collect'){ dcInit(); }
     if(tab.dataset.tab==='minutes'){ renderMinutes(); }
     if(tab.dataset.tab==='notebook'){ renderNotebook(); }
     if(tab.dataset.tab==='stakeholders'){ renderStakeholders(); }
@@ -1818,34 +1801,18 @@ const CHECKLIST=[
   ]}
 ];
 
-/* ============================== PRIORITY MAP (STRICT BCP) ============================== */
-/* 1 = Critical for BCP core (must be first)
-   2 = Important, needed for quality
-   3 = Secondary, can wait */
 const PRIORITY = [
-  // Group 0: ساختار راهبری (14)
   [1,1,1,1,2,2,2,2,1,2,1,1,2,3],
-  // Group 1: فهرست خدمات و سامانه‌ها (8)
   [1,1,1,2,1,2,2,1],
-  // Group 2: معماری و زیرساخت (11)
   [2,1,2,1,2,2,2,1,1,2,1],
-  // Group 3: پشتیبان‌گیری و بازیابی (10)
   [1,1,1,1,1,2,1,1,2,1],
-  // Group 4: برنامه‌های مدیریت بحران (9)
   [1,1,1,2,1,2,1,1,2],
-  // Group 5: اطلاعات کسب‌وکاری (12)
   [1,1,1,2,2,1,2,2,1,1,2,2],
-  // Group 6: اطلاعات فنی تکمیلی (15)
   [1,1,2,2,2,2,2,2,2,2,2,2,2,3,2],
-  // Group 7: سوابق رخدادها (8)
   [2,2,2,2,3,2,2,3],
-  // Group 8: منابع و ظرفیت‌ها (9)
   [1,1,2,2,2,2,2,2,2],
-  // Group 9: مستندات امنیتی (8)
   [3,3,3,3,2,3,3,2],
-  // Group 10: قراردادی (7)
   [2,3,2,2,2,3,3],
-  // Group 11: مانور و آموزش (6)
   [2,1,3,3,3,2]
 ];
 
@@ -1929,7 +1896,6 @@ async function renderChecklist(){
       else if(e?.status==='no')no++;
     });
     const done=has+no;
-    const pct=total?Math.round((done/total)*100):0;
     html+=`<div class="chk-group collapsed" data-g="${gi}">
       <div class="chk-head" data-toggle="${gi}">
         <div class="chk-head-left">
@@ -2817,6 +2783,837 @@ $('saveStkBtn').addEventListener('click',async ()=>{
   toast('ذخیره شد','success');
 });
 
+/* ============================== DATA COLLECTION ============================== */
+/* Field format: [key, label, type, example, required?]
+   type: 't'=text, 'a'=textarea, 'n'=number (as text) */
+const DC_FORMS = {
+  'ORG-01':{t:'مشخصات کلان سازمان',m:0,r:'یک‌بار برای کل سازمان',f:[
+    ['orgTitle','عنوان رسمی سازمان','t','کمیته امداد امام خمینی (ره)',1],
+    ['mission','مأموریت و اهداف اصلی','a','حمایت از خانوارهای نیازمند و توانمندسازی مددجویان',1],
+    ['legalDuties','وظایف قانونی و اختیارات','a','ارائه خدمات حمایتی، درمانی و اشتغال‌زایی'],
+    ['macroStructure','ساختار کلان سازمان','a','معاونت‌ها، ادارات کل و واحدهای مستقل'],
+    ['staffTotal','تعداد کل کارکنان','n','۱۲۰۰۰'],
+    ['provinceUnits','تعداد واحدهای استانی','n','۳۱'],
+    ['countyUnits','تعداد واحدهای شهرستانی و مراکز','n','۴۰۰'],
+    ['workHours','ساعات فعالیت سازمان','t','شنبه تا چهارشنبه، ۸ تا ۱۶'],
+    ['offHourServices','خدمات خارج از ساعات اداری','t','پاسخ‌گویی تلفنی و خدمات برخط'],
+    ['partners','سازمان‌ها و نهادهای همکار','a','بانک‌ها، وزارت تعاون، وزارت بهداشت'],
+    ['regions','مناطق و گروه‌های جغرافیایی تحت پوشش','t','شهری، روستایی و محروم'],
+    ['incidentHistory','سوابق بحران‌ها و اختلالات عمده','a','قطعی سراسری سامانه، سیل، زلزله'],
+    ['existingPlans','برنامه‌ها و دستورالعمل‌های موجود در بحران','a','دستورالعمل مدیریت بحران، برنامه واکنش اضطراری'],
+    ['legalReq','الزامات قانونی و نظارتی مرتبط','a','الزامات حاکمیتی و دستورالعمل‌های ابلاغی']
+  ]},
+  'ORG-02':{t:'ساختار سازمانی',m:1,r:'به ازای هر واحد سازمانی',f:[
+    ['unitName','نام و کد واحد سازمانی','t','معاونت حمایت و سلامت خانواده',1],
+    ['unitType','نوع واحد','t','معاونت، اداره کل، مدیریت، اداره، مرکز'],
+    ['parentUnit','واحد مافوق','t','حوزه ریاست'],
+    ['subUnits','واحدهای زیرمجموعه','t','اداره کل حمایت‌های معیشتی'],
+    ['manager','نام و سمت مدیر واحد','t','مدیرکل حمایت‌های معیشتی'],
+    ['staff','تعداد کارکنان','n','۲۵'],
+    ['mission','شرح مأموریت و وظایف','a','مدیریت خدمات حمایتی'],
+    ['services','خدمات و فعالیت‌های اصلی','a','پرداخت کمک‌هزینه معیشتی'],
+    ['processes','فرآیندهای اصلی و پشتیبان','a','بررسی پرونده و تأیید پرداخت'],
+    ['systems','سامانه‌های مورد استفاده','t','سامانه سها'],
+    ['resources','تجهیزات و منابع حیاتی','t','رایانه، اینترنت، تجهیزات ارتباطی'],
+    ['contractors','پیمانکاران و تأمین‌کنندگان وابسته','t','شرکت پشتیبان سامانه'],
+    ['internalDeps','واحدهای داخلی وابسته','t','امور مالی، فناوری اطلاعات'],
+    ['externalDeps','سازمان‌های بیرونی وابسته','t','بانک عامل'],
+    ['altLocation','امکان فعالیت در محل جایگزین','t','امکان فعالیت از اداره استانی'],
+    ['remoteWork','امکان دورکاری','t','بله، برای برخی وظایف'],
+    ['successors','وجود جانشین برای مسئولیت‌های کلیدی','t','معاون مدیرکل'],
+    ['bcpLiaison','رابط معرفی‌شده برای تهیه BCP','t','کارشناس برنامه‌ریزی']
+  ]},
+  'ORG-03':{t:'ساختمان‌ها و مراکز عملیاتی',m:1,r:'به ازای هر ساختمان یا مرکز',f:[
+    ['name','نام و شناسه مرکز','t','اداره کمیته امداد شهرستان X',1],
+    ['type','نوع مرکز','t','ستادی، استانی، شهرستانی، مرکز خدمات'],
+    ['location','استان و شهرستان','t','استان فارس، شهرستان شیراز'],
+    ['address','نشانی و موقعیت جغرافیایی','a','نشانی کامل و مختصات'],
+    ['ownership','وضعیت مالکیت','t','ملکی، استیجاری'],
+    ['staff','تعداد کارکنان مستقر','n','۳۵'],
+    ['units','واحدهای مستقر در ساختمان','t','حمایت، مالی، اشتغال'],
+    ['services','نوع خدمات ارائه‌شده در محل','t','تشکیل پرونده و رسیدگی به درخواست‌ها'],
+    ['avgVisitors','متوسط مراجعه‌کنندگان روزانه','n','۱۵۰'],
+    ['capacity','ظرفیت پذیرش مراجعه‌کنندگان','n','۲۰۰'],
+    ['power','وضعیت برق اضطراری','t','UPS و ژنراتور'],
+    ['network','وضعیت اینترنت و ارتباطات','t','فیبر نوری و اینترنت پشتیبان'],
+    ['hvac','وضعیت سرمایش، گرمایش و تهویه','t','سیستم مرکزی'],
+    ['safety','امکانات ایمنی و اطفای حریق','t','کپسول و سیستم اعلام حریق'],
+    ['altLocation','محل جایگزین قابل استفاده','t','ساختمان اداره کل استان'],
+    ['relocationTime','زمان لازم برای انتقال فعالیت','t','۸ ساعت'],
+    ['maintenance','مسئول نگهداری و پشتیبانی','t','واحد پشتیبانی'],
+    ['history','سوابق حوادث و اختلالات ساختمان','a','قطعی برق، آب‌گرفتگی']
+  ]},
+  'SVC-01':{t:'فهرست خدمات',m:1,r:'به ازای هر خدمت',f:[
+    ['svcId','شناسه خدمت','t','SVC-001',1],
+    ['title','عنوان خدمت','t','حمایت معیشتی',1],
+    ['desc','شرح خدمت','a','ارائه کمک‌هزینه به خانوارهای مشمول'],
+    ['type','نوع خدمت','t','حمایتی، مالی، درمانی، آموزشی'],
+    ['owner','واحد مالک خدمت','t','معاونت حمایت و سلامت خانواده'],
+    ['audience','گروه دریافت‌کننده خدمت','t','خانوارهای تحت پوشش'],
+    ['audienceCount','تعداد دریافت‌کنندگان','n','۵۰۰۰۰۰'],
+    ['geoScope','گستره جغرافیایی','t','سراسری'],
+    ['deliveryMethod','روش ارائه خدمت','t','حضوری، سامانه‌ای، تلفنی'],
+    ['frequency','تناوب ارائه','t','ماهانه، مستمر، موردی'],
+    ['requestVolume','حجم درخواست‌ها','t','۲۰ هزار درخواست ماهانه'],
+    ['hours','ساعات/روزهای ارائه','t','روزهای اداری'],
+    ['legalDeadline','مهلت قانونی یا تعهد زمانی','t','پرداخت تا موعد مقرر'],
+    ['systems','سامانه‌های مورد استفاده','t','سامانه سها'],
+    ['participants','واحدهای مشارکت‌کننده','t','امور مالی، فناوری اطلاعات، استان‌ها'],
+    ['inputs','مدارک و اطلاعات ورودی','a','درخواست، مدارک حمایتی'],
+    ['outputs','خروجی خدمت','t','پرداخت یا اعلام نتیجه درخواست'],
+    ['manualFallback','امکان ارائه بدون سامانه','t','بررسی دستی و ثبت موقت'],
+    ['stopImpact','پیامد توقف خدمت','a','تأخیر در پرداخت حمایت'],
+    ['responsible','مسئول پاسخ‌گویی','t','مدیر خدمت']
+  ]},
+  'SVC-02':{t:'فرآیندها',m:1,r:'به ازای هر فرآیند',f:[
+    ['prcId','شناسه فرآیند','t','PRC-001',1],
+    ['name','نام فرآیند','t','بررسی و تأیید درخواست حمایت معیشتی',1],
+    ['service','خدمت مرتبط','t','حمایت معیشتی'],
+    ['owner','واحد مالک فرآیند','t','اداره کل حمایت'],
+    ['startPoint','نقطه آغاز','t','ثبت درخواست'],
+    ['steps','مراحل اجرایی','a','ثبت، بررسی، تأیید، پرداخت'],
+    ['participants','واحدهای مشارکت‌کننده','t','شهرستان، استان، امور مالی'],
+    ['stepOwners','مسئول هر مرحله','a','کارشناس پرونده'],
+    ['docs','اطلاعات و مدارک موردنیاز','a','مدارک پرونده'],
+    ['stepOutputs','خروجی هر مرحله','a','تأیید یا رد درخواست'],
+    ['stepTime','زمان انجام هر مرحله','t','۲ روز کاری'],
+    ['volume','حجم اجرای فرآیند','t','۳۰۰ پرونده در روز'],
+    ['systems','سامانه‌های مورد استفاده','t','سامانه سها'],
+    ['prcDeps','وابستگی به سایر فرآیندها','t','تأیید وضعیت پرونده'],
+    ['externalDeps','وابستگی به سازمان بیرونی','t','بانک عامل'],
+    ['manualAbility','امکان اجرای دستی','t','دریافت درخواست کاغذی'],
+    ['stopImpact','پیامد توقف فرآیند','a','ایجاد پرونده‌های معوق']
+  ]},
+  'SVC-03':{t:'فعالیت‌های تشکیل‌دهنده فرآیند',m:1,r:'به ازای هر فعالیت',f:[
+    ['name','نام فعالیت','t','بررسی مدارک',1],
+    ['process','فرآیند مرتبط','t','بررسی درخواست حمایت'],
+    ['responsible','مسئول انجام','t','کارشناس پرونده'],
+    ['unit','واحد انجام‌دهنده','t','اداره شهرستان'],
+    ['input','ورودی فعالیت','t','درخواست ثبت‌شده'],
+    ['output','خروجی فعالیت','t','تأیید اولیه'],
+    ['time','زمان انجام','t','۳۰ دقیقه'],
+    ['volume','حجم فعالیت','t','۵۰ مورد در روز'],
+    ['tools','ابزار و سامانه موردنیاز','t','رایانه و سامانه سها'],
+    ['physicalNeed','نیازمندی حضور فیزیکی','t','در برخی موارد'],
+    ['substitutable','امکان انجام توسط فرد جایگزین','t','بله'],
+    ['altMethod','روش جایگزین انجام','t','بررسی مستندات چاپی']
+  ]},
+  'SVC-04':{t:'ذی‌نفعان و دریافت‌کنندگان خدمات',m:1,r:'به ازای هر گروه ذی‌نفع',f:[
+    ['title','عنوان گروه','t','خانوارهای تحت پوشش',1],
+    ['type','نوع ذی‌نفع','t','داخلی، بیرونی'],
+    ['count','تعداد افراد یا واحدها','n','۵۰۰۰۰۰'],
+    ['services','خدمات دریافت‌شده','t','حمایت معیشتی'],
+    ['geoScope','گستره جغرافیایی','t','سراسری'],
+    ['dependency','میزان وابستگی به خدمت','t','بالا'],
+    ['sensitivity','حساسیت به توقف خدمت','t','بسیار بالا'],
+    ['delayImpact','پیامد تأخیر در خدمت','a','ایجاد مشکل در تأمین نیازهای ضروری'],
+    ['priorityGroups','گروه‌های دارای اولویت ویژه','t','بیماران خاص و خانوارهای فاقد درآمد'],
+    ['altAccess','امکان استفاده از روش جایگزین','t','مراجعه حضوری یا تماس تلفنی'],
+    ['notification','روش اطلاع‌رسانی','t','پیامک، تماس، وب‌سایت']
+  ]},
+  'SVC-05':{t:'آمار عملکرد و حجم عملیات',m:1,r:'به ازای هر خدمت/فرآیند/واحد',f:[
+    ['subject','موضوع آمار (خدمت/فرآیند/واحد)','t','حمایت معیشتی',1],
+    ['daily','تعداد عملیات روزانه','n','۵۰۰'],
+    ['monthly','تعداد عملیات ماهانه','n','۱۵۰۰۰'],
+    ['yearly','تعداد عملیات سالانه','n','۱۸۰۰۰۰'],
+    ['openCases','تعداد پرونده‌های جاری','n','۲۰۰۰۰'],
+    ['overdueCases','تعداد پرونده‌های معوق','n','۲۰۰۰'],
+    ['avgTime','متوسط زمان انجام','t','۲ روز'],
+    ['maxTime','حداکثر زمان مجاز رسیدگی','t','۵ روز'],
+    ['normalCapacity','ظرفیت عادی','t','۵۰۰ درخواست روزانه'],
+    ['maxCapacity','ظرفیت حداکثری','t','۸۰۰ درخواست روزانه'],
+    ['staffNeeded','تعداد کارکنان موردنیاز','n','۱۰'],
+    ['peakPeriods','دوره‌های اوج فعالیت','t','پایان ماه و ایام خاص'],
+    ['seasonal','تغییرات فصلی یا مناسبتی','a','افزایش درخواست در ماه رمضان']
+  ]},
+  'BIA-01':{t:'تحلیل اثر توقف خدمت',m:1,r:'به ازای هر خدمت',f:[
+    ['service','خدمت مورد بررسی','t','حمایت معیشتی',1],
+    ['affectedCount','تعداد افراد متأثر','n','۱۰۰۰۰۰'],
+    ['after30m','اثر توقف پس از ۳۰ دقیقه','a','اختلال در ثبت درخواست‌ها'],
+    ['after1h','اثر پس از یک ساعت','a','افزایش درخواست‌های پاسخ‌داده‌نشده'],
+    ['after8h','اثر پس از ۸ ساعت','a','ایجاد اختلال در عملیات روزانه'],
+    ['after24h','اثر پس از ۲۴ ساعت','a','تأخیر در رسیدگی به پرونده‌ها'],
+    ['after72h','اثر پس از ۷۲ ساعت','a','افزایش قابل‌توجه پرونده‌های معوق'],
+    ['afterWeek','اثر پس از یک هفته','a','اختلال در تعهدات حمایتی'],
+    ['afterMonth','اثر پس از یک ماه','a','پیامدهای اجتماعی و اعتباری گسترده'],
+    ['financial','اثر مالی توقف','a','افزایش هزینه‌های جبرانی'],
+    ['legal','اثر قانونی و قراردادی','t','عدم رعایت مهلت تعهدات'],
+    ['social','اثر اجتماعی','t','ایجاد مشکل برای خانوارهای نیازمند'],
+    ['reputation','اثر اعتباری','t','کاهش اعتماد عمومی'],
+    ['otherServices','اثر بر سایر خدمات','t','اختلال در پرداخت‌های مرتبط'],
+    ['recoverable','امکان جبران آثار توقف','t','پرداخت معوقات پس از بازیابی'],
+    ['recoveryTime','زمان موردنیاز برای جبران','t','۱۰ روز']
+  ]},
+  'BIA-02':{t:'شاخص‌های زمانی تداوم و بازیابی',m:1,r:'به ازای هر خدمت/فرآیند/سامانه',f:[
+    ['subject','موضوع شاخص','t','سامانه سها',1],
+    ['mtpd','MTPD — حداکثر مدت قابل‌تحمل توقف','t','۷۲ ساعت'],
+    ['rto','RTO — حداکثر زمان هدف بازیابی','t','۸ ساعت'],
+    ['rpo','RPO — حداکثر داده قابل از دست رفتن','t','۱ ساعت'],
+    ['mbco','MBCO — حداقل سطح قابل قبول ارائه','t','۳۰ درصد ظرفیت عادی'],
+    ['wrt','WRT — زمان آماده‌سازی پس از بازیابی','t','۲ ساعت'],
+    ['basis','مبنای تعیین شاخص‌ها','a',''],
+    ['approver','واحد تأییدکننده','t',''],
+    ['feasibility','امکان‌پذیری فنی RTO/RPO','t',''],
+    ['resources','منابع لازم برای تحقق','a',''],
+    ['tested','آیا آزمون شده است؟','t','خیر'],
+    ['fallback','راهکار جایگزین در صورت عدم تحقق','a','']
+  ]},
+  'BIA-03':{t:'اولویت‌بندی خدمات',m:1,r:'به ازای هر خدمت',f:[
+    ['service','نام خدمت','t','حمایت معیشتی',1],
+    ['importance','درجه اهمیت','t','حیاتی'],
+    ['priority','اولویت بازیابی','t','اولویت ۱'],
+    ['reason','دلیل اولویت‌بندی','a','وابستگی مستقیم خانوارها'],
+    ['priorityGroups','گروه‌های دارای اولویت','t','خانوارهای دارای شرایط اضطراری'],
+    ['minCapacity','حداقل ظرفیت موردنیاز','t','۳۰ درصد ظرفیت عادی'],
+    ['minStaff','حداقل نیروی انسانی موردنیاز','n','۵'],
+    ['requiredResources','منابع و تجهیزات ضروری','a','سامانه، اینترنت، دسترسی بانکی'],
+    ['order','ترتیب بازیابی نسبت به سایر خدمات','t','قبل از خدمات غیرضروری'],
+    ['approver','مرجع تأیید اولویت','t','معاونت مالک خدمت']
+  ]},
+  'RSK-01':{t:'شناسایی تهدیدات',m:1,r:'به ازای هر تهدید',f:[
+    ['title','عنوان تهدید','t','قطع طولانی‌مدت برق',1],
+    ['category','دسته تهدید','t','طبیعی، فیزیکی، فناوری، انسانی، بیرونی'],
+    ['source','منشأ تهدید','t','اختلال در شبکه برق'],
+    ['scope','محدوده اثر','t','یک ساختمان، استان یا کل سازمان'],
+    ['affectedServices','خدمات متأثر','a','خدمات وابسته به سامانه‌های مرکزی'],
+    ['affectedProcesses','فرآیندهای متأثر','a','ثبت و بررسی پرونده'],
+    ['affectedSystems','سامانه‌های متأثر','a','سامانه سها'],
+    ['likelihood','احتمال وقوع','t','متوسط'],
+    ['severity','شدت اثر','t','بسیار زیاد'],
+    ['duration','مدت احتمالی اثر','t','۲۴ ساعت'],
+    ['existingControls','کنترل‌های موجود','a','UPS و ژنراتور'],
+    ['controlWeaknesses','ضعف کنترل‌ها','a','ظرفیت محدود سوخت'],
+    ['history','سابقه وقوع','t','قطعی برق در تابستان'],
+    ['mitigation','اقدام پیشنهادی کاهش اثر','a','تأمین سوخت پشتیبان']
+  ]},
+  'RSK-02':{t:'شناسایی و ارزیابی ریسک‌ها',m:1,r:'به ازای هر ریسک',f:[
+    ['rskId','شناسه ریسک','t','RSK-001',1],
+    ['title','عنوان ریسک','t','عدم امکان بازیابی سامانه پس از خرابی سرور',1],
+    ['cause','علت ایجاد ریسک','a','نبود نسخه پشتیبان سالم'],
+    ['affectedAsset','دارایی یا خدمت متأثر','t','سامانه حمایت معیشتی'],
+    ['likelihood','احتمال وقوع','t','متوسط'],
+    ['severity','شدت پیامد','t','بسیار زیاد'],
+    ['level','سطح ریسک','t','بالا'],
+    ['existingControls','کنترل‌های موجود','a','تهیه نسخه پشتیبان روزانه'],
+    ['weaknesses','نقاط ضعف کنترل‌ها','a','عدم آزمون منظم بازیابی'],
+    ['owner','مسئول مدیریت ریسک','t','مدیریت فناوری اطلاعات'],
+    ['action','اقدام اصلاحی یا کاهنده','a','آزمون دوره‌ای Restore'],
+    ['timeline','زمان اجرای اقدام','t','سه ماه'],
+    ['residual','ریسک باقی‌مانده','t','متوسط']
+  ]},
+  'RSK-03':{t:'سناریوهای بحران',m:1,r:'به ازای هر سناریو',f:[
+    ['title','عنوان سناریو','t','از دسترس خارج شدن مرکز داده اصلی',1],
+    ['trigger','شرایط آغاز بحران','a','خرابی گسترده تجهیزات مرکز داده'],
+    ['signs','نشانه‌های اولیه','a','قطع دسترسی سامانه‌های مرکزی'],
+    ['geoScope','محدوده جغرافیایی','t','کل سازمان'],
+    ['affectedServices','خدمات متأثر','a','حمایت معیشتی و درمانی'],
+    ['involvedUnits','واحدهای درگیر','t','فناوری، حمایت، مالی'],
+    ['duration','مدت احتمالی بحران','t','۴۸ ساعت'],
+    ['resources','منابع موردنیاز','a','مرکز داده جایگزین و نیروی فنی'],
+    ['immediateActions','اقدامات فوری','a','اعلام وضعیت بحران و ارزیابی خسارت'],
+    ['continuationStrategy','راهکار ادامه فعالیت','a','فعال‌سازی سایت پشتیبان'],
+    ['decisionMaker','مسئول تصمیم‌گیری','t','کمیته مدیریت بحران'],
+    ['executor','مسئول اجرای راهکار','t','مدیریت فناوری اطلاعات'],
+    ['returnCriteria','شرایط بازگشت به وضعیت عادی','a','تأیید سلامت سامانه‌ها و داده‌ها']
+  ]},
+  'RSK-04':{t:'سوابق حوادث و اختلالات',m:1,r:'به ازای هر حادثه',f:[
+    ['title','عنوان حادثه','t','اختلال سامانه پرداخت',1],
+    ['date','تاریخ وقوع','t','۱۴۰۵/۰۶/۱۵'],
+    ['timeRange','زمان شروع و پایان','t','۹ تا ۱۳'],
+    ['cause','علت وقوع','a','اختلال ارتباط با بانک'],
+    ['affected','خدمت یا سامانه متأثر','t','پرداخت کمک‌هزینه'],
+    ['affectedOps','تعداد کاربران یا عملیات متأثر','n','۳۰۰۰'],
+    ['actionsTaken','اقدامات انجام‌شده','a','فعال‌سازی مسیر جایگزین'],
+    ['recoveryTime','زمان بازیابی','t','۴ ساعت'],
+    ['backlog','میزان معوقات ایجادشده','t','۱۰۰۰ درخواست'],
+    ['weaknesses','نقاط ضعف شناسایی‌شده','a','نبود مسیر دوم ارتباطی'],
+    ['corrective','اقدامات اصلاحی پس از حادثه','a','ایجاد ارتباط پشتیبان'],
+    ['docs','مستندات حادثه','t','گزارش فنی و مکاتبات']
+  ]},
+  'IT-01':{t:'شناسنامه سامانه‌ها',m:1,r:'به ازای هر سامانه',f:[
+    ['sysId','شناسه سامانه','t','SYS-001',1],
+    ['name','نام سامانه','t','سامانه سها',1],
+    ['mission','شرح مأموریت سامانه','a','مدیریت درخواست‌های حمایتی'],
+    ['bizOwner','مالک کسب‌وکاری','t','معاونت حمایت'],
+    ['techOwner','متولی فنی','t','مدیریت فناوری اطلاعات'],
+    ['developer','شرکت توسعه‌دهنده','t','شرکت پیمانکار'],
+    ['support','شرکت پشتیبان','t','شرکت پشتیبانی'],
+    ['userCount','تعداد کاربران','n','۲۰۰۰'],
+    ['users','واحدهای استفاده‌کننده','t','ستاد، استان‌ها و شهرستان‌ها'],
+    ['services','خدمات وابسته','a','حمایت معیشتی'],
+    ['processes','فرآیندهای وابسته','a','تشکیل و بررسی پرونده'],
+    ['hosting','محل میزبانی','t','مرکز داده اصلی'],
+    ['os','سیستم‌عامل','t','Linux'],
+    ['db','پایگاه داده','t','PostgreSQL'],
+    ['lang','زبان برنامه‌نویسی','t','Java'],
+    ['arch','معماری سامانه','t','سه‌لایه'],
+    ['integrations','ارتباط با سایر سامانه‌ها','a','API با سامانه مالی'],
+    ['requiredEquip','تجهیزات موردنیاز','a','سرور، ذخیره‌ساز و فایروال'],
+    ['auth','روش احراز هویت','t','احراز هویت متمرکز'],
+    ['sourceRepo','محل نگهداری کد منبع','t','مخزن سازمانی'],
+    ['docs','مستندات فنی','t','مستند معماری و راهنمای کاربری'],
+    ['backupFreq','وضعیت نسخه پشتیبان','t','روزانه'],
+    ['backupLocation','محل نگهداری پشتیبان','t','سایت پشتیبان'],
+    ['lastRestoreTest','آخرین آزمون بازیابی','t','۱۴۰۵/۰۷/۱۰'],
+    ['hasDRSite','سایت بازیابی بحران','t','بله'],
+    ['rto','RTO سامانه','t','۸ ساعت'],
+    ['rpo','RPO سامانه','t','۱ ساعت'],
+    ['offlineMode','امکان فعالیت آفلاین','t','خیر'],
+    ['altMethod','روش جایگزین','t','ثبت موقت درخواست‌ها'],
+    ['contract','اطلاعات قرارداد و پشتیبانی','t','قرارداد پشتیبانی سالانه'],
+    ['techLimits','محدودیت‌های فنی بازیابی','a','وابستگی به سرویس بانک']
+  ]},
+  'IT-02':{t:'تجهیزات و دارایی‌های فناوری',m:1,r:'به ازای هر تجهیز',f:[
+    ['assetId','شناسه دارایی','t','EQ-001',1],
+    ['name','نام تجهیز','t','سرور پایگاه داده',1],
+    ['type','نوع تجهیز','t','سرور، ذخیره‌ساز، سوئیچ، فایروال'],
+    ['brand','برند و مدل','t','Dell PowerEdge R750'],
+    ['serial','شماره سریال','t',''],
+    ['specs','مشخصات فنی','a','CPU، RAM، ظرفیت ذخیره‌سازی'],
+    ['location','محل استقرار','t','مرکز داده اصلی'],
+    ['owner','مالک تجهیز','t','واحد فناوری اطلاعات'],
+    ['systems','سامانه‌های وابسته','a','سامانه سها'],
+    ['services','خدمات وابسته','a','ثبت درخواست حمایتی'],
+    ['status','وضعیت عملیاتی','t','فعال'],
+    ['installDate','تاریخ خرید و نصب','t','۱۴۰۴/۰۵/۰۱'],
+    ['warranty','وضعیت گارانتی','t','دارای گارانتی'],
+    ['support','شرکت پشتیبان','t','شرکت تأمین‌کننده'],
+    ['spareParts','قطعات یدکی موجود','t','پاور و دیسک'],
+    ['replacement','تجهیز جایگزین','t','سرور رزرو'],
+    ['replacementTime','زمان جایگزینی','t','۴ ساعت'],
+    ['configBackup','نسخه پشتیبان تنظیمات','t','موجود'],
+    ['failureHistory','سوابق خرابی','a','خرابی پاور'],
+    ['crisisAvailability','امکان تهیه جایگزین در بحران','t','بله، با تأمین‌کننده']
+  ]},
+  'IT-03':{t:'مراکز داده',m:1,r:'به ازای هر سایت',f:[
+    ['name','نام مرکز داده','t','مرکز داده اصلی',1],
+    ['location','محل استقرار','t','ساختمان ستادی'],
+    ['owner','مالک و بهره‌بردار','t','سازمان'],
+    ['hostedSystems','سامانه‌های میزبانی‌شده','a','سامانه‌های مالی و حمایتی'],
+    ['serverCount','تعداد و مشخصات سرورها','t','۵۰ سرور'],
+    ['cpuCapacity','ظرفیت پردازشی','t','مجموع CPU و RAM'],
+    ['storageCapacity','ظرفیت ذخیره‌سازی','t','۱۰۰ ترابایت'],
+    ['powerMain','وضعیت برق اصلی','t','دو ورودی برق'],
+    ['ups','وضعیت UPS','t','۳۰ دقیقه پشتیبانی'],
+    ['generator','ژنراتور اضطراری','t','دارای ژنراتور'],
+    ['fuelCapacity','ظرفیت و ذخیره سوخت','t','۲۴ ساعت'],
+    ['cooling','سیستم سرمایش','t','سرمایش افزونه'],
+    ['fireSup','سیستم اطفای حریق','t','سیستم گازی'],
+    ['accessControl','کنترل تردد و امنیت فیزیکی','t','کارت دسترسی و دوربین'],
+    ['networkPaths','مسیرهای ارتباطی','t','دو مسیر ارتباطی'],
+    ['drSite','مرکز داده جایگزین','t','سایت DR'],
+    ['distance','فاصله جغرافیایی سایت‌ها','t','۳۰ کیلومتر'],
+    ['independence','استقلال زیرساختی','t','برق و ارتباط مستقل'],
+    ['drCapacity','ظرفیت مرکز جایگزین','t','۷۰ درصد سایت اصلی'],
+    ['lastDRTest','آخرین آزمون انتقال به DR','t','۱۴۰۵/۰۶/۲۰']
+  ]},
+  'IT-04':{t:'ارتباطات و شبکه',m:1,r:'به ازای هر مسیر ارتباطی',f:[
+    ['netId','شناسه مسیر','t','NET-001',1],
+    ['route','مبدأ و مقصد','t','ستاد تا مرکز داده'],
+    ['provider','شرکت ارائه‌دهنده','t','اپراتور ارتباطی'],
+    ['type','نوع ارتباط','t','فیبر نوری'],
+    ['bandwidth','ظرفیت پهنای باند','t','۱ گیگابیت'],
+    ['terminalEquip','تجهیزات انتهایی','t','روتر و سوئیچ'],
+    ['services','خدمات وابسته','a','دسترسی به سامانه‌های مرکزی'],
+    ['altPath','مسیر جایگزین','t','ارتباط رادیویی'],
+    ['altIndependence','استقلال مسیر جایگزین','t','مسیر فیزیکی مستقل'],
+    ['sla','توافق‌نامه سطح خدمت','t','SLA قرارداد'],
+    ['repairTime','زمان رفع خرابی تعهدشده','t','۴ ساعت'],
+    ['supportContact','اطلاعات تماس پشتیبانی','t','شماره مرکز عملیات اپراتور'],
+    ['emergencyMethod','روش ارتباط اضطراری','a','تماس با پشتیبانی و مسیر جایگزین']
+  ]},
+  'IT-05':{t:'اطلاعات و داده‌های حیاتی',m:1,r:'به ازای هر مجموعه داده',f:[
+    ['name','نام مجموعه داده','t','اطلاعات پرونده‌های حمایتی',1],
+    ['bizOwner','مالک کسب‌وکاری','t','معاونت حمایت'],
+    ['techOwner','متولی فنی','t','فناوری اطلاعات'],
+    ['system','سامانه نگهدارنده','t','سامانه سها'],
+    ['dataType','نوع اطلاعات','t','اطلاعات عملیاتی'],
+    ['classification','سطح طبقه‌بندی','t','محرمانه'],
+    ['volume','حجم اطلاعات','t','۵ ترابایت'],
+    ['changeRate','نرخ تغییر اطلاعات','t','روزانه'],
+    ['location','محل ذخیره‌سازی','t','پایگاه داده اصلی'],
+    ['backupLocation','محل نسخه پشتیبان','t','ذخیره‌ساز سایت پشتیبان'],
+    ['backupFreq','تناوب پشتیبان‌گیری','t','هر ۴ ساعت'],
+    ['retention','مدت نگهداری نسخه‌ها','t','۳۰ روز'],
+    ['encryption','روش رمزنگاری','t','رمزنگاری در حالت سکون'],
+    ['restoreOwner','مسئول بازیابی','t','مدیر پایگاه داده'],
+    ['rpo','RPO مجموعه داده','t','۴ ساعت'],
+    ['lastIntegrityTest','آخرین آزمون صحت بازیابی','t','۱۴۰۵/۰۷/۱۰']
+  ]},
+  'HR-01':{t:'نقش‌های کلیدی',m:1,r:'به ازای هر نقش',f:[
+    ['title','عنوان نقش','t','مدیر پایگاه داده',1],
+    ['unit','واحد سازمانی','t','فناوری اطلاعات'],
+    ['criticalDuties','وظایف حیاتی','a','مدیریت و بازیابی پایگاه داده'],
+    ['dependentServices','خدمات وابسته','a','خدمات سامانه‌های مرکزی'],
+    ['minStaff','حداقل تعداد افراد لازم','n','۲'],
+    ['currentStaff','تعداد افراد موجود','n','۳'],
+    ['requiredSkills','مهارت تخصصی موردنیاز','t','مدیریت PostgreSQL'],
+    ['requiredAccess','سطح دسترسی موردنیاز','t','دسترسی مدیریتی'],
+    ['successor','فرد یا نقش جانشین','t','کارشناس ارشد پایگاه داده'],
+    ['remoteWork','امکان دورکاری','t','بله'],
+    ['physicalRequired','الزام حضور فیزیکی','t','در زمان خرابی سخت‌افزار'],
+    ['knowledgeDependency','وابستگی به دانش فردی','t','بالا'],
+    ['replacementTime','زمان جایگزینی فرد','t','۲ روز'],
+    ['documentation','مستندات دانش سازمانی','t','راهنمای بازیابی و عملیات']
+  ]},
+  'HR-02':{t:'منابع انسانی در شرایط بحران',m:1,r:'به ازای هر واحد یا نقش حیاتی',f:[
+    ['unit','واحد یا نقش حیاتی','t','واحد فناوری اطلاعات',1],
+    ['minCrisisStaff','حداقل نیروی لازم در بحران','n','۵'],
+    ['normalStaff','نیروی لازم در وضعیت عادی','n','۱۵'],
+    ['shiftWork','امکان فعالیت شیفتی','t','بله'],
+    ['offHours','امکان فعالیت خارج از ساعات اداری','t','بله'],
+    ['remoteWork','امکان فعالیت از راه دور','t','محدود'],
+    ['altLocationNeed','نیاز به حضور در محل جایگزین','t','بله'],
+    ['successionPlan','برنامه جانشین‌پروری','t','معرفی دو جانشین'],
+    ['constraints','محدودیت‌های قانونی یا سازمانی','t','محدودیت ساعات کار'],
+    ['trainingNeed','نیاز به آموزش پیش از بحران','t','آموزش سامانه جایگزین'],
+    ['substituteSource','روش تأمین نیروی جایگزین','t','نیروهای آموزش‌دیده استان']
+  ]},
+  'VEN-01':{t:'شناسنامه پیمانکار',m:1,r:'به ازای هر پیمانکار',f:[
+    ['name','نام پیمانکار','t','شرکت پشتیبان سامانه',1],
+    ['subject','موضوع قرارداد','t','پشتیبانی نرم‌افزار'],
+    ['contractUnit','واحد طرف قرارداد','t','مدیریت فناوری اطلاعات'],
+    ['contractNum','شماره و تاریخ قرارداد','t','قرارداد شماره ۱۲۳'],
+    ['duration','مدت قرارداد','t','یک سال'],
+    ['services','خدمات وابسته','a','سامانه سها'],
+    ['contractOwner','مسئول قرارداد','t','مدیر پروژه'],
+    ['emergencyPhone','شماره تماس اضطراری','t','شماره مسئول پشتیبانی'],
+    ['sla','سطح خدمت (SLA)','t','پاسخ‌گویی حداکثر ۲ ساعت'],
+    ['supportHours','ساعات پشتیبانی','t','۲۴ ساعته'],
+    ['holidaySupport','پشتیبانی در تعطیلات','t','دارد'],
+    ['onSiteAbility','امکان اعزام نیرو به محل','t','بله'],
+    ['knowledgeDependency','وابستگی سازمان به دانش پیمانکار','t','بالا'],
+    ['bcpAvailable','برنامه تداوم کسب‌وکار پیمانکار','t','موجود یا نامشخص'],
+    ['alternate','پیمانکار جایگزین','t','شرکت جایگزین'],
+    ['replacementTime','زمان جایگزینی پیمانکار','t','۳۰ روز'],
+    ['accessLevel','سطح دسترسی پیمانکار','t','دسترسی محدود و کنترل‌شده'],
+    ['docsInHand','مستندات فنی در اختیار سازمان','t','مستندات نصب و پشتیبانی'],
+    ['continuationInOutage','امکان ادامه خدمت در قطع همکاری','t','محدود'],
+    ['crisisCommitment','تعهدات پیمانکار در بحران','a','پشتیبانی اضطراری']
+  ]},
+  'EXT-01':{t:'سازمان‌های همکار',m:1,r:'به ازای هر سازمان',f:[
+    ['name','نام سازمان','t','بانک عامل',1],
+    ['cooperationArea','حوزه همکاری','t','پرداخت تسهیلات'],
+    ['relatedService','خدمت مرتبط','t','تسهیلات قرض‌الحسنه'],
+    ['sharedProcess','فرآیند مشترک','a','ارسال درخواست و دریافت نتیجه'],
+    ['exchangeType','نوع تبادل اطلاعات','t','API'],
+    ['relatedSystem','سامانه مرتبط','t','سامانه تسهیلات'],
+    ['responsibleUnit','واحد مسئول ارتباط','t','امور مالی'],
+    ['contactPerson','مسئول تماس','t','نماینده معرفی‌شده'],
+    ['sla','سطح خدمت یا تعهدات','t','پاسخ‌گویی در روزهای کاری'],
+    ['dependencyLevel','میزان وابستگی','t','بالا'],
+    ['alternateAbility','امکان سازمان جایگزین','t','وابسته به قرارداد'],
+    ['hasAgreement','تفاهم‌نامه یا قرارداد','t','تفاهم‌نامه همکاری'],
+    ['emergencyContact','روش ارتباط اضطراری','t','تماس مستقیم با نماینده']
+  ]},
+  'RES-01':{t:'منابع مالی، فیزیکی و لجستیکی',m:1,r:'به ازای هر منبع',f:[
+    ['name','نام منبع','t','اعتبار پرداخت کمک اضطراری',1],
+    ['type','نوع منبع','t','مالی، فیزیکی، لجستیکی'],
+    ['owner','مالک یا متولی','t','معاونت مالی'],
+    ['dependentService','خدمت وابسته','t','حمایت معیشتی'],
+    ['capacity','ظرفیت موجود','t','اعتبار مصوب'],
+    ['normalConsumption','میزان مصرف عادی','t','پرداخت ماهانه'],
+    ['minRequired','حداقل موجودی موردنیاز','t','اعتبار یک ماه'],
+    ['supplySource','مرجع تأمین','t','منابع مالی سازمان'],
+    ['crisisAllocation','روش تخصیص در بحران','t','تخصیص اضطراری'],
+    ['altPayment','روش پرداخت جایگزین','t','پرداخت از مسیر بانکی جایگزین'],
+    ['replenishTime','زمان تأمین مجدد','t','۷ روز'],
+    ['legalLimits','محدودیت‌های قانونی','t','ضوابط پرداخت و تخصیص'],
+    ['supplyOwner','مسئول تأمین','t','مدیر مالی']
+  ]},
+  'DEP-01':{t:'ماتریس وابستگی‌ها',m:1,r:'به ازای هر رابطه وابستگی',f:[
+    ['mainService','خدمت اصلی','t','حمایت معیشتی',1],
+    ['process','فرآیند وابسته','t','تأیید و پرداخت'],
+    ['system','سامانه وابسته','t','سامانه سها'],
+    ['serviceOwner','مالک خدمت','t','معاونت حمایت'],
+    ['userUnit','واحد بهره‌بردار','t','اداره شهرستان'],
+    ['equipment','تجهیز وابسته','t','سرور پایگاه داده'],
+    ['dataCenter','مرکز داده وابسته','t','مرکز داده اصلی'],
+    ['externalOrg','سازمان بیرونی وابسته','t','بانک عامل'],
+    ['networkPath','مسیر ارتباطی وابسته','t','ارتباط اختصاصی'],
+    ['contractor','پیمانکار وابسته','t','شرکت پشتیبان'],
+    ['depType','نوع وابستگی','t','فنی، انسانی، مالی، عملیاتی'],
+    ['severity','شدت وابستگی','t','حیاتی'],
+    ['alternative','جایگزین موجود','t','سایت پشتیبان'],
+    ['tolerableOutage','مدت قابل‌تحمل قطع','t','۸ ساعت'],
+    ['impact','پیامد قطع وابستگی','a','توقف پرداخت']
+  ]},
+  'CNT-01':{t:'روش‌های جایگزین انجام خدمت',m:1,r:'به ازای هر خدمت یا فرآیند',f:[
+    ['serviceName','نام خدمت یا فرآیند','t','ثبت درخواست حمایت',1],
+    ['altMethodName','نام روش جایگزین','t','ثبت موقت دستی',1],
+    ['activationCondition','شرایط فعال‌سازی','t','قطعی بیش از ۴ ساعت'],
+    ['steps','مراحل اجرای روش جایگزین','a','دریافت، ثبت، بررسی و نگهداری درخواست'],
+    ['responsible','مسئول اجرا','t','مدیر اداره شهرستان'],
+    ['tools','ابزار موردنیاز','t','فرم کاغذی و رایانه مستقل'],
+    ['staffNeeded','تعداد نیروی موردنیاز','n','۳'],
+    ['capacity','ظرفیت اجرای روش جایگزین','t','۱۰۰ درخواست در روز'],
+    ['limitations','محدودیت‌های روش جایگزین','a','عدم امکان پرداخت فوری'],
+    ['maxDuration','مدت مجاز استفاده','t','حداکثر ۷۲ ساعت'],
+    ['dataEntryAfter','نحوه ثبت اطلاعات پس از بازیابی','a','ورود اطلاعات به سامانه'],
+    ['dataControl','نحوه کنترل اطلاعات ثبت‌شده','a','تطبیق و تأیید دو نفره'],
+    ['legalPermit','مجوز قانونی یا سازمانی','t','دستورالعمل مصوب'],
+    ['securityRisks','خطرات امنیتی روش جایگزین','a','نگهداری اسناد حاوی اطلاعات محرمانه']
+  ]},
+  'CNT-02':{t:'محل‌های جایگزین فعالیت',m:1,r:'به ازای هر محل جایگزین',f:[
+    ['name','نام محل جایگزین','t','ساختمان اداره کل استان',1],
+    ['address','نشانی','a','نشانی کامل'],
+    ['staffCapacity','ظرفیت استقرار کارکنان','n','۵۰'],
+    ['visitorCapacity','ظرفیت پذیرش مراجعه‌کننده','n','۱۰۰'],
+    ['equipment','تجهیزات موجود','t','رایانه و چاپگر'],
+    ['power','برق اضطراری','t','ژنراتور'],
+    ['network','اینترنت و ارتباطات','t','اینترنت پشتیبان'],
+    ['security','امکانات امنیت فیزیکی','t','نگهبانی و کنترل تردد'],
+    ['preparationTime','زمان آماده‌سازی','t','۶ ساعت'],
+    ['availableServices','خدمات قابل ارائه در محل','a','خدمات ضروری'],
+    ['activationOwner','مسئول فعال‌سازی','t','مدیر پشتیبانی']
+  ]},
+  'CNT-03':{t:'مدیریت پرونده‌ها و عملیات معوق',m:1,r:'به ازای هر خدمت',f:[
+    ['service','نام خدمت','t','حمایت درمانی',1],
+    ['openCases','تعداد پرونده‌های جاری','n','۲۰۰۰'],
+    ['overdueCases','تعداد پرونده‌های معوق','n','۵۰۰'],
+    ['avgProcessTime','متوسط زمان رسیدگی','t','۳ روز'],
+    ['postCrisisCapacity','ظرفیت رسیدگی پس از بحران','t','۵۰۰ پرونده روزانه'],
+    ['staffIncrease','امکان افزایش نیروی انسانی','t','بله'],
+    ['priority','اولویت رسیدگی','t','پرونده‌های فوری و اضطراری'],
+    ['recoveryTime','زمان موردنیاز برای جبران','t','۵ روز'],
+    ['responsible','مسئول مدیریت معوقات','t','مدیر خدمت']
+  ]},
+  'GOV-01':{t:'ساختار مدیریت بحران',m:0,r:'یک‌بار برای کل سازمان',f:[
+    ['committeeName','نام کمیته یا ساختار','t','کمیته مدیریت بحران',1],
+    ['formationAuthority','مرجع تشکیل','t','بالاترین مقام سازمان'],
+    ['chair','رئیس کمیته','t','رئیس سازمان'],
+    ['deputy','جانشین رئیس','t','معاون معرفی‌شده'],
+    ['members','اعضای کمیته','a','معاونان و مدیران کل مرتبط'],
+    ['itRep','نماینده فناوری اطلاعات','t','مدیر فناوری اطلاعات'],
+    ['secRep','نماینده امنیت اطلاعات','t','مدیر امنیت اطلاعات'],
+    ['hrRep','نماینده منابع انسانی','t','مدیر منابع انسانی'],
+    ['prRep','نماینده روابط عمومی','t','مدیر روابط عمومی'],
+    ['provinceRep','نماینده استان‌ها','t','نماینده منتخب'],
+    ['authority','حدود اختیارات','a','تصمیم‌گیری درباره فعال‌سازی BCP'],
+    ['formationConditions','شرایط تشکیل','t','بحران سطح سازمانی'],
+    ['mainLocation','محل اصلی تشکیل','t','ساختمان ستادی'],
+    ['altLocation','محل جایگزین تشکیل','t','سایت جایگزین'],
+    ['commMethod','روش ارتباط اعضا','t','تماس تلفنی و پیام‌رسان سازمانی'],
+    ['endAuthority','مرجع اعلام پایان بحران','t','رئیس کمیته']
+  ]},
+  'GOV-02':{t:'نقش‌ها و مسئولیت‌های بحران',m:1,r:'به ازای هر نقش',f:[
+    ['title','عنوان نقش','t','مسئول تداوم فعالیت خدمت',1],
+    ['unit','واحد سازمانی','t','معاونت حمایت'],
+    ['mainOwner','مسئول اصلی','t','مدیرکل مربوطه'],
+    ['deputy','جانشین','t','معاون مدیرکل'],
+    ['crisisDuty','مسئولیت در زمان بحران','a','فعال‌سازی روش جایگزین'],
+    ['authority','حدود اختیارات','a','تخصیص نیروی جایگزین'],
+    ['coordUnits','واحدهای هماهنگ‌شونده','t','فناوری و مالی'],
+    ['reporting','روش گزارش‌دهی','t','گزارش به کمیته بحران'],
+    ['responseTime','زمان پاسخ‌گویی موردانتظار','t','حداکثر یک ساعت']
+  ]},
+  'GOV-03':{t:'فهرست تماس‌های اضطراری',m:1,r:'به ازای هر فرد یا سازمان',f:[
+    ['name','نام فرد یا سازمان','t','مسئول پشتیبانی مرکز داده',1],
+    ['role','سمت یا مسئولیت','t','مدیر مرکز داده'],
+    ['unit','واحد سازمانی','t','فناوری اطلاعات'],
+    ['mainPhone','شماره تماس اصلی','t','شماره کاری'],
+    ['altPhone','شماره تماس جایگزین','t','شماره دوم'],
+    ['email','نشانی ایمیل','t','ایمیل سازمانی'],
+    ['successor','جانشین','t','کارشناس ارشد'],
+    ['availability','ساعات دسترس‌پذیری','t','۲۴ ساعته'],
+    ['altComm','روش ارتباط جایگزین','t','تماس با مرکز عملیات'],
+    ['lastVerified','تاریخ آخرین صحت‌سنجی','t','۱۴۰۵/۰۷/۰۱']
+  ]},
+  'GOV-04':{t:'برنامه ارتباطات اضطراری',m:1,r:'به ازای هر سناریو یا گروه مخاطب',f:[
+    ['scenario','سناریوی بحران','t','قطع سراسری سامانه',1],
+    ['audience','گروه مخاطب','t','کارکنان ستادی و استانی'],
+    ['goal','هدف اطلاع‌رسانی','a','اعلام اختلال و نحوه ادامه فعالیت'],
+    ['preparer','مسئول تهیه پیام','t','روابط عمومی'],
+    ['approver','مرجع تأیید پیام','t','کمیته بحران'],
+    ['mainChannel','کانال اصلی','t','پیامک سازمانی'],
+    ['altChannel','کانال جایگزین','t','تماس تلفنی'],
+    ['timing','زمان ارسال پیام','t','بلافاصله پس از تأیید بحران'],
+    ['frequency','تناوب اطلاع‌رسانی','t','هر ۴ ساعت'],
+    ['archive','نحوه ثبت و آرشیو پیام‌ها','t','سامانه مکاتبات']
+  ]},
+  'TST-01':{t:'سوابق آزمون و مانور',m:1,r:'به ازای هر آزمون یا مانور',f:[
+    ['title','عنوان آزمون یا مانور','t','مانور بازیابی سامانه سها',1],
+    ['date','تاریخ اجرا','t','۱۴۰۵/۰۶/۲۰'],
+    ['goal','هدف آزمون','a','بررسی قابلیت بازیابی سامانه'],
+    ['relatedService','خدمت یا سامانه مرتبط','t','سامانه سها'],
+    ['scenario','سناریوی آزمون','a','از دسترس خارج شدن سرور اصلی'],
+    ['responsible','واحد مسئول','t','فناوری اطلاعات'],
+    ['participants','شرکت‌کنندگان','t','تیم زیرساخت و پشتیبانی'],
+    ['timeRange','زمان شروع و پایان','t','۹ تا ۱۳'],
+    ['result','نتیجه آزمون','t','موفق'],
+    ['rtoTarget','RTO هدف','t','۸ ساعت'],
+    ['rtoAchieved','RTO محقق‌شده','t','۴ ساعت'],
+    ['rpoTarget','RPO هدف','t','یک ساعت'],
+    ['rpoAchieved','RPO محقق‌شده','t','۳۰ دقیقه'],
+    ['issues','مشکلات شناسایی‌شده','a','تأخیر در اتصال سرویس‌ها'],
+    ['corrective','اقدامات اصلاحی','a','بهینه‌سازی فرایند بازیابی'],
+    ['retestTime','زمان آزمون مجدد','t','سه ماه بعد'],
+    ['docs','مستندات آزمون','t','گزارش فنی و صورت‌جلسه']
+  ]},
+  'TST-02':{t:'سوابق آموزش و آمادگی کارکنان',m:1,r:'به ازای هر دوره',f:[
+    ['title','عنوان دوره','t','آموزش تداوم کسب‌وکار',1],
+    ['audience','گروه مخاطب','t','مدیران و کارشناسان'],
+    ['units','واحدهای شرکت‌کننده','t','معاونت‌ها و استان‌ها'],
+    ['date','تاریخ برگزاری','t','۱۴۰۵/۰۷/۱۵'],
+    ['count','تعداد شرکت‌کنندگان','n','۵۰'],
+    ['content','محتوای آموزشی','a','آشنایی با نقش‌ها و روش‌های جایگزین'],
+    ['evaluation','روش ارزیابی','t','آزمون کتبی'],
+    ['result','نتیجه ارزیابی','t','۸۰ درصد قبولی'],
+    ['remainingNeeds','نیازهای آموزشی باقیمانده','a','آموزش کار با سامانه جایگزین'],
+    ['docs','مستندات آموزش','t','فهرست حضور و گواهی']
+  ]}
+};
+
+const DC_SECTIONS = [
+  {id:1, t:'اطلاعات پایه و شناخت سازمان', p:'شناسایی مأموریت، ساختار، گستره فعالیت، ظرفیت عملیاتی و محدوده مسئولیت واحدها.', forms:['ORG-01','ORG-02','ORG-03']},
+  {id:2, t:'شناسایی خدمات و فعالیت‌ها', p:'شناسایی خدماتی که سازمان ارائه می‌کند و فعالیت‌هایی که برای استمرار ارائه آن‌ها باید حفظ شوند.', forms:['SVC-01','SVC-02','SVC-03','SVC-04','SVC-05']},
+  {id:3, t:'تحلیل اثرات توقف (BIA)', p:'تعیین میزان اثر توقف خدمات، فرآیندها و سامانه‌ها بر مأموریت سازمان و مشخص‌کردن اولویت بازیابی.', forms:['BIA-01','BIA-02','BIA-03']},
+  {id:4, t:'تهدیدات، ریسک‌ها و سناریوها', p:'شناسایی شرایطی که ممکن است استمرار فعالیت سازمان را مختل کنند و تعیین پیامدها و راهکارهای مقابله.', forms:['RSK-01','RSK-02','RSK-03','RSK-04']},
+  {id:5, t:'زیرساخت فناوری اطلاعات', p:'شناسایی وابستگی خدمات و فرآیندها به سامانه‌ها، تجهیزات، مراکز داده، شبکه و اطلاعات حیاتی.', forms:['IT-01','IT-02','IT-03','IT-04','IT-05']},
+  {id:6, t:'نیروی انسانی و دانش سازمانی', p:'شناسایی وابستگی فعالیت‌های حیاتی به کارکنان، تخصص‌ها، دسترسی‌ها و دانش افراد کلیدی.', forms:['HR-01','HR-02']},
+  {id:7, t:'پیمانکاران و تأمین‌کنندگان', p:'شناسایی وابستگی سازمان به شرکت‌ها و اشخاص بیرونی برای استمرار فعالیت.', forms:['VEN-01']},
+  {id:8, t:'سازمان‌های بیرونی و منابع', p:'شناسایی خدماتی که استمرارشان به عملکرد سازمان‌ها، بانک‌ها و نهادهای بیرونی وابسته است.', forms:['EXT-01','RES-01']},
+  {id:9, t:'روابط و وابستگی‌های حیاتی', p:'مشخص‌کردن زنجیره وابستگی خدمات به فرآیندها، سامانه‌ها، افراد، تجهیزات و سازمان‌های بیرونی.', forms:['DEP-01']},
+  {id:10, t:'راهکارهای تداوم و جایگزین', p:'شناسایی روش‌هایی که در صورت از دسترس خارج شدن امکانات اصلی، امکان ادامه حداقلی خدمات را فراهم می‌کنند.', forms:['CNT-01','CNT-02','CNT-03']},
+  {id:11, t:'مدیریت بحران و ارتباطات', p:'مشخص‌کردن مرجع تصمیم‌گیری، مسئولیت‌ها، اختیارات و روش اطلاع‌رسانی در زمان وقوع بحران.', forms:['GOV-01','GOV-02','GOV-03','GOV-04']},
+  {id:12, t:'آزمون، مانور و ارزیابی', p:'ارزیابی عملی قابلیت اجرای برنامه‌های تداوم کسب‌وکار و شناسایی نقاط ضعف پیش از وقوع بحران.', forms:['TST-01','TST-02']}
+];
+
+let DC_CURRENT = null;
+let DC_OPEN_SECTION = 1;
+
+async function dcInit(){
+  renderDCSidebar();
+  if(DC_CURRENT) await dcRenderMain();
+  updateDCBadges();
+}
+
+function renderDCSidebar(){
+  let h='';
+  DC_SECTIONS.forEach(sec=>{
+    const open = sec.id === DC_OPEN_SECTION;
+    h += `<div class="dc-sec ${open?'open':''}" data-sec="${sec.id}">
+      <div class="dc-sec-head">
+        <div class="dc-sec-num">${faDigits(sec.id)}</div>
+        <span>${escapeHtml(sec.t)}</span>
+      </div>
+      <div class="dc-sec-body">`;
+    sec.forms.forEach(code=>{
+      const f = DC_FORMS[code];
+      const active = code === DC_CURRENT ? 'active' : '';
+      h += `<div class="dc-form-link ${active}" data-form="${code}">
+        <svg class="ic" viewBox="0 0 24 24" style="width:11px;height:11px;opacity:.6"><circle cx="12" cy="12" r="9"/></svg>
+        <span>${escapeHtml(f.t)}</span>
+        <span class="badge-count" data-badge="${code}">۰</span>
+      </div>`;
+    });
+    h += `</div></div>`;
+  });
+  $('dcSidebar').innerHTML = h;
+  $('dcSidebar').querySelectorAll('.dc-sec-head').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const sec = +el.closest('.dc-sec').dataset.sec;
+      DC_OPEN_SECTION = (DC_OPEN_SECTION === sec) ? null : sec;
+      renderDCSidebar();
+    });
+  });
+  $('dcSidebar').querySelectorAll('[data-form]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      DC_CURRENT = el.dataset.form;
+      renderDCSidebar();
+      dcRenderMain();
+    });
+  });
+}
+
+async function updateDCBadges(){
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_forms?select=category`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+    });
+    if(!res.ok) return;
+    const data = await res.json();
+    const counts = {};
+    if(Array.isArray(data)) data.forEach(r=>{ counts[r.category] = (counts[r.category]||0)+1; });
+    let total=0, filled=0;
+    DC_SECTIONS.forEach(sec=>sec.forms.forEach(code=>{
+      const badge = document.querySelector(`[data-badge="${code}"]`);
+      const c = counts[code]||0;
+      if(badge) badge.textContent = faDigits(c);
+      total++;
+      if(c>0) filled++;
+    }));
+    const pct = total ? Math.round((filled/total)*100) : 0;
+    const pf = $('dcProgressFill');
+    const pt = $('dcProgressText');
+    if(pf) pf.style.width = pct+'%';
+    if(pt) pt.textContent = faDigits(pct)+'٪';
+  } catch(e) {}
+}
+
+async function dcFetchRecords(category){
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/bcp_forms?category=eq.${category}&select=*&order=created_at.desc`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+    });
+    if(!res.ok) return [];
+    const d = await res.json();
+    return Array.isArray(d) ? d : [];
+  } catch(e) { return []; }
+}
+
+async function dcInsertRecord(category, data){
+  return await fetch(`${SUPABASE_URL}/rest/v1/bcp_forms`, {
+    method: 'POST',
+    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ category, data })
+  });
+}
+
+async function dcUpdateRecord(id, data){
+  return await fetch(`${SUPABASE_URL}/rest/v1/bcp_forms?id=eq.${id}`, {
+    method: 'PATCH',
+    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ data, updated_at: new Date().toISOString() })
+  });
+}
+
+async function dcDeleteRecord(id){
+  return await fetch(`${SUPABASE_URL}/rest/v1/bcp_forms?id=eq.${id}`, {
+    method: 'DELETE',
+    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+  });
+}
+
+async function dcRenderMain(){
+  if(!DC_CURRENT){
+    $('dcMain').innerHTML = `<div class="dc-empty">
+      <svg class="ic" viewBox="0 0 24 24" style="width:56px;height:56px;margin:0 auto 16px;color:var(--border-2)"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+      <h3>یک فرم را از فهرست انتخاب کنید</h3>
+      <p>۱۲ حوزه اطلاعاتی، ۳۴ فرم تخصصی</p>
+    </div>`;
+    return;
+  }
+  const f = DC_FORMS[DC_CURRENT];
+  const sec = DC_SECTIONS.find(s=>s.forms.includes(DC_CURRENT));
+  const list = await dcFetchRecords(DC_CURRENT);
+  const showAddBtn = !f.m || list.length === 0;
+
+  let h = `<div class="dc-form-header">
+    <h3>${escapeHtml(f.t)} <span style="font-family:monospace;font-size:.78rem;color:var(--muted);font-weight:500">(${DC_CURRENT})</span></h3>
+    <div class="rep">${escapeHtml(f.r)}</div>`;
+  if(sec?.p) h += `<div class="purpose">${escapeHtml(sec.p)}</div>`;
+  h += `</div>`;
+
+  h += `<div class="dc-toolbar">
+    <div class="dc-toolbar-info">تعداد ثبت‌شده: <strong>${faDigits(list.length)}</strong> مورد ${f.m?'':'(فقط یک مورد)'}</div>
+    ${(!f.m && list.length > 0) ? '<span style="font-size:.78rem;color:var(--muted)">این فرم تک‌موردی است. برای ویرایش روی «ویرایش» بزنید.</span>' : '<button class="btn-primary" id="dcAddBtn"><svg class="ic ic-sm" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> ثبت مورد جدید</button>'}
+  </div>`;
+
+  if(list.length === 0){
+    h += `<div class="dc-empty" style="padding:60px 20px">
+      <svg class="ic" viewBox="0 0 24 24" style="width:48px;height:48px;margin:0 auto 14px;color:var(--border-2)"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+      <h3>هنوز داده‌ای ثبت نشده</h3>
+      <p>برای شروع، روی «ثبت مورد جدید» کلیک کنید</p>
+    </div>`;
+  } else {
+    h += `<div class="dc-list">`;
+    list.forEach(rec=>{
+      const firstKey = f.f[0][0];
+      const title = rec.data[firstKey] || rec.data[f.f[1]?.[0]] || 'بدون عنوان';
+      const preview = f.f.slice(0,4).map(([k])=>rec.data[k]).filter(Boolean).join(' • ');
+      h += `<div class="dc-record">
+        <div class="dc-record-info">
+          <div class="dc-record-title">${escapeHtml(String(title).slice(0,80))}</div>
+          <div class="dc-record-preview">${escapeHtml(String(preview).slice(0,180))}</div>
+        </div>
+        <div class="dc-record-actions">
+          <button class="btn-ghost" data-dc-edit="${rec.id}">ویرایش</button>
+          <button class="btn-ghost" data-dc-del="${rec.id}" style="color:var(--danger);border-color:var(--danger)">حذف</button>
+        </div>
+      </div>`;
+    });
+    h += `</div>`;
+  }
+  $('dcMain').innerHTML = h;
+
+  const addBtn = $('dcAddBtn');
+  if(addBtn) addBtn.addEventListener('click', ()=>dcShowForm());
+  $('dcMain').querySelectorAll('[data-dc-edit]').forEach(b=>b.addEventListener('click', ()=>{
+    const r = list.find(x=>String(x.id) === b.dataset.dcEdit);
+    if(r) dcShowForm(r);
+  }));
+  $('dcMain').querySelectorAll('[data-dc-del]').forEach(b=>b.addEventListener('click', async ()=>{
+    if(!confirm('حذف این مورد؟')) return;
+    await dcDeleteRecord(b.dataset.dcDel);
+    await dcRenderMain();
+    updateDCBadges();
+    toast('حذف شد','success');
+  }));
+}
+
+function dcShowForm(rec = null){
+  const f = DC_FORMS[DC_CURRENT];
+  const sec = DC_SECTIONS.find(s=>s.forms.includes(DC_CURRENT));
+  let h = `<div class="dc-form-header">
+    <h3>${rec?'ویرایش':'ثبت'} ${escapeHtml(f.t)}</h3>
+    <div class="rep">${escapeHtml(f.r)}</div>
+  </div>
+  <div class="dc-form">
+    <div class="dc-help">
+      <strong>راهنما:</strong> فیلدهای ستاره‌دار (<span style="color:var(--danger)">*</span>) الزامی هستند. مقادیر داخل پرانتز به‌عنوان «مثال» نمایش داده شده‌اند و می‌توانید با کلیک روی هر کادر، مقدار واقعی سازمان خود را وارد کنید.
+    </div>`;
+
+  f.f.forEach(([key, label, type, example, required])=>{
+    const val = rec?.data?.[key] || '';
+    h += `<div class="dc-field">
+      <label>${escapeHtml(label)} ${required?'<span class="req">*</span>':''}</label>
+      ${example?`<span class="ex-hint">مثال: ${escapeHtml(example)}</span>`:''}`;
+    if(type === 'a'){
+      h += `<textarea data-k="${key}" placeholder="${escapeHtml(example||'')}">${escapeHtml(val)}</textarea>`;
+    } else {
+      h += `<input type="text" data-k="${key}" value="${escapeHtml(String(val))}" placeholder="${escapeHtml(example||'')}" ${type==='n'?'dir="ltr"':''}>`;
+    }
+    h += `</div>`;
+  });
+
+  h += `<div class="form-actions">
+    <button class="btn-ghost" id="dcCancel">انصراف</button>
+    <button class="btn-primary" id="dcSave">${rec?'ذخیره تغییرات':'ثبت'}</button>
+  </div></div>`;
+
+  $('dcMain').innerHTML = h;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  $('dcCancel').addEventListener('click', ()=>dcRenderMain());
+  $('dcSave').addEventListener('click', async ()=>{
+    const data = {};
+    const requiredMissing = [];
+    f.f.forEach(([key, label, , , req])=>{
+      const el = $('dcMain').querySelector(`[data-k="${key}"]`);
+      if(!el) return;
+      const v = el.value.trim();
+      if(v) data[key] = v;
+      else if(req) requiredMissing.push(label);
+    });
+    if(Object.keys(data).length === 0){ toast('حداقل یک فیلد را پر کنید','danger'); return; }
+    if(requiredMissing.length){
+      toast('فیلدهای الزامی: '+requiredMissing.join('، '),'danger');
+      return;
+    }
+    let ok;
+    if(rec) ok = await dcUpdateRecord(rec.id, data);
+    else ok = await dcInsertRecord(DC_CURRENT, data);
+    if(ok && (ok.status === undefined || ok.ok)) { // fetch returns Response
+      toast(rec?'ویرایش شد':'ثبت شد','success');
+      await dcRenderMain();
+      updateDCBadges();
+    } else {
+      toast('خطا در ذخیره‌سازی. اتصال به سرور را بررسی کنید.','danger');
+    }
+  });
+}
+
 /* ============================== MODAL HELPERS ============================== */
 document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>{
   $(b.dataset.close).classList.remove('open');
@@ -2847,6 +3644,7 @@ async function renderAll(){
   await renderMinutes();
   await renderNotebook();
   await renderStakeholders();
+  dcInit();
 }
 </script>
 </body>
